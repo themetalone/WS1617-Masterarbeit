@@ -1,0 +1,24 @@
+%---Allgemein---%
+\newcommand{\note}[1]{\hrule \subsubsection*{Notizen}#1\hrule}
+
+%---Deckblatt---%
+\newcommand{\myauthor}{}
+\newcommand{\mytitle}{}
+\newcommand{\subtitle}{}
+\newcommand{\dozent}{}
+\newcommand{\semester}{}
+\newcommand{\logo}{}
+
+
+\newenvironment{notiz}{\hrule\subsubsection*{Notizen}\begin{description}}{\end{description}\hrule}
+
+%---Ref---%
+\newcommand{\fullref}[1]{\emph{\ref{#1} \nameref{#1}}}
+
+
+\newcommand{\degr}{^{\circ}}
+
+%---Tabular---%
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % linksbündig mit Breitenangabe
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}} % zentriert mit Breitenangabe
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
