@@ -34,8 +34,7 @@ class HealthStateImpl implements HealthState {
 	 */
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
 	/* (non-Javadoc)
@@ -43,8 +42,7 @@ class HealthStateImpl implements HealthState {
 	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 	/* (non-Javadoc)
@@ -52,8 +50,7 @@ class HealthStateImpl implements HealthState {
 	 */
 	@Override
 	public long getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	/* (non-Javadoc)
@@ -61,8 +58,10 @@ class HealthStateImpl implements HealthState {
 	 */
 	@Override
 	public void addToSize(long number) throws NotEnoughIndividualsException {
-		// TODO Auto-generated method stub
-
+		if(this.changes + number + this.size < 0){
+			throw new NotEnoughIndividualsException(-(this.changes + number + this.size));
+		}
+		this.changes += number;
 	}
 
 	/* (non-Javadoc)
@@ -70,8 +69,7 @@ class HealthStateImpl implements HealthState {
 	 */
 	@Override
 	public void applyChanges() {
-		// TODO Auto-generated method stub
-
+		this.size += this.changes;
 	}
 
 }
