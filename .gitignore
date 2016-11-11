@@ -1,3 +1,6 @@
 *.project
 Arbeit/Masterarbeit.pdf
 *.aux
+*.log
+*.gz
+*.toc
