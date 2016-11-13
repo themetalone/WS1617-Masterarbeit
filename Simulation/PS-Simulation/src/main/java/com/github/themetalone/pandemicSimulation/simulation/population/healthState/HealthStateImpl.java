@@ -59,7 +59,7 @@ class HealthStateImpl implements HealthState {
 	@Override
 	public void addToSize(long number) throws NotEnoughIndividualsException {
 		if(this.changes + number + this.size < 0){
-			throw new NotEnoughIndividualsException(-(this.changes + number + this.size));
+			throw new NotEnoughIndividualsException((this.changes + number + this.size));
 		}
 		this.changes += number;
 	}

@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.themetalone.pandemicSimulation.simulation.exceptions.NotEnoughIndividualsException;
+import com.github.themetalone.pandemicSimulation.simulation.population.healthState.HealthState;
 import com.github.themetalone.pandemicSimulation.simulation.population.healthState.HealthStateFactory;
 import com.github.themetalone.pandemicSimulation.simulation.population.transmission.components.TransmissionComponent;
+import com.github.themetalone.pandemicSimulation.simulation.population.transmission.components.TransmissionComponentProvider;
 
 class TransmissionImpl implements Transmission {
 	
@@ -28,26 +30,25 @@ class TransmissionImpl implements Transmission {
 
 	@Override
 	public void transmit() {
-		try {
-			HealthStateFactory.getInstance().getHealthState(destinationId).addToSize(
-				components.stream().mapToLong(tc->tc.getValue()).sum()
-			);
-		} catch (NotEnoughIndividualsException e) {
-			LOG.info("{}| Could not transmit all Individuals. Transmitting {} instead", this.toString(), e.getMaxDiff());
+		final HealthState hs = HealthStateFactory.getInstance().getHealthState(destinationId);
+		components.stream().forEach(tc -> {
 			try {
-				HealthStateFactory.getInstance().getHealthState(destinationId).addToSize(-e.getMaxDiff());
-			} catch (Exception e1) {
-				LOG.error("{}| Somewhere something went wrong. This exception shouldn't have been thrown");
+				hs.addToSize(tc.getValue());
+			} catch (NotEnoughIndividualsException e) {
+				tc.setLowerBound(e.getMaxDiff());
+				TransmissionComponentProvider.getInstance().getTransmissionComponent(tc.getCounterpartId()).setUpperBound(-e.getMaxDiff());
+				try {
+					hs.addToSize(tc.getValue());
+				} catch (NotEnoughIndividualsException e1) {
+					throw new Error("Transmission failed:"+tc.toString());
+				}
 			}
-		} catch (NoSuchElementException e) {
-			LOG.error("{}| Could not find destination...");
-		}
-
+		});
 	}
 	
 	@Override
 	public String toString(){
-		return "Transmission Impl: "+destinationId+" -> "+components.stream().map(tc->tc.toString()).reduce("", (s,t)->(s+"+"+t));
+		return "TransmissionImpl: "+destinationId+" -> "+components.stream().map(tc->tc.toString()).reduce("", (s,t)->(s+"+"+t));
 	}
 
 }
