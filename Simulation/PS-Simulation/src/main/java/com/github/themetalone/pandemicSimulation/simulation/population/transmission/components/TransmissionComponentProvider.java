@@ -1,19 +1,19 @@
 package com.github.themetalone.pandemicSimulation.simulation.population.transmission.components;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 public class TransmissionComponentProvider {
 	
 	
 	private static TransmissionComponentProvider instance;
 	
-	private List<TransmissionComponent> components;
+	private Set<TransmissionComponent> components;
 	
 	public TransmissionComponentProvider(){
-		components = new LinkedList<>();
+		components = new HashSet<>();
 	}
 	
 	public static TransmissionComponentProvider getInstance(){
@@ -23,7 +23,7 @@ public class TransmissionComponentProvider {
 		return instance;
 	}
 	
-	public void setComponents(List<TransmissionComponent> components){
+	public void setComponents(Set<TransmissionComponent> components){
 		this.components = components;
 	}
 	
