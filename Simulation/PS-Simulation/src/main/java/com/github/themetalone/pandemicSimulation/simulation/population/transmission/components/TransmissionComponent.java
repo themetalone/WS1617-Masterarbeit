@@ -7,7 +7,7 @@ package com.github.themetalone.pandemicSimulation.simulation.population.transmis
  *
  */
 public interface TransmissionComponent {
-	
+		
 	/**
 	 * 
 	 * @return the numerical value of the component

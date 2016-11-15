@@ -1,6 +1,6 @@
 \section{Mathematische Grundlagen}
 \subsection{Single Population Ansätze}
-
+\ellen
 Zunächst werden Single Population Ansätze untersucht, also Modelle zur Beschreibung einer Gesellschaft, beispielsweise eines Landes oder einer Stadt. Dazu werden üblicherweise SIR-Modelle genutzt.
 
 \subsubsection{SIR Modell}
@@ -11,9 +11,9 @@ Entweder ist das Individuum gesund und kann angesteckt werden (Gruppe S), es ist
 Sei nun $N$ die gesamte Bevölkerungsanzahl, dann gilt im klassischen Modell zu jedem Zeitpunkt $t$, $S(t)+I(t)+R(t) = N$. Zusätzlich wird die Annahme getroffen, dass sich zu Beginn einer Epidemie niemand in der Gruppe R befindet, also gilt: $S(0)+I(0)= S_0+I_0 = N$.\\
 Die Ausbreitung der Infektion wird dann mit der folgenden Gruppe von Differenzialgleichungen beschrieben.
 \begin{align}
-\dfrac{dS}{dt} = -kSI\\
-\dfrac{dI}{dt} = kSI- \gamma I\\
-\dfrac{dR}{dt} = \gamma I
+\dfrac{dS}{dt} &= -kSI\\
+\dfrac{dI}{dt} &= kSI- \gamma I\\
+\dfrac{dR}{dt} &= \gamma I
 \end{align}
 
 Dabei gilt: $S_0 > 0, I_0 > 0, R_0 = 0$.\\
@@ -28,3 +28,4 @@ Um diesen Überlegungen Rechnung zu tragen wurde das SIR-Modell bereits oft weit
 \subsubsection{Modifizierte SIR Modelle}
 \subsubsection{IDEA Modell}
 \subsection{Netzwerkansätze}
+\input{sachanalyse/mpm}

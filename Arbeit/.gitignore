@@ -2,3 +2,6 @@
 /Masterarbeit.out
 /Masterarbeit.synctex.gz
 /Masterarbeit.toc
+*.bbl
+*.blg
+*.tex.bak
