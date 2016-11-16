@@ -1,2 +1,14 @@
 \steffen
-\cite{Sattenspiel1995}, \cite{Milne2008}, \cite{Capasso1978}\\
+\begin{description}
+	\item[\cite{Sattenspiel1995}] Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell
+	\item[\cite{Capasso1978}] Behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Vorteile.
+\end{description}
+
+\begin{itemize}
+	\item Aufbauend auf dem beschriebenen SIR Modell in \ref{ssec:spa}
+	\item Verwendung eines Netzwerkes
+	\item Jeder Knoten ist eine Zustandspopulation (Terminus festlegen). Jede Kante beschreibt einen Fluss von einem Knoten zu einem Anderen.
+	\item eine SIR Population ist demnach ein Subnetz
+	\item Knoten sind nie negativ. 
+	\item diskrete Zeitschritte
+\end{itemize}
