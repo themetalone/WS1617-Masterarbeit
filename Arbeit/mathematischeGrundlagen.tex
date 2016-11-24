@@ -27,5 +27,20 @@ Um diesen Überlegungen Rechnung zu tragen wurde das SIR-Modell bereits oft weit
 
 \subsubsection{Modifizierte SIR Modelle}
 \subsubsection{IDEA Modell}
+\subsubsection{Wahl eines Modells}
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}
-\input{sachanalyse/mpm}
+\steffen
+Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
+\subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
+\cite{Capasso1978} behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
+\subsubsection{Erweiterung des SIR-Modells}
+{Sattenspiel1995} Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell
+\subsubsection{Wahl eines Modells}
+\begin{itemize}
+	\item Aufbauend auf dem beschriebenen SIR Modell in \ref{ssec:spa}
+	\item Verwendung eines Netzwerkes
+	\item Jeder Knoten ist eine Zustandspopulation (Terminus festlegen). Jede Kante beschreibt einen Fluss von einem Knoten zu einem Anderen.
+	\item eine SIR Population ist demnach ein Subnetz
+	\item Knoten sind nie negativ. 
+	\item diskrete Zeitschritte
+\end{itemize}
