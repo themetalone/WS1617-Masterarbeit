@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public abstract class Provider<Identifier, Target extends Providable> {
 
-  private Collection<Target> targets;
+  protected Collection<Target> targets;
 
   public Provider(Collection<Target> targets) {
     this.targets = targets;
