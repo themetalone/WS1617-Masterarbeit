@@ -43,7 +43,7 @@ Da es sich hier jedoch um Übergänge handelt, die durchaus nachvollziehbar und 
 M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen. 
 \subsubsection{IDEA Modell}
 \subsubsection{Wahl eines Modells}
-\subsection{Erweiterung auf mehrere miteinander interagierende Populationen}
+\subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
 \steffen
 Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
 \subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
@@ -61,13 +61,41 @@ Für die Simulation einer Pandemie wird der Netzwerksansatz von \citep{Capasso19
 
 Sei 
 \begin{align}
-	P=&\lbrace H, D\rbrace \text{ mit}\\
+	P=&\lbrace H, D\rbrace \text{ mit}\label{eq:ssec:multiPop:SIRBegin}\\
 	H=&\lbrace S, I, R\rbrace\\
-	D=&\lbrace \Delta S= -\lambda SI, \Delta I = \lambda SI - \mu I, \Delta R = \mu I   \rbrace
+	D=&\lbrace \Delta S= -\lambda SI, \Delta I = \lambda SI - \mu I, \Delta R = \mu I   \rbrace \label{eq:ssec:multiPop:SIREnd}
 \end{align}
 eine zeitdiskrete SIR-Population. In der folgenden Beschreibung der Pandemie mit einem Netzwerksmodell werden die Subpopulationen der verschiedenen Infektionsstadien mit den Knoten eines gerichteten Netzwerkes identifiziert. Die Knoten enthalten somit auch immer die aktuelle Größe der Subpopulation. Die Kanten werden aus den Änderungsraten gebildet. 
 
-Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvariant ist gilt, dass es für jeden positiven Summanden in einer Änderungsrate einen betragsmäßig gleichen negativen Summanden in einer anderen Änderungsrate gibt. 
+Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvariant ist gilt, dass es für jeden positiven Summanden in einer Änderungsrate einen betragsmäßig gleichen aber negativen Summanden in einer anderen Änderungsrate gibt. Für die bisher betrachteten \emph{SIR}-Modelle ist dieser Zusammenhang leicht zu sehen:
+\begin{align}
+	\Delta S & = -\lambda IS & \\
+	\Delta I & = \lambda IS & - \mu I \\
+	\Delta R & = & \mu I
+\end{align}
+
+Die Subpopulation mit dem negativen Summanden in ihrer Änderungsrate wird als Quelle bezeichnet, die mit dem positiven als Senke oder Ziel. So lässt sich die Beziehung zwischen beiden Subpopulationen als Netzwerk mit 2 Knoten und einer gerichteten Kante darstellen (siehe Abbildung \ref{fig:ssec:multiPop:simpleDirectedEdge}) und als ``Abwandern'' von Individuen aus der Quell-Subpopulation in die Senken-Subpopulation interpretieren.
+
+\begin{figure}
+TODO einfache gerichtete Kante
+\caption{Beispiel einer Quelle-Senke Relation zwischen zwei Subpopulationen.}\label{fig:ssec:multiPop:simpleDirectedEdge}
+\end{figure}
+
+Mit der soeben beschriebenen Transformation lässt sich das bekannte \emph{SIR}-Modell nun als Netzwerk darstellen. Für das \emph{SIR}-Modell in Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd} wird das Netzwerk in Abbildung \ref{fig:ssec:multiPop:SIRNet} dargestellt.
+
+\begin{figure}
+TODO Netzwerk eines SIR Modells
+\caption{Netzwerkdarstellung von Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd}}\label{fig:ssec:multiPop:SIRNet}
+\end{figure}
+
+Die Erweiterung der Modellierung auf multiple, miteinander interagierende Populationen wird nun mit der Erweiterung des Netzwerkes um weitere Populationen sowie zusätzlichen Kanten zwischen den Populationen erreicht. Mit der Motivation der Modellierung im Hinterkopf wird im Folgenden von einem \emph{SEIR}-Modell ausgegangen. In \cite{Sattenspiel1995} wird eine Interaktion zwischen den Populationen uniform modelliert. Jede Subpopulation hat die gleiche Reiserate. Dieser Ansatz modelliert aber an der Realität vorbei. Je nach zu simulierender Krankheit sind Infizierte mit Symptomen (Subpopulation \emph{I}) körperlich nicht mehr in der Lage zu reisen oder werden, auf Grund ihrer offensichtlichen Krankheit, auf gewissen Transportwegen nicht mehr befördert. Dies gielt beispielsweie für Flugzeuge oder Schiffe, bei denen die Passagiere gemeinsam auf einem engen, abgeschlossenen Raum miteinander interagieren. Unter dieser Prämisse wäre ein \emph{SIR}-Modell zur Beschreibung von Pandemien nicht sinnvoll. Es würde nur ein Austausch zwischen den verschiedenen \emph{S}-Populationen stattfinden und Infizierte würden keine Nachbarpopulationen kontaminieren.  Durch die Hinzunahme einer \emph{E}-Population, in der die nichtsymptomatischen Infizierten zusammengefasst werden, wird das Kontaminationsproblem gelöst, da diese Individuen die Krankheit durch alle Transportwege in andere Populationen tragen können. 
+
+Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}-Subpopulationen und allen \emph{E}-Subpopulationen Kanten dem Netzwerk hinzugefügt werden, die den Fluss zwischen den Subpopulationen beschreiben. Für ein besseres Verständnis wird im Folgenden zwischen inneren und äußeren Kanten unterschieden. Die inneren Kanten beschreiben die Kanten innerhalb einer Population und die äußeren die Interaktion zwischen den Populationen. Für die weitere Modellierung einer Pandemie wird angenommen, dass die Infizierte mit Symptomen nicht reisen. Zudem werden die Interaktionen zwischen den \emph{R}-Subpopulationen nicht modelliert, da diese für die Betrachtung einer Krankheit keine Bedeutung mehr haben und hauptsächlich als ``Endlager'' für Individuen dienen, die nicht mehr durch die Krankheit beeinflusst werden können (zum Beispiel durch Immunisierung oder Tod). Für zwei \emph{SEIR}-Populationen $P$ und $P'$ ist das Netzwerk in Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} dargestellt.
+
+\begin{figure}
+TODO Netzwerk für \emph{SEIR}-P und P'
+\caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen}\label{fig:ssec:multiPop:2interactingSEIR}
+\end{figure}
 
 
 
