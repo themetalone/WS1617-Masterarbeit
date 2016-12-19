@@ -32,10 +32,31 @@ Um diesen Überlegungen Rechnung zu tragen wurde das SIR-Modell bereits oft weit
 \steffen
 Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
 \subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
-\cite{Capasso1978} behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
+\cite{Capasso1978} beschreiben in ihrer Arbeit ein Infektionsmodell, mit dem sich die Ausbreitung einer Infektionskrankheit in einer isolierten Stadt beschreiben lässt. Im Gegensatz zu den SIR-Modellen werden in diesem Modell die Individuen direkt simuliert. Innerhalb der Population werden die Individuen in sogenannten \emph{Mixing Groups} zusammengefasst, in denen sich die Individuen untereinander anstecken können. Je nach Interpretation repräsentieren die \emph{Mixing Groups} Haushalte, Schulklassen, Arbeitsplätze oder Krankenhausabteilungen. Jedes Individuum hat dabei eine fest zugeteilte Haushalts- und Beschäftigungs-Gruppe, zwischen denen im Laufe eines Tages gependelt wird. Dies entspricht dem Arbeits- beziehungsweise dem Schulalltag der Individuen.
+
+Für die Modellierung der Krankheit werden die drei grundlegenden Zustände \emph{infizierbar}, \emph{infiziert} und \emph{immunisiert}. Die \emph{Infizierten} unterteilen sich noch zusätzlich in die mit Symptomen und die ohne. Damit ist diese Modellierung äquivalent zu der eines \emph{SEIR}-Modells.
+
+
+behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
 \subsubsection{Erweiterung des SIR-Modells}
 \cite{Sattenspiel1995} Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell
-\subsubsection{Wahl eines Modells}
+
+\subsubsection{Vom SIR-Modell zur Netzwerksbasierten Pandemie-Simulation}
+Für die Simulation einer Pandemie wird der Netzwerksansatz von \citep{Capasso1978} mit der Erweiterung des SIR-Modells von \citep{Sattenspiel1995} kombiniert. 
+
+Sei 
+\begin{align}
+	P=&\lbrace H, D\rbrace \text{ mit}\\
+	H=&\lbrace S, I, R\rbrace\\
+	D=&\lbrace \Delta S= -\lambda SI, \Delta I = \lambda SI - \mu I, \Delta R = \mu I   \rbrace
+\end{align}
+eine zeitdiskrete SIR-Population. In der folgenden Beschreibung der Pandemie mit einem Netzwerksmodell werden die Subpopulationen der verschiedenen Infektionsstadien mit den Knoten eines gerichteten Netzwerkes identifiziert. Die Knoten enthalten somit auch immer die aktuelle Größe der Subpopulation. Die Kanten werden aus den Änderungsraten gebildet. 
+
+Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvariant ist gilt, dass es für jeden positiven Summanden in einer Änderungsrate einen betragsmäßig gleichen negativen Summanden in einer anderen Änderungsrate gibt. 
+
+
+
+\hrule
 \begin{itemize}
 	\item Aufbauend auf dem beschriebenen SIR Modell in \ref{ssec:spa}
 	\item Verwendung eines Netzwerkes
