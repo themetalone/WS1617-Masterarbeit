@@ -22,10 +22,25 @@ Der Faktor $SI$ beschreibt die Möglichkeiten, dass eine kranke auf eine gesunde
 Dieses Modell ist sehr simpel, hat jedoch einige schwächen im Bezug auf die Beobachtungen in der Realität.\\
 So scheint es unwahrscheinlich, dass der Interaktionsterm linear ist. Viel wahrscheinlicher ist es, dass Aufgrund von Verhaltensänderungen eine Verringerung der Interaktionen eintritt, sobald die Epidemie bekannt ist.\\
 Zudem ist es bei Beobachtungen über einen längeren Zeitraum durchaus wahrscheinlich, dass es zu Geburten und Todesfällen kommt.\\
-Um diesen Überlegungen Rechnung zu tragen wurde das SIR-Modell bereits oft weiterentwickelt.
+Um diesen Überlegungen Rechnung zu tragen wurde das SIR-Modell bereits oft weiterentwickelt.\\
+Eine Auswahl dieser Weiterentwicklungen wird später beschrieben und untersucht. Zunächst wird jedoch das klassische SIR-Modell diskretisiert. Dies ist für die vorliegende Arbeit notwendig, da eine Umsetzung in der Schule durchgeführt werden soll und Differentialgleichungen in der Schule nicht behandelt werden.\\
+ Da rekursive Folgen bereits früh von SuS untersucht werden, bietet es sich an, die Differentialgleichungen in rekursive Funktionen umzuwandeln.\\
+  Dann kann man die Gleichungen folgendermaßen beschreiben:
+  \begin{align}
+  S_n &= S_{n-1}- kS_{n-1}I_{n-1}\\
+  I_n &= I_{n-1}+ kS_{n-1}I_{n-1}- \gamma I_{n-1}\\
+  R_n &= R_{n-1}+ \gamma I_{n-1}
+  \end{align}
 
 
 \subsubsection{Modifizierte SIR Modelle}
+\ellen
+Eine einfache Möglichkeit zur Modifikation des SIR-Modells ist es, zusätzliche Zustände einzuführen. Caitlin Rivers et al. verfolgen einen solchen Ansatz und erweitern das SIR-Modell zu einem SEIHFR-Modell. 
+Genau wie im grundlegenden Modell gibt es die Ansteckbaren (S), Infektiösen (I) und die, die nicht mehr angesteckt werden und auch nicht mehr anstecken (R). Zusätzlich gibt es jedoch jene, die Kontakt zu Kranken hatten, jedoch noch nicht Infektiös sind (E), sowie jene die in Krankenhäusern untergebracht sind (H) und jene, die sterben und beerdigt werden (F).
+Durch diese Einführung zusätzlicher Zustände können genauere Aussagen getroffen werden, da beispielsweise die Klasse R zuvor ungenügend Informationen zur Verfügung stellte. Durch das SEIHFR-Modell ist es möglich zu unterscheiden, wie viele Immunisiert wurden und wie viele gestorben sind. Dies ist im weiteren Verlauf wichtig, wenn man Methoden zur Eindämmung und Bekämpfung von Infektionskrankheiten untersuchen möchte. Gleichzeitig wird das Problem jedoch komplizierter durch die Erweiterung des Modells, da die einzelnen Zustände nun komplizierter miteinander interagieren.\\
+So wird ein Teil von I in Krankenhäuser eingeliefert (H), während andere sterben (F) und wieder andere genesen und immunisiert werden (R). Ebenso stirb ein Teil derjenigen, die sich in Krankenhäusern befinden, während andere genesen und in den Zustand R übergehen.\\
+Da es sich hier jedoch um Übergänge handelt, die durchaus nachvollziehbar und für SuS begreiflich darstellbar sind, ist der Gewinn durch die differenziertere Betrachtung der Klasse R stärker zu bewerten, als die Kosten die durch den höheren Aufwand entstehen.\\
+M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen. 
 \subsubsection{IDEA Modell}
 \subsubsection{Wahl eines Modells}
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
