@@ -1,5 +1,6 @@
 package com.github.themetalone.pandemic.simulation.healthState;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
 
 /**
@@ -57,6 +58,7 @@ public class SimpleHealthState implements HealthState {
 
     this.size += this.changes;
     this.changes = 0;
+    PandemicSimulationDataWriterProvider.getWriter().putHealthStateState(this.ID, this.size, this.tick);
 
   }
 

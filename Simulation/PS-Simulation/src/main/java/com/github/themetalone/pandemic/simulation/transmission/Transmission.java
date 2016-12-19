@@ -7,7 +7,7 @@ import com.github.themetalone.pandemic.utils.provider.Providable;
  * @author steffen
  *
  */
-public interface Transmission extends Providable {
+public interface Transmission extends Providable, Comparable<Transmission> {
 
   @Override
   TransmissionIdentifier getIdentifier();
@@ -17,5 +17,7 @@ public interface Transmission extends Providable {
   HealthStateIdentifier getTarget();
 
   void transmit();
+
+  int getPriority();
 
 }

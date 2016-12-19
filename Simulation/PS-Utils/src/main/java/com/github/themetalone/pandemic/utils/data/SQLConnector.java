@@ -1,5 +1,6 @@
 package com.github.themetalone.pandemic.utils.data;
 
+import java.sql.Connection;
 import java.util.Observer;
 
 /**
@@ -8,6 +9,6 @@ import java.util.Observer;
  */
 public interface SQLConnector extends Observer {
 
-  void addStatement(String stmnt);
+  Connection getConnection();
 
 }

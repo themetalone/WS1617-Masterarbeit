@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.event.ExecuteTransmissionsEvent;
 import com.github.themetalone.pandemic.simulation.event.PandemicSimulationEvent;
 import com.github.themetalone.pandemic.utils.provider.Provider;
@@ -16,11 +17,20 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
 
   private static TransmissionProvider instance;
 
+  /**
+   *
+   * @param p provider
+   */
   public static void setProvider(TransmissionProvider p) {
 
     instance = p;
   }
 
+  /**
+   *
+   * @return TransmissionProvider
+   * @throws Error if no provider is set
+   */
   public static TransmissionProvider getInstance() {
 
     if (instance == null)
@@ -31,10 +41,11 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
   /**
    * The constructor.
    *
-   * @param targets
+   * @param targets that will be provided
    */
   public TransmissionProvider(Collection<Transmission> targets) {
     super(targets);
+    super.targets.parallelStream().forEach(t -> PandemicSimulationDataWriterProvider.getWriter().putTransmission(t));
   }
 
   @Override
@@ -47,7 +58,7 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
 
       this.targets.parallelStream().forEach(t -> t.setTick(ete.TICK));
 
-      this.targets.parallelStream().forEach(t -> t.transmit());
+      this.targets.stream().sorted().forEachOrdered(Transmission::transmit);
 
     }
   }

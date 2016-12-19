@@ -6,33 +6,24 @@ package com.github.themetalone.pandemic.simulation.data;
  */
 public class PandemicSimulationDataWriterProvider {
 
-  private static PandemicSimulationDataWriterProvider instance;
-
-  private final PandemicSimulationDataWriter writer;
-
-  /**
-   * The constructor.
-   */
-  public PandemicSimulationDataWriterProvider(PandemicSimulationDataWriter writer) {
-    this.writer = writer;
-  }
+  private static PandemicSimulationDataWriter writer;
 
   /**
    * @return instance
    */
-  public static PandemicSimulationDataWriterProvider getInstance() {
+  public static PandemicSimulationDataWriter getWriter() {
 
-    if (instance == null)
-      throw new Error("No PandemicSimulationDataWriterProvider set");
-    return instance;
+    if (writer == null)
+      throw new Error("No PandemicSimulationDataWriter set");
+    return writer;
   }
 
   /**
-   * @param instance new value of {@link #getinstance}.
+   * @param writer new value of {@link #getwriter}.
    */
-  public void setInstance(PandemicSimulationDataWriterProvider instance) {
+  public static void setWriter(PandemicSimulationDataWriter writer) {
 
-    PandemicSimulationDataWriterProvider.instance = instance;
+    PandemicSimulationDataWriterProvider.writer = writer;
   }
 
 }

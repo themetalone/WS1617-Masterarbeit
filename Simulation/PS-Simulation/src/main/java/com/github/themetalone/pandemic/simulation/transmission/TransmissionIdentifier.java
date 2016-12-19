@@ -12,9 +12,20 @@ public class TransmissionIdentifier {
 
   public final HealthStateIdentifier TARGET;
 
-  public TransmissionIdentifier(int srcPopId, int srcHsId, int trgtPopId, int trgtHsId) {
+  public final int TYPE;
+
+  /**
+   * The constructor.
+   *
+   * @param sOURCE
+   * @param tARGET
+   * @param tYPE
+   */
+  public TransmissionIdentifier(int srcPopId, int srcHsId, int trgtPopId, int trgtHsId, int tYPE) {
+    super();
     this.SOURCE = new HealthStateIdentifier(srcPopId, srcHsId);
     this.TARGET = new HealthStateIdentifier(trgtPopId, trgtHsId);
+    this.TYPE = tYPE;
   }
 
   @Override
@@ -24,6 +35,7 @@ public class TransmissionIdentifier {
     int result = 1;
     result = prime * result + ((this.SOURCE == null) ? 0 : this.SOURCE.hashCode());
     result = prime * result + ((this.TARGET == null) ? 0 : this.TARGET.hashCode());
+    result = prime * result + this.TYPE;
     return result;
   }
 
@@ -47,13 +59,15 @@ public class TransmissionIdentifier {
         return false;
     } else if (!this.TARGET.equals(other.TARGET))
       return false;
+    if (this.TYPE != other.TYPE)
+      return false;
     return true;
   }
 
   @Override
   public String toString() {
 
-    return "TransmissionIdentifier [SOURCE=" + this.SOURCE + ", TARGET=" + this.TARGET + "]";
+    return "TransmissionIdentifier [SOURCE=" + this.SOURCE + ", TARGET=" + this.TARGET + ", TYPE=" + this.TYPE + "]";
   }
 
 }

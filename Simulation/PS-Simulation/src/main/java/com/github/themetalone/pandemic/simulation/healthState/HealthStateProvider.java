@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.event.CommitChangesEvent;
 import com.github.themetalone.pandemic.simulation.event.PandemicSimulationEvent;
 import com.github.themetalone.pandemic.utils.provider.Provider;
@@ -16,11 +17,18 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
 
   private static HealthStateProvider instance;
 
+  /**
+   * @param p a provider
+   */
   public static void setInstance(HealthStateProvider p) {
 
     instance = p;
   }
 
+  /**
+   * @return HealthStateProvider
+   * @throws Error if no provider is set
+   */
   public static HealthStateProvider getInstance() {
 
     if (instance == null)
@@ -31,12 +39,14 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
   /**
    * The constructor.
    *
+   * registers itself as the current provider
    *
-   * @param targets
+   * @param targets the HealtStates this provider provides
    */
   public HealthStateProvider(Collection<HealthState> targets) {
     super(targets);
     instance = this;
+    super.targets.parallelStream().forEach(hs -> PandemicSimulationDataWriterProvider.getWriter().putHealthState(hs));
   }
 
   @Override

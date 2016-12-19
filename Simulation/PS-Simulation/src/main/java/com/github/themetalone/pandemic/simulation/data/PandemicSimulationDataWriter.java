@@ -11,12 +11,36 @@ import com.github.themetalone.pandemic.simulation.transmission.TransmissionIdent
  */
 public interface PandemicSimulationDataWriter {
 
+  /**
+   * @param s to be added to the data storage.
+   */
   void putHealthState(HealthState s);
 
+  /**
+   *
+   * @param t to be added to the data storage
+   */
   void putTransmission(Transmission t);
 
+  /**
+   *
+   * @param id of the HealthState
+   * @param size of the HealthState
+   * @param tick current time of the simulation
+   */
   void putHealthStateState(HealthStateIdentifier id, long size, long tick);
 
+  /**
+   *
+   * @param id of the transmission
+   * @param value the transmitted value
+   * @param tick current time of the simulation
+   */
   void putTransmissionExecution(TransmissionIdentifier id, long value, long tick);
+
+  /**
+   * Tells the DataWriter to finish open tasks
+   */
+  void close();
 
 }
