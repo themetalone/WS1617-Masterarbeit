@@ -77,27 +77,61 @@ Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvari
 Die Subpopulation mit dem negativen Summanden in ihrer Änderungsrate wird als Quelle bezeichnet, die mit dem positiven als Senke oder Ziel. So lässt sich die Beziehung zwischen beiden Subpopulationen als Netzwerk mit 2 Knoten und einer gerichteten Kante darstellen (siehe Abbildung \ref{fig:ssec:multiPop:simpleDirectedEdge}) und als ``Abwandern'' von Individuen aus der Quell-Subpopulation in die Senken-Subpopulation interpretieren.
 
 \begin{figure}
-TODO einfache gerichtete Kante
+\begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
+	\node[state] (S)				{S};
+	\node[state] (I) [right of=S]	{I};
+	
+	\path (S) edge node {$\lambda SI$} (I);
+\end{tikzpicture}\end{center}
 \caption{Beispiel einer Quelle-Senke Relation zwischen zwei Subpopulationen.}\label{fig:ssec:multiPop:simpleDirectedEdge}
 \end{figure}
 
 Mit der soeben beschriebenen Transformation lässt sich das bekannte \emph{SIR}-Modell nun als Netzwerk darstellen. Für das \emph{SIR}-Modell in Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd} wird das Netzwerk in Abbildung \ref{fig:ssec:multiPop:SIRNet} dargestellt.
 
 \begin{figure}
-TODO Netzwerk eines SIR Modells
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
+	\node[state] (S)				{S};
+	\node[state] (I) [right of=S]	{I};
+	\node[state] (R) [right of=I]	{R};
+	\path 	(S) edge node {$\lambda SI$}	(I)
+			(I) edge node {$\mu I$}			(R);
+\end{tikzpicture}
+\end{center}
 \caption{Netzwerkdarstellung von Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd}}\label{fig:ssec:multiPop:SIRNet}
 \end{figure}
 
 Die Erweiterung der Modellierung auf multiple, miteinander interagierende Populationen wird nun mit der Erweiterung des Netzwerkes um weitere Populationen sowie zusätzlichen Kanten zwischen den Populationen erreicht. Mit der Motivation der Modellierung im Hinterkopf wird im Folgenden von einem \emph{SEIR}-Modell ausgegangen. In \cite{Sattenspiel1995} wird eine Interaktion zwischen den Populationen uniform modelliert. Jede Subpopulation hat die gleiche Reiserate. Dieser Ansatz modelliert aber an der Realität vorbei. Je nach zu simulierender Krankheit sind Infizierte mit Symptomen (Subpopulation \emph{I}) körperlich nicht mehr in der Lage zu reisen oder werden, auf Grund ihrer offensichtlichen Krankheit, auf gewissen Transportwegen nicht mehr befördert. Dies gielt beispielsweie für Flugzeuge oder Schiffe, bei denen die Passagiere gemeinsam auf einem engen, abgeschlossenen Raum miteinander interagieren. Unter dieser Prämisse wäre ein \emph{SIR}-Modell zur Beschreibung von Pandemien nicht sinnvoll. Es würde nur ein Austausch zwischen den verschiedenen \emph{S}-Populationen stattfinden und Infizierte würden keine Nachbarpopulationen kontaminieren.  Durch die Hinzunahme einer \emph{E}-Population, in der die nichtsymptomatischen Infizierten zusammengefasst werden, wird das Kontaminationsproblem gelöst, da diese Individuen die Krankheit durch alle Transportwege in andere Populationen tragen können. 
 
-Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}-Subpopulationen und allen \emph{E}-Subpopulationen Kanten dem Netzwerk hinzugefügt werden, die den Fluss zwischen den Subpopulationen beschreiben. Für ein besseres Verständnis wird im Folgenden zwischen inneren und äußeren Kanten unterschieden. Die inneren Kanten beschreiben die Kanten innerhalb einer Population und die äußeren die Interaktion zwischen den Populationen. Für die weitere Modellierung einer Pandemie wird angenommen, dass die Infizierte mit Symptomen nicht reisen. Zudem werden die Interaktionen zwischen den \emph{R}-Subpopulationen nicht modelliert, da diese für die Betrachtung einer Krankheit keine Bedeutung mehr haben und hauptsächlich als ``Endlager'' für Individuen dienen, die nicht mehr durch die Krankheit beeinflusst werden können (zum Beispiel durch Immunisierung oder Tod). Für zwei \emph{SEIR}-Populationen $P$ und $P'$ ist das Netzwerk in Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} dargestellt.
-
+Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}-Subpopulationen und allen \emph{E}-Subpopulationen Kanten dem Netzwerk hinzugefügt werden, die den Fluss zwischen den Subpopulationen beschreiben. Für ein besseres Verständnis wird im Folgenden zwischen inneren und äußeren Kanten unterschieden. Die inneren Kanten beschreiben die Kanten innerhalb einer Population und die äußeren die Interaktion zwischen den Populationen. Für die weitere Modellierung einer Pandemie wird angenommen, dass die Infizierte mit Symptomen nicht reisen. Zudem werden die Interaktionen zwischen den \emph{R}-Subpopulationen nicht modelliert, da diese für die Betrachtung einer Krankheit keine Bedeutung mehr haben und hauptsächlich als ``Endlager'' für Individuen dienen, die nicht mehr durch die Krankheit beeinflusst werden können (zum Beispiel durch Immunisierung oder Tod). Für zwei \emph{SEIR}-Populationen $P$ und $P'$ ist das Netzwerk in Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} dargestellt. 
 \begin{figure}
-TODO Netzwerk für \emph{SEIR}-P und P'
-\caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen}\label{fig:ssec:multiPop:2interactingSEIR}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3.5cm]
+	\node[state] (S)				{S};
+	\node[state] (E) [right of=S]	{E};
+	\node[state] (I) [right of=E]	{I};
+	\node[state] (R) [right of=I]	{R};
+	\node[state] (S')[below of=S]	{S'};
+	\node[state] (E')[below of=E]	{E'};
+	\node[state] (I')[below of=I]	{I'};
+	\node[state] (R')[below of=R]	{R'};
+	\path 	(S)	edge node {$\lambda SE + \beta SI$} 	(E)
+				edge [bend left] node {$\tau_S$}					(S')
+			(E)	edge node {$\gamma E$}					(I)
+				edge [bend left] node {$\tau_E$}					(E')
+			(I)	edge node {$\delta I$}					(R)
+			(S')edge node {$\lambda S'E' + \beta S'I'$}(E')
+				edge [bend left] node {$\tau_{S'}$}					(S)
+			(E')edge node {$\gamma E'$}					(I')
+				edge [bend left] node {$\tau_{E'}$}					(E)
+			(I')edge node {$\delta I'$}					(R');
+	
+\end{tikzpicture}
+\end{center}
+\caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen mit gleichen Übergangskoeffizienten}\label{fig:ssec:multiPop:2interactingSEIR}
 \end{figure}
 
-
+Stünde in diesem Beispiel jede Population für ein Land, würden die gleichen Übertragungsfaktoren ($\alpha, \beta, \gamma, \delta$) auf ähnliche Strukturen in der Behandlung von Krankheiten hinweisen.
 
 \hrule
 \begin{itemize}
