@@ -40,9 +40,42 @@ Genau wie im grundlegenden Modell gibt es die Ansteckbaren (S), Infektiösen (I)
 Durch diese Einführung zusätzlicher Zustände können genauere Aussagen getroffen werden, da beispielsweise die Klasse R zuvor ungenügend Informationen zur Verfügung stellte. Durch das SEIHFR-Modell ist es möglich zu unterscheiden, wie viele Immunisiert wurden und wie viele gestorben sind. Dies ist im weiteren Verlauf wichtig, wenn man Methoden zur Eindämmung und Bekämpfung von Infektionskrankheiten untersuchen möchte. Gleichzeitig wird das Problem jedoch komplizierter durch die Erweiterung des Modells, da die einzelnen Zustände nun komplizierter miteinander interagieren.\\
 So wird ein Teil von I in Krankenhäuser eingeliefert (H), während andere sterben (F) und wieder andere genesen und immunisiert werden (R). Ebenso stirb ein Teil derjenigen, die sich in Krankenhäusern befinden, während andere genesen und in den Zustand R übergehen.\\
 Da es sich hier jedoch um Übergänge handelt, die durchaus nachvollziehbar und für SuS begreiflich darstellbar sind, ist der Gewinn durch die differenziertere Betrachtung der Klasse R stärker zu bewerten, als die Kosten die durch den höheren Aufwand entstehen.\\
-M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen. 
+M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen.\\
 \subsubsection{IDEA Modell}
+\ellen
+Auch das IDEA-Modell (Incidence decay witz exponential adjustment) versucht die Ausbreitung von Infektionskrankheiten zu beschreiben. Dieses Modell benutzt keine Differentialgleichungen, sondern beschränkt sich auf eine Funktion:\\
+\begin{align}
+I_t &=(\dfrac{R_0}{(1+d)^t})^t
+\end{align}
+%TODO äußere Klammer schön machen
+Dabei beschreibt $I_t$ die Menge der Krankheitsfälle zum Zeitpunkt t, $R_0$ die Grundreproduktionsrate und $d$ ist ein Kontrollparameter, der dafür sorgt, dass die Anzahl der Krankheitsfälle nicht zu stark ansteigt. 
 \subsubsection{Wahl eines Modells}
+Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekannten Größen oder Operationen für die SuS auftreten. Da jedoch lediglich die Klasse der Infizierten beschrieben wird, ist sie für die weitere Arbeit kaum zu nutzen, da die Untersuchung der Removed-Klasse nicht möglich ist.\\
+ Auch das klassische SIR-Modell hält nicht genügend Möglichkeiten bereit, die Removed-Klasse zu untersuchen.\\
+  Das SEIHFR-Modell bietet diese Möglichkeiten, jedoch wird dieses, um die Auswertung zu vereinfachen, um die Klasse D erweitert. Diese Klasse beschreibt jene, die durch die Krankheit gestorben sind. 
+  \begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3.5cm]
+	\node[state] (S)				{S};
+	\node[state] (E) [right of=S]	{E};
+	\node[state] (I) [right of=E]	{I};
+	\node[state] (H) [right of=I]	{H};
+	\node[state] (F)[above of=H]	{F};
+	\node[state] (D)[right of=F]	{D};
+	\node[state] (R)[below right of=H]	{R};
+	\path 	(S)	edge node {$\lambda$} 					(E)
+			(E)	edge node {$\alpha$}					(I)
+			(I)	edge node {$\delta_1 (1-\iota) \gamma_D$}	(F)
+			(I)	edge node {$\gamma_{H^\iota}$}				(H)
+			(I)	edge [bend right] node {$\gamma_1(1-\iota)(1-\delta_1)$}	(R)
+			(F)	edge node {$\gamma_F$}					(D)
+			(H)	edge node {$\gamma_{DH} \delta_2$}		(D)
+			(H) edge node {$\gamma_{IH}(1-\delta_2)$}	(R);
+	
+\end{tikzpicture}
+\end{center}
+\caption{SEIHFRD-Modell}
+\end{figure}
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
 \steffen
 Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
