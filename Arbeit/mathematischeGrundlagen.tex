@@ -78,7 +78,7 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
 \end{figure}
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
 \steffen
-Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
+Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert. Für die eigentliche Erweiterung des Modells wird sich auf eine \emph{SIR}-Modellierung beschränkt und zusätzliche Subpopulationen erst bei Bedarf in Betracht gezogen.
 \subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
 \cite{Capasso1978} beschreiben in ihrer Arbeit ein Infektionsmodell, mit dem sich die Ausbreitung einer Infektionskrankheit in einer isolierten Stadt beschreiben lässt. Im Gegensatz zu den SIR-Modellen werden in diesem Modell die Individuen direkt simuliert. Innerhalb der Population werden die Individuen in sogenannten \emph{Mixing Groups} zusammengefasst, in denen sich die Individuen untereinander anstecken können. Je nach Interpretation repräsentieren die \emph{Mixing Groups} Haushalte, Schulklassen, Arbeitsplätze oder Krankenhausabteilungen. Jedes Individuum hat dabei eine fest zugeteilte Haushalts- und Beschäftigungs-Gruppe, zwischen denen im Laufe eines Tages gependelt wird. Dies entspricht dem Arbeits- beziehungsweise dem Schulalltag der Individuen.
 
@@ -107,7 +107,7 @@ Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvari
 	\Delta R & = & \mu I
 \end{align}
 
-Die Subpopulation mit dem negativen Summanden in ihrer Änderungsrate wird als Quelle bezeichnet, die mit dem positiven als Senke oder Ziel. So lässt sich die Beziehung zwischen beiden Subpopulationen als Netzwerk mit 2 Knoten und einer gerichteten Kante darstellen (siehe Abbildung \ref{fig:ssec:multiPop:simpleDirectedEdge}) und als ``Abwandern'' von Individuen aus der Quell-Subpopulation in die Senken-Subpopulation interpretieren.
+Die Subpopulation mit dem negativen Summanden in ihrer Änderungsrate wird als Quelle bezeichnet, die mit dem positiven als Senke oder Ziel. So lässt sich die Beziehung zwischen beiden Subpopulationen als Netzwerk mit 2 Knoten und einer gerichteten Kante darstellen (siehe Abbildung \ref{fig:ssec:multiPop:simpleDirectedEdge}) und als ``Abwandern'' von Individuen aus der Quell-Subpopulation in die Senken-Subpopulation interpretieren. Die Menge an Individuen, die entlang der Kante abwandert, nennen wir das \emph{Volumen} der Kante. 
 
 \begin{figure}
 \begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
@@ -149,14 +149,14 @@ Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}
 	\node[state] (I')[below of=I]	{I'};
 	\node[state] (R')[below of=R]	{R'};
 	\path 	(S)	edge node {$\lambda SE + \beta SI$} 	(E)
-				edge [bend left] node {$\tau_S$}					(S')
+				edge [bend left] node {$\tau S$}					(S')
 			(E)	edge node {$\gamma E$}					(I)
-				edge [bend left] node {$\tau_E$}					(E')
+				edge [bend left] node {$\tau E$}					(E')
 			(I)	edge node {$\delta I$}					(R)
 			(S')edge node {$\lambda S'E' + \beta S'I'$}(E')
-				edge [bend left] node {$\tau_{S'}$}					(S)
+				edge [bend left] node {$\pi S'$}					(S)
 			(E')edge node {$\gamma E'$}					(I')
-				edge [bend left] node {$\tau_{E'}$}					(E)
+				edge [bend left] node {$\pi E'$}					(E)
 			(I')edge node {$\delta I'$}					(R');
 	
 \end{tikzpicture}
@@ -164,7 +164,11 @@ Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}
 \caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen mit gleichen Übergangskoeffizienten}\label{fig:ssec:multiPop:2interactingSEIR}
 \end{figure}
 
-Stünde in diesem Beispiel jede Population für ein Land, würden die gleichen Übertragungsfaktoren ($\alpha, \beta, \gamma, \delta$) auf ähnliche Strukturen in der Behandlung von Krankheiten hinweisen.
+Stünde in diesem Beispiel jede Population für ein Land, würden die gleichen Übertragungsfaktoren ($\alpha, \beta, \gamma, \delta$) auf ähnliche Strukturen in der Behandlung von Krankheiten hinweisen. 
+
+In Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} wird jeweils ein Faktor für die äußeren Kanten von $P$ nach $P'$ ($\tau$) und einer für die Gegenrichtung ($\pi$) verwendet. Dieser Faktor wird im Folgenden als Reisefaktor bezeichnet und ist zwischen zwei Populationen für alle Subpopulationen gleich. Da in unserem Modell nur symptomfreie Individuen reisen, haben Individuen der \emph{E}-Subpopulation keinen Grund weniger zu reisen als die Individuen der \emph{S}-Subpopulation. Eine Verallgemeinerung auf subpopulationsabhängige Reisefaktoren ist jedoch nicht ausgeschlossen. 
+
+
 
 \hrule
 \begin{itemize}
