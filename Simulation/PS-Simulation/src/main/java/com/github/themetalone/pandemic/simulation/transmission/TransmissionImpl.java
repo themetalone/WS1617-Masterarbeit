@@ -16,8 +16,6 @@ public class TransmissionImpl implements Transmission {
 
   private final TransmissionIdentifier ID;
 
-  private final int TYPE;
-
   private long tick;
 
   private final int priority;
@@ -42,7 +40,6 @@ public class TransmissionImpl implements Transmission {
     this.ID = new TransmissionIdentifier(srcPopId, srcHsId, trgtPopId, trgtHsId, type);
     this.priority = priority;
     this.COMPONENTS = components;
-    this.TYPE = type;
   }
 
   @Override

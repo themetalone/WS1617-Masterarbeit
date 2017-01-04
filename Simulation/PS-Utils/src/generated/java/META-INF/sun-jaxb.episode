@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
+Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
+Generiert: 2016.12.30 um 04:59:48 PM CET 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://github.com/themetalone/simpleconfig">
+    <schemaBindings map="false">
+      <package name="com.github.themetalone.pandemic.utils.generated"/>
+    </schemaBindings>
+    <bindings scd="tns:simulation">
+      <class ref="com.github.themetalone.pandemic.utils.generated.Simulation"/>
+    </bindings>
+    <bindings scd="~tns:innereuebertragungtyp">
+      <class ref="com.github.themetalone.pandemic.utils.generated.Innereuebertragungtyp"/>
+    </bindings>
+    <bindings scd="~tns:subpopulationComplexType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.SubpopulationComplexType"/>
+    </bindings>
+  </bindings>
+</bindings>
+

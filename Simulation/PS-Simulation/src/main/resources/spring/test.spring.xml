@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+
+  <bean id="batchsize" class="java.lang.Long">
+    <constructor-arg value="1000"/>
+  </bean>
+  <bean id="datalocation" class="java.lang.String">
+    <constructor-arg value="./PandemicSimulation/data"/>
+  </bean>
+
+
+
+  <bean name="Simulation" class="com.github.themetalone.pandemic.simulation.Simulation" id="simulation">
+    <constructor-arg index="0" type="java.lang.Long" value="10000"></constructor-arg>
+  </bean>
+
+  <bean id="hsprovider" name="HealthStateProvider" class="com.github.themetalone.pandemic.simulation.healthState.HealthStateProvider">
+    <constructor-arg index="0">
+      <list>
+        <!-- Population A -->
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="0"></constructor-arg>
+          <constructor-arg index="1" value="0"></constructor-arg>
+          <constructor-arg index="2" value="A.S"></constructor-arg>
+          <constructor-arg index="3" value="1000"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="0"></constructor-arg>
+          <constructor-arg index="1" value="1"></constructor-arg>
+          <constructor-arg index="2" value="A.E"></constructor-arg>
+          <constructor-arg index="3" value="10"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="0"></constructor-arg>
+          <constructor-arg index="1" value="2"></constructor-arg>
+          <constructor-arg index="2" value="A.I"></constructor-arg>
+          <constructor-arg index="3" value="0"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="0"></constructor-arg>
+          <constructor-arg index="1" value="3"></constructor-arg>
+          <constructor-arg index="2" value="A.R"></constructor-arg>
+          <constructor-arg index="3" value="0"></constructor-arg>
+        </bean>
+        <!-- Population B -->
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="1"></constructor-arg>
+          <constructor-arg index="1" value="0"></constructor-arg>
+          <constructor-arg index="2" value="B.S"></constructor-arg>
+          <constructor-arg index="3" value="2000"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="1"></constructor-arg>
+          <constructor-arg index="1" value="1"></constructor-arg>
+          <constructor-arg index="2" value="B.E"></constructor-arg>
+          <constructor-arg index="3" value="0"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="1"></constructor-arg>
+          <constructor-arg index="1" value="2"></constructor-arg>
+          <constructor-arg index="2" value="B.I"></constructor-arg>
+          <constructor-arg index="3" value="0"></constructor-arg>
+        </bean>
+        <bean class="com.github.themetalone.pandemic.simulation.healthState.SimpleHealthState">
+          <constructor-arg index="0" value="1"></constructor-arg>
+          <constructor-arg index="1" value="3"></constructor-arg>
+          <constructor-arg index="2" value="B.R"></constructor-arg>
+          <constructor-arg index="3" value="0"></constructor-arg>
+        </bean>
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="tprovider" name="TransmissionProvider" class="com.github.themetalone.pandemic.simulation.transmission.TransmissionProvider">
+    <constructor-arg index="0">
+      <list>
+        <!-- TODO TRANSMISSIONS -->
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="dwprovider" name="DataWriterProvider" class="com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider">
+    <constructor-arg index="0">
+      <bean id="dw" name="DataWriter" class="com.github.themetalone.pandemic.simulation.data.H2SqlPandemicSimulationDataWriter">
+        <constructor-arg index="0">
+          <bean id="sqlconnector" name="SQLConnector" clas="com.github.themetalone.pandemic.utils.data.H2SQLConnector">
+            <constructor-arg ref="datalocation"></constructor-arg>
+          </bean>
+        </constructor-arg>
+        <constructor-arg index="1" ref="batchsize"></constructor-arg>
+      </bean>
+    </constructor-arg>
+  </bean>
+</beans>

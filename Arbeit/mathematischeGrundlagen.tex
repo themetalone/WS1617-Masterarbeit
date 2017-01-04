@@ -149,14 +149,14 @@ Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}
 	\node[state] (I')[below of=I]	{I'};
 	\node[state] (R')[below of=R]	{R'};
 	\path 	(S)	edge node {$\lambda SE + \beta SI$} 	(E)
-				edge [bend left] node {$\tau S$}					(S')
+				edge [bend left] node {$T^{P,P'}$}					(S')
 			(E)	edge node {$\gamma E$}					(I)
-				edge [bend left] node {$\tau E$}					(E')
+				edge [bend left] node {$T^{P,P'}$}					(E')
 			(I)	edge node {$\delta I$}					(R)
 			(S')edge node {$\lambda S'E' + \beta S'I'$}(E')
-				edge [bend left] node {$\pi S'$}					(S)
+				edge [bend left] node {$T^{P',P}$}					(S)
 			(E')edge node {$\gamma E'$}					(I')
-				edge [bend left] node {$\pi E'$}					(E)
+				edge [bend left] node {$T^{P',P}$}					(E)
 			(I')edge node {$\delta I'$}					(R');
 	
 \end{tikzpicture}
@@ -168,16 +168,23 @@ Stünde in diesem Beispiel jede Population für ein Land, würden die gleichen �
 
 In Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} wird jeweils ein Faktor für die äußeren Kanten von $P$ nach $P'$ ($\tau$) und einer für die Gegenrichtung ($\pi$) verwendet. Dieser Faktor wird im Folgenden als Reisefaktor bezeichnet und ist zwischen zwei Populationen für alle Subpopulationen gleich. Da in unserem Modell nur symptomfreie Individuen reisen, haben Individuen der \emph{E}-Subpopulation keinen Grund weniger zu reisen als die Individuen der \emph{S}-Subpopulation. Eine Verallgemeinerung auf subpopulationsabhängige Reisefaktoren ist jedoch nicht ausgeschlossen. 
 
+Das Volument einer Reisekante von Population $A$ nach Population $B$ wird beschrieben mit
+\begin{align}
+	T^{A,B} = T^{A,B}_{s} \cdot T^{A,B}_{d}. 
+\end{align}
+$T^{A,B}_s$ beschreibt dabei den Einfluss statischer Gegebenheiten auf das Reisevolumen und $T^{A,B}_d$ eine Skalierung, die die dynamischen Gegebenheiten darstellt. Die Gründe für den Austausch von Individuen zwischen zwei Populationen sind im Allgemeinen Migration, Tourismus und Beruf. Im Falle einer tötlichen Krankheit kann auch noch die Flucht vor dieser Krankheit ein Reisegrund sein. Verbleibt ein Individuum in der Zielpopulation, also im Falle von Migration oder Flucht, ist die Integration dieses Falles in das \emph{SIR}-Modell einfach, da es ähnlich zum Übergang von einem Krankheitszustand zum nächsten. Im Falle von Tourismus und Beruf, in dem die Individuen periodisch zu ihrer Startpopulation zurückkehren, ist die Integration hingegen schwierig. Die \emph{SIR}-Modelle sind gedächtnislos; die Berechnung des nächsten Simulationsschrittes ist nur abhängig von den aktuellen Größen der Subpopulationen. Diese Eigenschaft ist sowohl für den Schuleinsatz als auch allgemein für eine Simulation von Vorteil. So ist beispielsweise der benötigte Speicherplatz für die Berechnung eines Simulationsschrittes natürlich geringer. Vor allem mit dem Schuleinsatz im Fokus soll diese Eigenschaft erhalten bleiben. Um die Gedächtnislosigkeit zu erhalten und gleichzeitig Tourismus und Pendelberufe zu simulieren, wäre folgender Ansatz möglich.
 
+Jede Population \emph{P} erhält für jede reisende Subpopulation $Y$ (in unserem Fall \emph{S} und \emph{E}) und jede besuchende Nachbarpopulation \emph{X} eine zusätzliche Subpopulation $P.Y^X_T$, die als Ziel für alle Reisenden aus $X$ nach $P$ dient. Somit \emph{konserviert} man die Information, wieviele Individuen im aktuellen Zeitschritt von \emph{X} nach \emph{P} gereist sind. $P.Y^X_T$ erhält eine Reisekante zurück nach $X.Y$ mit einem Volumentfaktor von 1. Alle Reisenden kehren also einen Simulationsschritt nach Ankunft wieder in ihr Ursprungsland zurück. Die inneren Kanten müssen dahingehend angepasst werden, dass die Individuen in den Reisesubpopulationen in die Kantenvolumen eingerechnet werden. Weitherin müssen innere Kanten, also Krankheitszustandsübergange, zwischen den Reisepopulationen hinzugefügt werden, um eine Ansteckung im Zielland zu ermöglichen. So sind dann Tourismus und Berufspendeln gedächtnislos in das Modell integriert. Nur ``erkauft'' man sich diese Integration bei $n$ Populationen mit insgesamt $2n^2-2n$ zusätzlichen Subpopulationen und wenn im weiteren Verlauf der Arbeit die Reisewege noch nach Art aufgeteilt werden vervielfacht sich diese Zahl weiter. Dieser quadratische Anstieg an Subpopulationen macht das Modell unhandlich bis unbrauchbar bei großen Simulationen. Möchte man beispielsweise den Verlauf des letzten Ebolaausbruches in ganz Afrika (54 Länder) simulieren erhält man in dem von uns beschriebenen \emph{SEIHFRD}-Modell $378$ Subpopulationen. Wendet man nun die Tourismuserweiterung darauf an, erhält man in jeder Population $2\cdot 53$ Subpopulationen dazu, was zu insgesamt $6102$ Subpopulationen führt. 
 
-\hrule
-\begin{itemize}
-	\item Aufbauend auf dem beschriebenen SIR Modell in \ref{ssec:spa}
-	\item Verwendung eines Netzwerkes
-	\item Jeder Knoten ist eine Zustandspopulation (Terminus festlegen). Jede Kante beschreibt einen Fluss von einem Knoten zu einem Anderen.
-	\item eine SIR Population ist demnach ein Subnetz
-	\item Knoten sind nie negativ. 
-	\item diskrete Zeitschritte
-	\item Simulation von Geschlpssenen Flughäfen entspricht entfernen von Kanten
-	\item Simulation von Quarantäne entspricht zusätzliche Knoten, die nur S,E,R durchlassen
-\end{itemize}
+Dieser Zusatz an zu verwaltenden Subpopoulationen erscheint als zu hoch für den modellierten Aspekt (\textbf{REF?}), weswegen er in das hier beschriebene Modell nicht aufgenommen wird. Es wird also nur die Migration und die Flucht vor einer Epidemie modelliert. Beginnen wir mit der Migration. 
+
+Das Migrationsvolumen wird berechnet mit
+\begin{align}
+	T^{A,B}_{Mig} = f_{att}(A,B)\cdot f_{Mig}(A).
+\end{align}
+Dabei ist $f_{att}(A,B) \in [0,1]$ der Anteil der emigrierenden Individuen aus $A$ nach $B$. Für alle Populationen $A$ gilt dabei immer
+\begin{align}
+	\sum\limits_{X \text{ Population } \& X\neq A} f_{att}(A,X) = 1
+\end{align}
+
+Der Faktor $f_{Mig}(A)$ beschreibt den Anteil der Bevölkerung von $A$, der in der Lage ist zu migrieren. 

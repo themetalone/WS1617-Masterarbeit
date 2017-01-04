@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://github.com/themetalone/simpleconfig" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scfg="http://github.com/themetalone/simpleconfig">
+
+    <element name="simulation">
+      <complexType>
+        <sequence>
+          <element name="standards">
+            <complexType>
+              <sequence>
+                <all><element name="uebertragung" type="scfg:innereuebertragungtyp" minOccurs="0" maxOccurs="unbounded"></element><element name="subpopulation" type="scfg:subpopulationComplexType" minOccurs="0" maxOccurs="unbounded">
+                </element></all>
+              </sequence>
+
+
+            </complexType>
+          </element>
+          <element name="population" maxOccurs="unbounded" minOccurs="1">
+            <complexType>
+              <sequence>
+                <element name="subpopulation" maxOccurs="unbounded" minOccurs="0" type="scfg:subpopulationComplexType">
+                </element>
+                <element name="uebertragung" type="scfg:innereuebertragungtyp" maxOccurs="unbounded" minOccurs="0"></element>
+              </sequence>
+              <attribute name="name" type="string"></attribute>
+              <attribute name="erweiterung" type="string"></attribute>
+            </complexType>
+          </element>
+          <element name="reise-wege"><complexType></complexType></element>
+        </sequence>
+        <attribute name="zeit" use="required">
+          <simpleType>
+            <restriction base="int">
+              <minExclusive value="0"></minExclusive>
+            </restriction>
+          </simpleType>
+        </attribute>
+        <attribute name="puffer" use="optional" default="1000">
+          <simpleType>
+            <restriction base="int">
+              <minExclusive value="0"></minExclusive>
+            </restriction>
+          </simpleType>
+        </attribute>
+        <attribute name="datenbank" type="string" use="required"></attribute>
+        <attribute name="modell" use="optional" default="SEIR">
+          <simpleType>
+            <restriction base="string">
+              <pattern value="SE?IH?F?D?RQ?"></pattern>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </complexType></element>
+
+    <complexType name="innereuebertragungtyp">
+      <sequence>
+        <element name="komponente" minOccurs="1" maxOccurs="unbounded">
+          <complexType>
+            <sequence>
+              <element name="subpopulation" minOccurs="1" maxOccurs="unbounded">
+                <simpleType>
+                  <restriction base="string">
+                    <pattern value="(S|E|I|R|H|F|QS|QE|D|R)"></pattern>
+                  </restriction>
+                </simpleType>
+              </element>
+            </sequence>
+            <attribute name="skalierung" type="double" default="1"></attribute>
+          </complexType></element>
+      </sequence>
+      <attribute name="von">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="(S|E|I|R|H|F|QS|QE|D|R)"></pattern>
+          </restriction>
+        </simpleType>
+      </attribute>
+      <attribute name="nach">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="(S|E|I|R|H|F|QS|QE|D|R)"></pattern>
+          </restriction>
+        </simpleType>
+      </attribute>
+    </complexType>
+
+    <complexType name="subpopulationComplexType">
+      <attribute use="required" name="name">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="(S|E|I|R|H|F|QS|QE|D|R)"></pattern>
+          </restriction>
+        </simpleType>
+      </attribute>
+      <attribute use="required" name="groesse" type="int"></attribute>
+    </complexType>
+</schema>

@@ -8,6 +8,10 @@ public class PandemicSimulationDataWriterProvider {
 
   private static PandemicSimulationDataWriter writer;
 
+  public PandemicSimulationDataWriterProvider(PandemicSimulationDataWriter writer) {
+    PandemicSimulationDataWriterProvider.writer = writer;
+  }
+
   /**
    * @return instance
    */

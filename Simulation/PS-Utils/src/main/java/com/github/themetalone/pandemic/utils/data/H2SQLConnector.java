@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Observable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author steffen
  *
@@ -14,17 +17,28 @@ public class H2SQLConnector implements SQLConnector {
 
   private Connection connection;
 
+  private final String jdbcPrefix = "jdbc:h2";
+
+  private final String jdbcUrl;
+
+  private final String jdbcDriver = "org.h2.Driver";
+
+  private static final Logger LOG = LoggerFactory.getLogger(SQLConnector.class);
+
+  private final String user = "simulation";
+
+  private final String pw = "simulation";
+
   /**
    * The constructor.
    */
   public H2SQLConnector(String location) {
 
-    String jdbcPrefix = "jdbc:h2";
-    String jdbcUrl = jdbcPrefix + ":" + location + ";MV_STORE=FALSE;MVCC=FALSE";
+    LOG.info("Using H2SQLConnector with database @ {}", location);
+    this.jdbcUrl = this.jdbcPrefix + ":" + location + ";MV_STORE=FALSE;MVCC=FALSE";
     try {
-      String jdbcDriver = "org.h2.Driver";
-      Class.forName(jdbcDriver);
-      Connection initConnection = DriverManager.getConnection(jdbcUrl, "", "");
+      Class.forName(this.jdbcDriver);
+      Connection initConnection = DriverManager.getConnection(this.jdbcUrl, "", "");
       Statement stmnt = initConnection.createStatement();
       stmnt.addBatch("CREATE USER IF NOT EXISTS simulation PASSWORD 'simulation' ADMIN");
       stmnt.addBatch("CREATE SCHEMA IF NOT EXISTS PANDEMIC AUTHORIZATION simulation");
@@ -53,9 +67,9 @@ public class H2SQLConnector implements SQLConnector {
 
       stmnt.executeBatch();
       stmnt.close();
-      this.connection = DriverManager.getConnection(jdbcUrl, "simulation", "simulation");
+      this.connection = DriverManager.getConnection(this.jdbcUrl, this.user, this.pw);
     } catch (ClassNotFoundException e) {
-      throw new Error("Could not load h2sql driver!\n Fallback to Logger");
+      throw new Error("Could not load h2sql driver!", e);
     } catch (SQLException e) {
       throw new Error("Encountered a SQLException:" + e.getMessage(), e);
     }
@@ -65,13 +79,18 @@ public class H2SQLConnector implements SQLConnector {
   @Override
   public void update(Observable arg0, Object arg1) {
 
-    // TODO Auto-generated method stub
-
   }
 
   @Override
   public Connection getConnection() {
 
+    try {
+      if (this.connection == null || this.connection.isClosed()) {
+        this.connection = DriverManager.getConnection(this.jdbcUrl, this.user, this.pw);
+      }
+    } catch (SQLException e) {
+      throw new Error("Encountered a SQLException:" + e.getMessage(), e);
+    }
     return this.connection;
   }
 
