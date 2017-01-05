@@ -106,5 +106,35 @@ Dabei ist $f_{att}(A,B) \in [0,1]$ der Anteil der emigrierenden Individuen aus $
 \begin{align}
 	\sum\limits_{X \text{ Population } \& X\neq A} f_{att}(A,X) = 1
 \end{align}
+Der Faktor $M_A$ beschreibt den Anteil der Bevölkerung von $A$, der in der Lage ist zu migrieren. Über dein Zeitraum der Simulation wird dieser als konstant angenommen. Da Tourismus und internationales Berufspendeln ausgenommen sind, ist der Migragrationsfaktor bereits der statische Reisefaktor $T^{A,B}_s$. Somit sind die Gründe modelliert, aus denen ein Individuum von einer Population in eine andere übersiedeln möchte. Der Einfluss einer Epidemie ist dabei aber noch unberücksichtigt. 
 
-Der Faktor $M_A$ beschreibt den Anteil der Bevölkerung von $A$, der in der Lage ist zu migrieren. Über dein Zeitraum der Simulation wird dieser als konstant angenommen. 
+Modelliert man eine gefährliche Krankheit wie das Ebolavirus, wirkt sich deren Verbreitung innerhalb von Populationen auf das Reiseverhalten aus. Wüted eine solche Krankheit in der eigenen Population wird sich ein größerer Anteil der Population eher für die Migration entscheiden, als dies ohne Epidemie der Fall wäre. Gleichzeitig wird eine solche Population auch weniger Immigration erfahren, da sich Individuen aus weniger betroffenen Populationen eher nicht der Gefahr einer Infektion aussetzen. Wir definieren den dynamischen Reisefaktor als
+\begin{align}
+	T^{A,B}_d =& f_{inf}(i_A,i_B, \sigma)&\text{mit}\\
+	f_{inf}(i_A,i_B,\sigma) \in& \mathbb{R}^+&\text{der Infektionseinschätzung von A bzgl. B,}\\
+	i_X =& \frac{|X.I|}{|X|}&\text{dem Infektionsquotienten und}\\
+	\sigma \geq&1 & \text{die Schwere der Krankheit}
+\end{align}
+In dem erweiterten \emph{SEIHFRD}-Modell (siehe Abbildung \ref{fig:ssec:model}) berechnet sich der der Infektionsquotient via 
+\begin{align}
+	i_X = \frac{|X.I|+|X.H|}{|X| - |X.D|}.
+\end{align}
+Der Infektionsquotient beschreibt die Wahrnehmung der Ausbreitung einer Krankheit innerhalb einer Population. Die \emph{Infektionseinschätzung} $f_{inf}$ von $A$ bezüglich $B$ hängt von den Infektionsquotienten von $A$ und $B$ ab. Ist $i_A = i_B$, wird die Infektion innerhalb der Zielpopulation also so schwer wie in der Ausgangspopulation wahrgenommen, wirkt die Krankheit weder beschleunigend noch bremsend auf die Migration. Es ist somit $f_{inf}(i_A,i_B,\sigma)=1$, unabhängig von der schwere der Krankheit. $f_{inf}$ kann beliebig komplex gewählt werden. Dabei sollten jedoch die folgenden Eigenschaften gelten:
+\begin{align}
+	\forall x, y \in [0,1], \sigma \geq 1 & \nonumber\\
+		& f_{inf}(x,x,\sigma) = 1\\
+		& f_{inf}(x,y,\sigma) \geq 0\\
+		& x < y \Rightarrow f_{inf}(x,y,\sigma) < 1 \label{eq:ssec:multiPop:infRisklow}\\
+		& x > y \Rightarrow f_{inf}(x,y,\sigma) > 1 \label{eq:ssec:multiPop:infRiskhigh}
+\end{align}
+Die Eigenschaft aus Gleichung \ref{eq:ssec:multiPop:infRisklow} beschreibt die Dämpfung der Migration, wenn in der Zielpopulation die zu simulierende Krankheit bereits vebreiteter ist, als in der Ausgangspopulation. Gleichung \ref{eq:ssec:multiPop:infRiskhigh} beschreibt analog die Migration in eine \emph{gesündere} Zielpopulation.
+
+Für dieses Modell wählen wir
+\begin{align}
+	f_{inf} :& [0,1]\times [0,1] \times \mathbb{R}_{\geq 1} \rightarrow  \mathbb{R}^+\\
+			 & (i_A,i_B,\sigma)\longmapsto								 \left( \frac{i_A}{i_B}\right)^\sigma\nonumber
+\end{align}
+Zusammenfassend erhält man also für das Reisevolumen von $A$ nach $B$:
+\begin{align}
+	T^{A,B} = f_{att}(A,B)\cdot M_A \cdot \left(\frac{i_A}{i_B}\right)^\sigma
+\end{align}
