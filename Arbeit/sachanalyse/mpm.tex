@@ -1,15 +1,110 @@
-\steffen
-Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert.
+Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert. Für die eigentliche Erweiterung des Modells wird sich auf eine \emph{SIR}-Modellierung beschränkt und zusätzliche Subpopulationen erst bei Bedarf in Betracht gezogen.
+\subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
+\cite{Capasso1978} beschreiben in ihrer Arbeit ein Infektionsmodell, mit dem sich die Ausbreitung einer Infektionskrankheit in einer isolierten Stadt beschreiben lässt. Im Gegensatz zu den SIR-Modellen werden in diesem Modell die Individuen direkt simuliert. Innerhalb der Population werden die Individuen in sogenannten \emph{Mixing Groups} zusammengefasst, in denen sich die Individuen untereinander anstecken können. Je nach Interpretation repräsentieren die \emph{Mixing Groups} Haushalte, Schulklassen, Arbeitsplätze oder Krankenhausabteilungen. Jedes Individuum hat dabei eine fest zugeteilte Haushalts- und Beschäftigungs-Gruppe, zwischen denen im Laufe eines Tages gependelt wird. Dies entspricht dem Arbeits- beziehungsweise dem Schulalltag der Individuen.
 
-\begin{description}
-	\item[\cite{Capasso1978}] Behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
-\item[\cite{Sattenspiel1995}] Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell\end{description}
+Für die Modellierung der Krankheit werden die drei grundlegenden Zustände \emph{infizierbar}, \emph{infiziert} und \emph{immunisiert}. Die \emph{Infizierten} unterteilen sich noch zusätzlich in die mit Symptomen und die ohne. Damit ist diese Modellierung äquivalent zu der eines \emph{SEIR}-Modells.
 
-\begin{itemize}
-	\item Aufbauend auf dem beschriebenen SIR Modell in \ref{ssec:spa}
-	\item Verwendung eines Netzwerkes
-	\item Jeder Knoten ist eine Zustandspopulation (Terminus festlegen). Jede Kante beschreibt einen Fluss von einem Knoten zu einem Anderen.
-	\item eine SIR Population ist demnach ein Subnetz
-	\item Knoten sind nie negativ. 
-	\item diskrete Zeitschritte
-\end{itemize}
+
+behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
+\subsubsection{Erweiterung des SIR-Modells}
+\cite{Sattenspiel1995} Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell
+
+\subsubsection{Vom SIR-Modell zur Netzwerksbasierten Pandemie-Simulation}
+Für die Simulation einer Pandemie wird der Netzwerksansatz von \citep{Capasso1978} mit der Erweiterung des SIR-Modells von \citep{Sattenspiel1995} kombiniert. 
+
+Sei 
+\begin{align}
+	P=&\lbrace H, D\rbrace \text{ mit}\label{eq:ssec:multiPop:SIRBegin}\\
+	H=&\lbrace S, I, R\rbrace\\
+	D=&\lbrace \Delta S= -\lambda SI, \Delta I = \lambda SI - \mu I, \Delta R = \mu I   \rbrace \label{eq:ssec:multiPop:SIREnd}
+\end{align}
+eine zeitdiskrete SIR-Population. In der folgenden Beschreibung der Pandemie mit einem Netzwerksmodell werden die Subpopulationen der verschiedenen Infektionsstadien mit den Knoten eines gerichteten Netzwerkes identifiziert. Die Knoten enthalten somit auch immer die aktuelle Größe der Subpopulation. Die Kanten werden aus den Änderungsraten gebildet. 
+
+Da die Summe der Subpopulationen inklusive der \emph{R}-Subpopulation zeitinvariant ist gilt, dass es für jeden positiven Summanden in einer Änderungsrate einen betragsmäßig gleichen aber negativen Summanden in einer anderen Änderungsrate gibt. Für die bisher betrachteten \emph{SIR}-Modelle ist dieser Zusammenhang leicht zu sehen:
+\begin{align}
+	\Delta S & = -\lambda IS & \\
+	\Delta I & = \lambda IS & - \mu I \\
+	\Delta R & = & \mu I
+\end{align}
+
+Die Subpopulation mit dem negativen Summanden in ihrer Änderungsrate wird als Quelle bezeichnet, die mit dem positiven als Senke oder Ziel. So lässt sich die Beziehung zwischen beiden Subpopulationen als Netzwerk mit 2 Knoten und einer gerichteten Kante darstellen (siehe Abbildung \ref{fig:ssec:multiPop:simpleDirectedEdge}) und als ``Abwandern'' von Individuen aus der Quell-Subpopulation in die Senken-Subpopulation interpretieren. Die Menge an Individuen, die entlang der Kante abwandert, nennen wir das \emph{Volumen} der Kante. 
+
+\begin{figure}
+\begin{center}\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
+	\node[state] (S)				{S};
+	\node[state] (I) [right of=S]	{I};
+	
+	\path (S) edge node {$\lambda SI$} (I);
+\end{tikzpicture}\end{center}
+\caption{Beispiel einer Quelle-Senke Relation zwischen zwei Subpopulationen.}\label{fig:ssec:multiPop:simpleDirectedEdge}
+\end{figure}
+
+Mit der soeben beschriebenen Transformation lässt sich das bekannte \emph{SIR}-Modell nun als Netzwerk darstellen. Für das \emph{SIR}-Modell in Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd} wird das Netzwerk in Abbildung \ref{fig:ssec:multiPop:SIRNet} dargestellt.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
+	\node[state] (S)				{S};
+	\node[state] (I) [right of=S]	{I};
+	\node[state] (R) [right of=I]	{R};
+	\path 	(S) edge node {$\lambda SI$}	(I)
+			(I) edge node {$\mu I$}			(R);
+\end{tikzpicture}
+\end{center}
+\caption{Netzwerkdarstellung von Gleichung \ref{eq:ssec:multiPop:SIRBegin} - \ref{eq:ssec:multiPop:SIREnd}}\label{fig:ssec:multiPop:SIRNet}
+\end{figure}
+
+Die Erweiterung der Modellierung auf multiple, miteinander interagierende Populationen wird nun mit der Erweiterung des Netzwerkes um weitere Populationen sowie zusätzlichen Kanten zwischen den Populationen erreicht. Mit der Motivation der Modellierung im Hinterkopf wird im Folgenden von einem \emph{SEIR}-Modell ausgegangen. In \cite{Sattenspiel1995} wird eine Interaktion zwischen den Populationen uniform modelliert. Jede Subpopulation hat die gleiche Reiserate. Dieser Ansatz modelliert aber an der Realität vorbei. Je nach zu simulierender Krankheit sind Infizierte mit Symptomen (Subpopulation \emph{I}) körperlich nicht mehr in der Lage zu reisen oder werden, auf Grund ihrer offensichtlichen Krankheit, auf gewissen Transportwegen nicht mehr befördert. Dies gielt beispielsweie für Flugzeuge oder Schiffe, bei denen die Passagiere gemeinsam auf einem engen, abgeschlossenen Raum miteinander interagieren. Unter dieser Prämisse wäre ein \emph{SIR}-Modell zur Beschreibung von Pandemien nicht sinnvoll. Es würde nur ein Austausch zwischen den verschiedenen \emph{S}-Populationen stattfinden und Infizierte würden keine Nachbarpopulationen kontaminieren.  Durch die Hinzunahme einer \emph{E}-Population, in der die nichtsymptomatischen Infizierten zusammengefasst werden, wird das Kontaminationsproblem gelöst, da diese Individuen die Krankheit durch alle Transportwege in andere Populationen tragen können. 
+
+Für das Populationsnetzwerk bedeutet dies, dass jeweils zwischen allen \emph{S}-Subpopulationen und allen \emph{E}-Subpopulationen Kanten dem Netzwerk hinzugefügt werden, die den Fluss zwischen den Subpopulationen beschreiben. Für ein besseres Verständnis wird im Folgenden zwischen inneren und äußeren Kanten unterschieden. Die inneren Kanten beschreiben die Kanten innerhalb einer Population und die äußeren die Interaktion zwischen den Populationen. Für die weitere Modellierung einer Pandemie wird angenommen, dass die Infizierte mit Symptomen nicht reisen. Zudem werden die Interaktionen zwischen den \emph{R}-Subpopulationen nicht modelliert, da diese für die Betrachtung einer Krankheit keine Bedeutung mehr haben und hauptsächlich als ``Endlager'' für Individuen dienen, die nicht mehr durch die Krankheit beeinflusst werden können (zum Beispiel durch Immunisierung oder Tod). Für zwei \emph{SEIR}-Populationen $P$ und $P'$ ist das Netzwerk in Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} dargestellt. 
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3.5cm]
+	\node[state] (S)				{S};
+	\node[state] (E) [right of=S]	{E};
+	\node[state] (I) [right of=E]	{I};
+	\node[state] (R) [right of=I]	{R};
+	\node[state] (S')[below of=S]	{S'};
+	\node[state] (E')[below of=E]	{E'};
+	\node[state] (I')[below of=I]	{I'};
+	\node[state] (R')[below of=R]	{R'};
+	\path 	(S)	edge node {$\lambda SE + \beta SI$} 	(E)
+				edge [bend left] node {$T^{P,P'}$}					(S')
+			(E)	edge node {$\gamma E$}					(I)
+				edge [bend left] node {$T^{P,P'}$}					(E')
+			(I)	edge node {$\delta I$}					(R)
+			(S')edge node {$\lambda S'E' + \beta S'I'$}(E')
+				edge [bend left] node {$T^{P',P}$}					(S)
+			(E')edge node {$\gamma E'$}					(I')
+				edge [bend left] node {$T^{P',P}$}					(E)
+			(I')edge node {$\delta I'$}					(R');
+	
+\end{tikzpicture}
+\end{center}
+\caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen mit gleichen Übergangskoeffizienten}\label{fig:ssec:multiPop:2interactingSEIR}
+\end{figure}
+
+Stünde in diesem Beispiel jede Population für ein Land, würden die gleichen Übertragungsfaktoren ($\alpha, \beta, \gamma, \delta$) auf ähnliche Strukturen in der Behandlung von Krankheiten hinweisen. 
+
+In Abbildung \ref{fig:ssec:multiPop:2interactingSEIR} wird jeweils ein Faktor für die äußeren Kanten von $P$ nach $P'$ ($\tau$) und einer für die Gegenrichtung ($\pi$) verwendet. Dieser Faktor wird im Folgenden als Reisefaktor bezeichnet und ist zwischen zwei Populationen für alle Subpopulationen gleich. Da in unserem Modell nur symptomfreie Individuen reisen, haben Individuen der \emph{E}-Subpopulation keinen Grund weniger zu reisen als die Individuen der \emph{S}-Subpopulation. Eine Verallgemeinerung auf subpopulationsabhängige Reisefaktoren ist jedoch nicht ausgeschlossen. 
+
+Das Volument einer Reisekante von Population $A$ nach Population $B$ wird beschrieben mit
+\begin{align}
+	T^{A,B} = T^{A,B}_{s} \cdot T^{A,B}_{d}. 
+\end{align}
+$T^{A,B}_s$ beschreibt dabei den Einfluss statischer Gegebenheiten auf das Reisevolumen und $T^{A,B}_d$ eine Skalierung, die die dynamischen Gegebenheiten darstellt. Die Gründe für den Austausch von Individuen zwischen zwei Populationen sind im Allgemeinen Migration, Tourismus und Beruf. Im Falle einer tötlichen Krankheit kann auch noch die Flucht vor dieser Krankheit ein Reisegrund sein. Verbleibt ein Individuum in der Zielpopulation, also im Falle von Migration oder Flucht, ist die Integration dieses Falles in das \emph{SIR}-Modell einfach, da es ähnlich zum Übergang von einem Krankheitszustand zum nächsten. Im Falle von Tourismus und Beruf, in dem die Individuen periodisch zu ihrer Startpopulation zurückkehren, ist die Integration hingegen schwierig. Die \emph{SIR}-Modelle sind gedächtnislos; die Berechnung des nächsten Simulationsschrittes ist nur abhängig von den aktuellen Größen der Subpopulationen. Diese Eigenschaft ist sowohl für den Schuleinsatz als auch allgemein für eine Simulation von Vorteil. So ist beispielsweise der benötigte Speicherplatz für die Berechnung eines Simulationsschrittes natürlich geringer. Vor allem mit dem Schuleinsatz im Fokus soll diese Eigenschaft erhalten bleiben. Um die Gedächtnislosigkeit zu erhalten und gleichzeitig Tourismus und Pendelberufe zu simulieren, wäre folgender Ansatz möglich.
+
+Jede Population \emph{P} erhält für jede reisende Subpopulation $Y$ (in unserem Fall \emph{S} und \emph{E}) und jede besuchende Nachbarpopulation \emph{X} eine zusätzliche Subpopulation $P.Y^X_T$, die als Ziel für alle Reisenden aus $X$ nach $P$ dient. Somit \emph{konserviert} man die Information, wieviele Individuen im aktuellen Zeitschritt von \emph{X} nach \emph{P} gereist sind. $P.Y^X_T$ erhält eine Reisekante zurück nach $X.Y$ mit einem Volumentfaktor von 1. Alle Reisenden kehren also einen Simulationsschritt nach Ankunft wieder in ihr Ursprungsland zurück. Die inneren Kanten müssen dahingehend angepasst werden, dass die Individuen in den Reisesubpopulationen in die Kantenvolumen eingerechnet werden. Weitherin müssen innere Kanten, also Krankheitszustandsübergange, zwischen den Reisepopulationen hinzugefügt werden, um eine Ansteckung im Zielland zu ermöglichen. So sind dann Tourismus und Berufspendeln gedächtnislos in das Modell integriert. Nur ``erkauft'' man sich diese Integration bei $n$ Populationen mit insgesamt $2n^2-2n$ zusätzlichen Subpopulationen und wenn im weiteren Verlauf der Arbeit die Reisewege noch nach Art aufgeteilt werden vervielfacht sich diese Zahl weiter. Dieser quadratische Anstieg an Subpopulationen macht das Modell unhandlich bis unbrauchbar bei großen Simulationen. Möchte man beispielsweise den Verlauf des letzten Ebolaausbruches in ganz Afrika (54 Länder) simulieren erhält man in dem von uns beschriebenen \emph{SEIHFRD}-Modell $378$ Subpopulationen. Wendet man nun die Tourismuserweiterung darauf an, erhält man in jeder Population $2\cdot 53$ Subpopulationen dazu, was zu insgesamt $6102$ Subpopulationen führt. 
+
+Dieser Zusatz an zu verwaltenden Subpopoulationen erscheint als zu hoch für den modellierten Aspekt (\textbf{REF?}), weswegen er in das hier beschriebene Modell nicht aufgenommen wird. Es wird also nur die Migration und die Flucht vor einer Epidemie modelliert. Beginnen wir mit der Migration. 
+
+Das Migrationsvolumen wird berechnet mit
+\begin{align}
+	T^{A,B}_s=T^{A,B}_{Mig} = f_{att}(A,B)\cdot M_A.
+\end{align}
+Dabei ist $f_{att}(A,B) \in [0,1]$ der Anteil der emigrierenden Individuen aus $A$ nach $B$. Für alle Populationen $A$ gilt dabei immer
+\begin{align}
+	\sum\limits_{X \text{ Population } \& X\neq A} f_{att}(A,X) = 1
+\end{align}
+
+Der Faktor $M_A$ beschreibt den Anteil der Bevölkerung von $A$, der in der Lage ist zu migrieren. Über dein Zeitraum der Simulation wird dieser als konstant angenommen. 
