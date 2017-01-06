@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
-import com.github.themetalone.pandemic.simulation.healthState.HealthStateIdentifier;
 import com.github.themetalone.pandemic.simulation.healthState.HealthStateProvider;
 import com.github.themetalone.pandemic.simulation.transmission.components.TransmissionComponent;
 
@@ -12,13 +11,7 @@ import com.github.themetalone.pandemic.simulation.transmission.components.Transm
  * @author steffen
  *
  */
-public class TransmissionImpl implements Transmission {
-
-  private final TransmissionIdentifier ID;
-
-  private long tick;
-
-  private final int priority;
+public class InnerTransmission extends TransmissionParent {
 
   private final Collection<TransmissionComponent> COMPONENTS;
 
@@ -35,29 +28,10 @@ public class TransmissionImpl implements Transmission {
    * @param priority low values are executed first
    * @param components {@link Collection}&lt;{@link TransmissionComponent}> the components of this transmission
    */
-  public TransmissionImpl(int srcPopId, int srcHsId, int trgtPopId, int trgtHsId, int type, int priority,
+  public InnerTransmission(int srcPopId, int srcHsId, int trgtPopId, int trgtHsId, int type, int priority,
       Collection<TransmissionComponent> components) {
-    this.ID = new TransmissionIdentifier(srcPopId, srcHsId, trgtPopId, trgtHsId, type);
-    this.priority = priority;
+    super(srcPopId, srcHsId, trgtPopId, trgtHsId, type, priority);
     this.COMPONENTS = components;
-  }
-
-  @Override
-  public TransmissionIdentifier getIdentifier() {
-
-    return this.ID;
-  }
-
-  @Override
-  public HealthStateIdentifier getSource() {
-
-    return this.ID.SOURCE;
-  }
-
-  @Override
-  public HealthStateIdentifier getTarget() {
-
-    return this.ID.TARGET;
   }
 
   @Override
@@ -86,33 +60,12 @@ public class TransmissionImpl implements Transmission {
 
   }
 
-  @Override
-  public void setTick(long tick) {
-
-    this.tick = tick;
-  }
-
   /**
    * @return the summed up value of all components
    */
   protected long getValue() {
 
     return this.COMPONENTS.parallelStream().mapToLong(TransmissionComponent::getValue).sum();
-  }
-
-  /**
-   * @return priority
-   */
-  @Override
-  public int getPriority() {
-
-    return this.priority;
-  }
-
-  @Override
-  public int compareTo(Transmission o) {
-
-    return this.priority - o.getPriority();
   }
 
 }

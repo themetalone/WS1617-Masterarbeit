@@ -5,21 +5,36 @@
 Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-Generiert: 2016.12.30 um 04:59:48 PM CET 
+Generiert: 2017.01.06 um 11:17:49 AM CET 
 
   -->
   <bindings scd="x-schema::tns" xmlns:tns="http://github.com/themetalone/simpleconfig">
     <schemaBindings map="false">
       <package name="com.github.themetalone.pandemic.utils.generated"/>
     </schemaBindings>
-    <bindings scd="tns:simulation">
-      <class ref="com.github.themetalone.pandemic.utils.generated.Simulation"/>
+    <bindings scd="~tns:simulationType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.SimulationType"/>
     </bindings>
-    <bindings scd="~tns:innereuebertragungtyp">
-      <class ref="com.github.themetalone.pandemic.utils.generated.Innereuebertragungtyp"/>
+    <bindings scd="~tns:populationenType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.PopulationenType"/>
     </bindings>
-    <bindings scd="~tns:subpopulationComplexType">
-      <class ref="com.github.themetalone.pandemic.utils.generated.SubpopulationComplexType"/>
+    <bindings scd="~tns:populationType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.PopulationType"/>
+    </bindings>
+    <bindings scd="~tns:subpopulationType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.SubpopulationType"/>
+    </bindings>
+    <bindings scd="~tns:uebergangType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.UebergangType"/>
+    </bindings>
+    <bindings scd="~tns:uebergangKomponenteType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.UebergangKomponenteType"/>
+    </bindings>
+    <bindings scd="~tns:routenType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.RoutenType"/>
+    </bindings>
+    <bindings scd="~tns:routeType">
+      <class ref="com.github.themetalone.pandemic.utils.generated.RouteType"/>
     </bindings>
   </bindings>
 </bindings>

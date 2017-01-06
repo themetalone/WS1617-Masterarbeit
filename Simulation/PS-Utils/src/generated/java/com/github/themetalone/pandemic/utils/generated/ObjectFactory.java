@@ -2,13 +2,16 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2016.12.30 um 04:59:48 PM CET 
+// Generiert: 2017.01.06 um 11:17:49 AM CET 
 //
 
 
 package com.github.themetalone.pandemic.utils.generated;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -28,6 +31,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _Simulation_QNAME = new QName("http://github.com/themetalone/simpleconfig", "simulation");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.github.themetalone.pandemic.utils.generated
@@ -37,59 +41,76 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Simulation }
+     * Create an instance of {@link SimulationType }
      * 
      */
-    public Simulation createSimulation() {
-        return new Simulation();
+    public SimulationType createSimulationType() {
+        return new SimulationType();
     }
 
     /**
-     * Create an instance of {@link Innereuebertragungtyp }
+     * Create an instance of {@link PopulationenType }
      * 
      */
-    public Innereuebertragungtyp createInnereuebertragungtyp() {
-        return new Innereuebertragungtyp();
+    public PopulationenType createPopulationenType() {
+        return new PopulationenType();
     }
 
     /**
-     * Create an instance of {@link Simulation.Standards }
+     * Create an instance of {@link PopulationType }
      * 
      */
-    public Simulation.Standards createSimulationStandards() {
-        return new Simulation.Standards();
+    public PopulationType createPopulationType() {
+        return new PopulationType();
     }
 
     /**
-     * Create an instance of {@link Simulation.Population }
+     * Create an instance of {@link SubpopulationType }
      * 
      */
-    public Simulation.Population createSimulationPopulation() {
-        return new Simulation.Population();
+    public SubpopulationType createSubpopulationType() {
+        return new SubpopulationType();
     }
 
     /**
-     * Create an instance of {@link Simulation.ReiseWege }
+     * Create an instance of {@link UebergangType }
      * 
      */
-    public Simulation.ReiseWege createSimulationReiseWege() {
-        return new Simulation.ReiseWege();
+    public UebergangType createUebergangType() {
+        return new UebergangType();
     }
 
     /**
-     * Create an instance of {@link SubpopulationComplexType }
+     * Create an instance of {@link UebergangKomponenteType }
      * 
      */
-    public SubpopulationComplexType createSubpopulationComplexType() {
-        return new SubpopulationComplexType();
+    public UebergangKomponenteType createUebergangKomponenteType() {
+        return new UebergangKomponenteType();
     }
 
     /**
-     * Create an instance of {@link Innereuebertragungtyp.Komponente }
+     * Create an instance of {@link RoutenType }
      * 
      */
-    public Innereuebertragungtyp.Komponente createInnereuebertragungtypKomponente() {
-        return new Innereuebertragungtyp.Komponente();
+    public RoutenType createRoutenType() {
+        return new RoutenType();
+    }
+
+    /**
+     * Create an instance of {@link RouteType }
+     * 
+     */
+    public RouteType createRouteType() {
+        return new RouteType();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SimulationType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://github.com/themetalone/simpleconfig", name = "simulation")
+    public JAXBElement<SimulationType> createSimulation(SimulationType value) {
+        return new JAXBElement<SimulationType>(_Simulation_QNAME, SimulationType.class, null, value);
     }
 
 }
