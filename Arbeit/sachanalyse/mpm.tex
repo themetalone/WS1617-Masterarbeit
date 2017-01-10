@@ -144,31 +144,31 @@ Zusammenfassend erhält man also als Faktor für das Reisevolumen von $A$ nach $
 \begin{align}
 	T^{A,B} = f_{att}(A,B)\cdot M_A \cdot \left(\frac{i_A}{i_B}\right)^\sigma
 \end{align}
-Der Reisefaktor wird auf alle Subpopulationen unverändert angewandt. Man erhält damit für zwei \emph{SEIR}-Populationen das in Abbildung ref dargestellte Netzwerk.
-
+Der Reisefaktor wird auf alle Subpopulationen unverändert angewandt. Man erhält damit für zwei \emph{SEIR}-Populationen das in Abbildung \ref{fig:ssec:multiPop:travelSEIR} dargestellte Netzwerk.
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3.5cm]
 	\node[state] (AS)				{A.S};
-	\node[state] (AE) [right of=AS]{A.E};
-	\node[state] (AI [right of=AE]	{A.I};
-	\node[state] (AR) [right of=AI]{A.R};
+	\node[state] (AE) [right =6cm of AS]{A.E};
+	\node[state] (AI) [right =1cm of AE]{A.I};
+	\node[state] (AR) [right =1cm of AI]{A.R};
 	\node[state] (BS)[below of=AS]	{B.S};
 	\node[state] (BE)[below of=AE]	{B.E};
 	\node[state] (BI)[below of=AI]	{B.I};
 	\node[state] (BR)[below of=AR]	{B.R};
-	\path 	(AS)	edge node (AE)
-				edge [bend left] node {$A.S \cdot T^{A,B}$}(BS)
-			(AE)	edge node 								(AI)
-				edge [bend left] node {$A.E\cdot T^{A,B}$} (BE)
-			(AI)	edge node 								(AR)
-			(BS)edge node (BE)
-				edge [bend left] node {$B.S\cdot T^{B,A}$}			(AS)
-			(BE)edge node 				(BI)
-				edge [bend left] node {$B.E\cdot T^{B,A}$}			(AE)
-			(BI)edge node						(BR);
+	\path 	(AS)	edge 				node {}						(AE)
+					edge [bend left] 	node {$A.S \cdot T^{A,B}$}	(BS)
+			(AE)	edge 				node {}						(AI)
+					edge [bend left] 	node {$A.E\cdot T^{A,B}$}	(BE)
+			(AI)	edge 				node {}					 	(AR)
+			(BS)	edge			 	node {}						(BE)
+					edge [bend left] 	node {$B.S\cdot T^{B,A}$}	(AS)
+			(BE)	edge 				node {}						(BI)
+					edge [bend left] 	node {$B.E\cdot T^{B,A}$}	(AE)
+			(BI)	edge 				node {}						(BR);
 	
 \end{tikzpicture}
 \end{center}
 \caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen mit Reisevolumina}\label{fig:ssec:multiPop:travelSEIR}
 \end{figure}
+
