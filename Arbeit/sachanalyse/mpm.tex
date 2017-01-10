@@ -104,13 +104,15 @@ Das Migrationsvolumen wird berechnet mit
 \end{align}
 Dabei ist $f_{att}(A,B) \in [0,1]$ der Anteil der emigrierenden Individuen aus $A$ nach $B$. Für alle Populationen $A$ gilt dabei immer
 \begin{align}
-	\sum\limits_{X \text{ Population } \& X\neq A} f_{att}(A,X) = 1
+	\sum\limits_{X \in H \& X\neq A} f_{att}(A,X) = 1\label{eq:ssec:multiPop:constAtt}
 \end{align}
-$f_{att}$ beschreibt die \emph{Attraktivität} der Population $B$ aus Sicht von $A$. Im Falle von Migration wird sich dies primär auf den Lebensstandard innerhalb der Population beziehen. 
-
-%TODO
-
-
+$f_{att}$ beschreibt die \emph{Attraktivität} der Population $B$ aus Sicht von $A$. Im Falle von Migration wird sich dies primär auf den Lebensstandard innerhalb der Population beziehen. Seien $L_A$ und $L_B\in \mathbb{N^+}$ Repräsentationen des Lebensstandards in $A$ und $B$. Wir definieren dann $f_{att}$ wie folgt:
+\begin{align}
+		f_{att} :& \mathbb{N}\times \mathbb{N}\times H \rightarrow  [0,1]\\
+			 & (L_A,L_B,A)\longmapsto		c_A\cdot\frac{L_B}{L_A}& \text{und}\nonumber\\
+		c_A = & \left( \sum\limits_{B\in H, B\neq A} \frac{L_B}{L_A}\right)^{-1}&
+\end{align}
+Durch die Wahl von $c_A$ wird die Forderung in Gleichung \ref{eq:ssec:multiPop:constAtt} immer erfüllt.
 
 Der Faktor $M_A$ beschreibt den Anteil der Bevölkerung von $A$, der in der Lage ist zu migrieren. Über dein Zeitraum der Simulation wird dieser als konstant angenommen. Da Tourismus und internationales Berufspendeln ausgenommen sind, ist der Migragrationsfaktor bereits der statische Reisefaktor $T^{A,B}_s$. Somit sind die Gründe modelliert, aus denen ein Individuum von einer Population in eine andere übersiedeln möchte. Der Einfluss einer Epidemie ist dabei aber noch unberücksichtigt. 
 
@@ -171,4 +173,6 @@ Der Reisefaktor wird auf alle Subpopulationen unverändert angewandt. Man erhäl
 \end{center}
 \caption{Netzwerk für zwei interagierende \emph{SEIR}-Populationen mit Reisevolumina}\label{fig:ssec:multiPop:travelSEIR}
 \end{figure}
+Die so definierten Reisekanten umfassen immer den kompletten Strom von Individuen von einer Population in eine andere. Für die Ausbreitung von Krankheiten kann es aber interessant sein, zu wissen, welche Wege in Individuum nehmen kann, um in eine Population einzureisen. Einer Person mit offensichtlichen Krankheitszeichen wird beispielsweise die Reise mit einem Flugzeug verwehrt, während die Reise mit dem Automobil über offene Grenzen völlig unkontrolliert erfolgt. Wir legen zudem fest, dass die \emph{bodengebundenen} Transportmittel wie Auto oder Zug Individuen nur in die geographisch benachbarten Populationen transportieren können. Der Transport via Flugzeug kann dagegen potentiell von jeder Population in jede andere erfolgen. 
 
+Die bisher modellierte Reisekante wird also in bodengebunden Verkehr und in Flugverkehr aufgeteilt. Die quantitative Aufteilung ist abhängig von lokalen Gegebenheiten, wie dem Durchschnittseinkommen, der Verbreitung von Flughäfen und natürlich dem Kostenverhältnis zwischen einer Auto-/Zugfahrt und einem Linienflug. 
