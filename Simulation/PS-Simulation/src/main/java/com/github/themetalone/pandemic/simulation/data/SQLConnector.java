@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.utils.data;
+package com.github.themetalone.pandemic.simulation.data;
 
 import java.sql.Connection;
 import java.util.Observer;

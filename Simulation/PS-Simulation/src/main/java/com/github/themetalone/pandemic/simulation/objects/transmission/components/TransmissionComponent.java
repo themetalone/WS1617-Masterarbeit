@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.transmission.components;
+package com.github.themetalone.pandemic.simulation.objects.transmission.components;
 
 /**
  * @author steffen

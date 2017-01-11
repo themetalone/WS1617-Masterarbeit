@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.healthState;
+package com.github.themetalone.pandemic.simulation.objects.healthState;
 
 /**
  * @author steffen

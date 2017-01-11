@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.healthState;
+package com.github.themetalone.pandemic.simulation.objects.healthState;
 
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;

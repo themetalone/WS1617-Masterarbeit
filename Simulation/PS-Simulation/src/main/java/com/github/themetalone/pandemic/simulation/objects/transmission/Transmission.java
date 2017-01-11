@@ -1,7 +1,7 @@
-package com.github.themetalone.pandemic.simulation.transmission;
+package com.github.themetalone.pandemic.simulation.objects.transmission;
 
-import com.github.themetalone.pandemic.simulation.healthState.HealthStateIdentifier;
-import com.github.themetalone.pandemic.utils.provider.Providable;
+import com.github.themetalone.pandemic.simulation.objects.Providable;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
 
 /**
  * @author steffen

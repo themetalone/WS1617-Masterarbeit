@@ -5,11 +5,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.themetalone.pandemic.simulation.healthState.HealthState;
-import com.github.themetalone.pandemic.simulation.healthState.HealthStateIdentifier;
-import com.github.themetalone.pandemic.simulation.transmission.Transmission;
-import com.github.themetalone.pandemic.simulation.transmission.TransmissionIdentifier;
-import com.github.themetalone.pandemic.utils.data.SQLConnector;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
+import com.github.themetalone.pandemic.simulation.objects.transmission.Transmission;
+import com.github.themetalone.pandemic.simulation.objects.transmission.TransmissionIdentifier;
 
 /**
  * @author steffen

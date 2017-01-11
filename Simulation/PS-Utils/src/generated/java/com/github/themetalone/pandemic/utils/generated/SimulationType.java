@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.06 um 11:17:49 AM CET 
+// Generiert: 2017.01.11 um 09:36:49 AM CET 
 //
 
 
@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="datenbank" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="batchgroesse" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
  *       &lt;attribute name="zeit" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="krankheit" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -55,6 +56,8 @@ public class SimulationType {
     protected Integer batchgroesse;
     @XmlAttribute(name = "zeit")
     protected Integer zeit;
+    @XmlAttribute(name = "krankheit")
+    protected Float krankheit;
 
     /**
      * Ruft den Wert der populationen-Eigenschaft ab.
@@ -174,6 +177,30 @@ public class SimulationType {
      */
     public void setZeit(Integer value) {
         this.zeit = value;
+    }
+
+    /**
+     * Ruft den Wert der krankheit-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Float }
+     *     
+     */
+    public Float getKrankheit() {
+        return krankheit;
+    }
+
+    /**
+     * Legt den Wert der krankheit-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Float }
+     *     
+     */
+    public void setKrankheit(Float value) {
+        this.krankheit = value;
     }
 
 }

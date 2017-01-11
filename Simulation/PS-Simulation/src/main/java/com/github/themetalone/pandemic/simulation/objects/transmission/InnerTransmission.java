@@ -1,11 +1,11 @@
-package com.github.themetalone.pandemic.simulation.transmission;
+package com.github.themetalone.pandemic.simulation.objects.transmission;
 
 import java.util.Collection;
 
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
-import com.github.themetalone.pandemic.simulation.healthState.HealthStateProvider;
-import com.github.themetalone.pandemic.simulation.transmission.components.TransmissionComponent;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
+import com.github.themetalone.pandemic.simulation.objects.transmission.components.TransmissionComponent;
 
 /**
  * @author steffen

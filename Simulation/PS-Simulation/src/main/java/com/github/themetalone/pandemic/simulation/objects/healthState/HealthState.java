@@ -1,7 +1,7 @@
-package com.github.themetalone.pandemic.simulation.healthState;
+package com.github.themetalone.pandemic.simulation.objects.healthState;
 
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
-import com.github.themetalone.pandemic.utils.provider.Providable;
+import com.github.themetalone.pandemic.simulation.objects.Providable;
 
 /**
  * @author steffen

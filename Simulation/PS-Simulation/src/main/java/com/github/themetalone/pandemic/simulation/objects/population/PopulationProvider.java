@@ -1,8 +1,8 @@
-package com.github.themetalone.pandemic.simulation.population;
+package com.github.themetalone.pandemic.simulation.objects.population;
 
 import java.util.Collection;
 
-import com.github.themetalone.pandemic.utils.provider.Provider;
+import com.github.themetalone.pandemic.simulation.objects.Provider;
 
 /**
  * @author steffen

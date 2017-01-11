@@ -1,12 +1,10 @@
 package com.github.themetalone.pandemic.simulation.exceptions;
 
-import com.github.themetalone.pandemic.utils.exception.PandemicException;
-
 /**
  * @author steffen
  *
  */
-public class PandemicSimulationException extends PandemicException {
+public class PandemicSimulationException extends Exception {
 
   /**
    *
@@ -21,7 +19,7 @@ public class PandemicSimulationException extends PandemicException {
 
   /**
    * The constructor.
-   * 
+   *
    * @param arg0
    */
   public PandemicSimulationException(String arg0) {
@@ -30,7 +28,7 @@ public class PandemicSimulationException extends PandemicException {
 
   /**
    * The constructor.
-   * 
+   *
    * @param arg0
    */
   public PandemicSimulationException(Throwable arg0) {
@@ -39,7 +37,7 @@ public class PandemicSimulationException extends PandemicException {
 
   /**
    * The constructor.
-   * 
+   *
    * @param arg0
    * @param arg1
    */
@@ -49,7 +47,7 @@ public class PandemicSimulationException extends PandemicException {
 
   /**
    * The constructor.
-   * 
+   *
    * @param arg0
    * @param arg1
    * @param arg2

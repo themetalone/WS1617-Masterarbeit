@@ -1,7 +1,7 @@
-package com.github.themetalone.pandemic.simulation.transmission;
+package com.github.themetalone.pandemic.simulation.objects.transmission;
 
-import com.github.themetalone.pandemic.simulation.population.Population;
-import com.github.themetalone.pandemic.simulation.population.PopulationProvider;
+import com.github.themetalone.pandemic.simulation.objects.population.Population;
+import com.github.themetalone.pandemic.simulation.objects.population.PopulationProvider;
 
 /**
  * @author steffen

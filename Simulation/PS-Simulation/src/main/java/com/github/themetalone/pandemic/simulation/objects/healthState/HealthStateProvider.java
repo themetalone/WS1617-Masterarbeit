@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.healthState;
+package com.github.themetalone.pandemic.simulation.objects.healthState;
 
 import java.util.Collection;
 import java.util.Observable;
@@ -7,7 +7,7 @@ import java.util.Observer;
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.event.CommitChangesEvent;
 import com.github.themetalone.pandemic.simulation.event.PandemicSimulationEvent;
-import com.github.themetalone.pandemic.utils.provider.Provider;
+import com.github.themetalone.pandemic.simulation.objects.Provider;
 
 /**
  * @author steffen
