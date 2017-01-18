@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.11 um 09:36:49 AM CET 
+// Generiert: 2017.01.18 um 09:10:02 AM CET 
 //
 
 
@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="route" type="{http://github.com/themetalone/simpleconfig}routeType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="flugverkehr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
+ *       &lt;attribute name="reisende-subpopulationen" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -45,6 +46,8 @@ public class RoutenType {
     protected List<RouteType> route;
     @XmlAttribute(name = "flugverkehr")
     protected Boolean flugverkehr;
+    @XmlAttribute(name = "reisende-subpopulationen")
+    protected String reisendeSubpopulationen;
 
     /**
      * Gets the value of the route property.
@@ -97,6 +100,30 @@ public class RoutenType {
      */
     public void setFlugverkehr(Boolean value) {
         this.flugverkehr = value;
+    }
+
+    /**
+     * Ruft den Wert der reisendeSubpopulationen-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getReisendeSubpopulationen() {
+        return reisendeSubpopulationen;
+    }
+
+    /**
+     * Legt den Wert der reisendeSubpopulationen-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setReisendeSubpopulationen(String value) {
+        this.reisendeSubpopulationen = value;
     }
 
 }

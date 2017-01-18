@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,18 +23,27 @@ import com.github.themetalone.pandemic.simulation.objects.healthState.SimpleHeal
 import com.github.themetalone.pandemic.simulation.objects.population.Population;
 import com.github.themetalone.pandemic.simulation.objects.population.PopulationProvider;
 import com.github.themetalone.pandemic.simulation.objects.transmission.InnerTransmission;
+import com.github.themetalone.pandemic.simulation.objects.transmission.MigrationTransmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.Transmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.TransmissionProvider;
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.MonomialTransmissionComponent;
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.TransmissionComponent;
 import com.github.themetalone.pandemic.utils.generated.PopulationType;
 import com.github.themetalone.pandemic.utils.generated.SimulationType;
+import com.github.themetalone.pandemic.utils.generated.SubpopulationType;
+import com.github.themetalone.pandemic.utils.generated.UebergangType;
 
 /**
  * @author steffen
  *
  */
 public class ConfigUtilImpl implements ConfigUtil {
+
+  public final static int INNERTRANSMISSION = 0;
+
+  public final static int TRAVELBYPLANE = 1;
+
+  public final static int OTHERTRAVEL = 2;
 
   /**
    * The constructor.
@@ -70,7 +80,18 @@ public class ConfigUtilImpl implements ConfigUtil {
     config.getPopulationen().getPopulation().stream().forEach(p -> popIdMap.put(p, popIdMap.size()));
     standardPopulation.getSubpopulation().stream().forEach(sp -> hsIdMap.put(sp.getName(), hsIdMap.size()));
 
-    // Give the PopulationTypes the standard configuration but do not override existing subpopulations
+    // sanity checks
+    //// travel percentage
+    config.getPopulationen().getPopulation().parallelStream().forEach(srcP -> {
+      float travelPercentage = config.getRouten().getRoute().parallelStream()
+          .filter(r -> r.getVon().equals(srcP.getName())).map(r -> r.getAnteil()).reduce(new Float(0), (a, b) -> a + b);
+      if (travelPercentage > 1) {
+        float correction = 1 / travelPercentage;
+        config.getRouten().getRoute().parallelStream().forEach(r -> r.setAnteil(r.getAnteil() * correction));
+      }
+    });
+
+    // Give the PopulationTypes the standard configuration but do not override existing configurations
     config.getPopulationen().getPopulation().stream().forEach(p -> {
       if (p.getLebensstandard() == null) {
         p.setLebensstandard(standardPopulation.getLebensstandard());
@@ -83,14 +104,33 @@ public class ConfigUtilImpl implements ConfigUtil {
         if (!p.getSubpopulation().stream().filter(psp -> psp.getName().equals(sp.getName())).findAny().isPresent()) {
           p.getSubpopulation().add(sp);
         } else {
-          // TODO default values. same by transmissions
+          // If the subpopulation is already there just fill in the gaps
+          SubpopulationType existingSP =
+              p.getSubpopulation().stream().filter(psp -> psp.getName().equals(sp.getName())).findAny().get();
+          if (existingSP.isLebend() == null && sp.isLebend() != null) {
+            existingSP.setLebend(sp.isLebend());
+          }
+          if (existingSP.isSichtbarInfiziert() == null && sp.isSichtbarInfiziert() != null) {
+            existingSP.setSichtbarInfiziert(sp.isSichtbarInfiziert());
+          }
+          if (existingSP.getGroesse() == null && sp.getGroesse() != null) {
+            existingSP.setGroesse(sp.getGroesse());
+          }
         }
       });
       //// Set transmissions if not present
       standardPopulation.getUebergang().forEach(t -> {
         if (!p.getUebergang().stream().filter(pt -> pt.getVon().equals(t.getVon()) && pt.getNach().equals(t.getNach()))
-            .findAny().isPresent())
+            .findAny().isPresent()) {
           p.getUebergang().add(t);
+        } else {
+          // If the inner transmission is already there just fill in the gaps
+          UebergangType existingT = p.getUebergang().stream()
+              .filter(pt -> pt.getVon().equals(t.getVon()) && pt.getNach().equals(t.getNach())).findAny().get();
+          if (existingT.getKomponente().isEmpty() && !t.getKomponente().isEmpty()) {
+            existingT.getKomponente().addAll(t.getKomponente());
+          }
+        }
       });
     });
 
@@ -127,12 +167,66 @@ public class ConfigUtilImpl implements ConfigUtil {
         components.add(new MonomialTransmissionComponent(c.getScalar(), refs));
       });
       transmissions.add(new InnerTransmission(popIdMap.get(p), hsIdMap.get(t.getVon()), popIdMap.get(p),
-          hsIdMap.get(t.getNach()), 0, 0, components));
+          hsIdMap.get(t.getNach()), INNERTRANSMISSION, 0, components));
     }));
 
     // travel edges
+    Collection<String> travelingSubpopulationNames =
+        parseTravelSubpopulations(config.getRouten().getReisendeSubpopulationen());
+    Map<String, Integer> popNameIdMap = new HashMap<>();
+    Map<Integer, String> popIdNameMap = new HashMap<>();
+    config.getPopulationen().getPopulation().parallelStream().forEach(p -> {
+      popNameIdMap.put(p.getName(), popIdMap.get(p));
+      popIdNameMap.put(popIdMap.get(p), p.getName());
+    });
 
-    // TODO above
+    config.getRouten().getRoute().parallelStream().forEach(r -> {
+      // If no additional mapping is given
+      if (r.getZuordnung().isEmpty()) {
+        travelingSubpopulationNames.parallelStream()
+            .forEach(sp -> transmissions.add(new MigrationTransmission(popNameIdMap.get(r.getVon()), hsIdMap.get(sp),
+                popNameIdMap.get(r.getNach()), hsIdMap.get(sp), r.isFlug() ? TRAVELBYPLANE : OTHERTRAVEL, 1,
+                r.getAnteil(), config.getKrankheit())));
+      } else {
+        r.getZuordnung().parallelStream()
+            .forEach(mapping -> transmissions
+                .add(new MigrationTransmission(popNameIdMap.get(r.getVon()), hsIdMap.get(mapping.getVonSubpopulation()),
+                    popNameIdMap.get(r.getNach()), hsIdMap.get(mapping.getNachSubpopulation()),
+                    r.isFlug() ? TRAVELBYPLANE : OTHERTRAVEL, 1, r.getAnteil(), config.getKrankheit())));
+      }
+    });
+    // If a global plane network is requested
+    if (config.getRouten().isFlugverkehr()) {
+      populations.parallelStream().forEach(srcP -> {
+        // Filter all populations that are not connected via plane to srcP
+        Predicate<Population> unconnectedPopulationFilter = filterP -> filterP.POPULATION_ID != srcP.POPULATION_ID
+            && /* ...that has no travel by plane edge coming from src */!transmissions.parallelStream()
+                .filter(t -> t.getIdentifier().TYPE == TRAVELBYPLANE
+                    && t.getIdentifier().SOURCE.POPULATION_ID == srcP.POPULATION_ID
+                    && t.getIdentifier().TARGET.POPULATION_ID == filterP.POPULATION_ID)
+                .findAny().isPresent();
+        // number of unconnected other populations
+        int unconnectedPopulations = populations.parallelStream()
+            /* all other populations ... */
+            .filter(unconnectedPopulationFilter).mapToInt(p -> new Integer(1)).sum();
+        // defined percentage of traveling population from srcP. Well defined if less or equal 1
+        float connectionLevel = config.getRouten().getRoute().parallelStream()
+            .filter(r -> r.getVon().equals(popIdNameMap.get(srcP.POPULATION_ID))).map(r -> r.getAnteil())
+            .reduce(new Float(0), (a, b) -> a + b);
+        // connectionLevel > 1 should be impossible by sanity checks above
+        if (connectionLevel < 1) {
+          // travel percentage of what a single travel by plane route can
+          float flightPercentage = (1 - connectionLevel) / unconnectedPopulations;
+          // add a route from srcP to each unconnected population for each traveling subpopulation
+          populations.parallelStream().filter(unconnectedPopulationFilter)
+              .forEach(trgP -> travelingSubpopulationNames.parallelStream().map(s -> hsIdMap.get(s)).forEach(hs -> {
+                transmissions.add(new MigrationTransmission(srcP.POPULATION_ID, hs, trgP.POPULATION_ID, hs,
+                    TRAVELBYPLANE, 1, flightPercentage, config.getKrankheit()));
+              }));
+        }
+
+      });
+    }
     // Populate Providers
     PandemicSimulationDataWriterProvider.setWriter(
         new H2SqlPandemicSimulationDataWriter(new H2SQLConnector(config.getDatenbank()), config.getBatchgroesse()));
@@ -140,6 +234,16 @@ public class ConfigUtilImpl implements ConfigUtil {
     new HealthStateProvider(healthstates);
     new TransmissionProvider(transmissions);
     return simulation;
+  }
+
+  private Collection<String> parseTravelSubpopulations(String input) {
+
+    String[] split = input.split(",");
+    Collection<String> output = new HashSet<>();
+    for (String s : split) {
+      output.add(s.trim());
+    }
+    return output;
   }
 
 }

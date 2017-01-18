@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="0" datenbank="" krankheit="0.0" xmlns="http://github.com/themetalone/simpleconfig"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
+  zeit="0">
+  <populationen>
+    <standard lebensstandard="0.0" migrationsanteil="0.0" modell="" name="">
+      <subpopulation groesse="10000" name="S"/>
+      <subpopulation groesse="5" name="E"/>
+      <subpopulation groesse="0" name="I" sichtbar-infiziert="true"/>
+      <subpopulation groesse="0" name="H" sichtbar-infiziert="true"/>
+      <subpopulation groesse="0" name="F" lebend="false"/>
+      <subpopulation/>
+      <uebergang nach="" von="">
+        <komponente scalar="0.0">
+          <reference>reference</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population lebensstandard="0.0" migrationsanteil="0.0" modell="" name="">
+      <subpopulation groesse="0" lebend="true" name="" sichtbar-infiziert="true"/>
+      <uebergang nach="" von="">
+        <komponente scalar="0.0">
+          <reference>reference</reference>
+        </komponente>
+      </uebergang>
+    </population>
+  </populationen>
+  <routen flugverkehr="true" reisende-subpopulationen="">
+    <route anteil="0.0" flug="false" nach="" von="">
+      <zuordnung nachSubpopulation="" vonSubpopulation=""/>
+    </route>
+  </routen>
+</simulation>
