@@ -63,14 +63,14 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
 	\node[state] (F)[above of=H]	{F};
 	\node[state] (D)[right of=F]	{D};
 	\node[state] (R)[below right of=H]	{R};
-	\path 	(S)	edge node {$\alpha \cdot I$} 				(E)
-			(E)	edge node {$1 \cdot E$}						(I)
-			(I)	edge node {$\beta \cdot I$}					(F)
-			(I)	edge node {$\gamma_\cdot I$}				(H)
-			(I)	edge node {$\delta \cdot I$}				(R)
-			(F)	edge node {$1 \cdot F $}					(D)
-			(H)	edge node {$\epsilon \cdot H$}				(D)
-			(H) edge node {$(1-\epsilon) \cdot H $}			(R);
+	\path 	(S)	edge node {$\alpha \cdot (I+E)+ \omega \cdot F$}(E)
+			(E)	edge node {$1 \cdot E$}							(I)
+			(I)	edge node {$\beta \cdot I$}						(F)
+			(I)	edge node {$\gamma_\cdot I$}					(H)
+			(I)	edge node {$\delta \cdot I$}					(R)
+			(F)	edge node {$1 \cdot F $}						(D)
+			(H)	edge node {$\epsilon \cdot H$}					(D)
+			(H) edge node {$(1-\epsilon) \cdot H $}				(R);
 	
 \end{tikzpicture}
 \end{center}
