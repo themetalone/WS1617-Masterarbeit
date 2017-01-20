@@ -1,0 +1,21 @@
+\subsection{Maßnahmen zur Verhinderung von Pandemien}
+Nachdem nun das \emph{SIR}-Modell für die Untersuchung von Pandemien erweitert wurde, werden nun Maßnahmen zur Eindämmung und deren Entsprechung im Netzwerkmodell beschrieben. 
+
+\subsubsection{Lokale Maßnahmen}
+Beginnt eine Krankheit zur Epidemie zu werden, kann man lokal organisatorisch Maßnahmen ergreifen, um sie einzudämmen. Zu diesen zählt die Aufklärung um die Infektionsgefahr sowie die vorübergehende Schließung von öffentlichen Einrichtungen. Letzteres wurde von \bf{REF?} mit dem oben beschriebenen Modell untersucht und für wirksam befunden. Durch die Aufklärung wird die Vorsicht bei zwischenmenschlichen Interaktionen erhöht, was die Infektionswahrscheinlichkeit pro Interaktion senkt. Ähnlich verhält es sich mit der Schließung von öffentlichen Einrichtungen. Hierdurch wird die Anzahl der möglichen Interaktionen von Infizierten und Infizierbaren reduziert, was ebenfalls die Infektionswahrscheinlichkeit reduziert. Im Modell schlagen sich diese Maßnahmen in einer Reduktion der Volumina der inneren Kanten nieder. 
+
+\subsubsection{Impfungen}
+Bei gewissen Klassen von Krankheiten, wie den Viruserkrankungen, lässt sich präventiv ein Schutz vor einer Infektion aufbauen. Im Falle von Viren wäre das die Impfung. Wird ein Individuum vor der eigentlichen Infektion geimpft, immunisiert es sich gegen die Krankheit und ist somit nicht mehr Teil der infizierbaren Subpopulation. Im Modell wird durch das Impfen eine zusätzliche Kante zwischen der $S$ und der $R$ Subpopulation eingefügt. Das Volumen der Kante richtet sich nach Verfügbarkeit und Wirksamkeit der präventiven Maßnahme.
+
+\subsubsection{Reisebeschränkungen}
+Während die beiden eben beschriebenen Maßnahmen die Eindämmung einer Krankheit innerhalb der Population als Ziel haben, ist das Ziel der Reisebeschränkung, zu verhindern, dass eine Krankheit in einer bisher gesunden Population ausbricht. Der kanonische Ansatz ist es, zu verhindern, dass kranke Individuen und mit ihnen die Krankheit in die Population einreisen. Was in der Realität mit Grenzsperren und Schließungen von Flughäfen umgesetzt wird, kann im Netzwerksmodell durch das Entfernen von Reisekanten erreicht werden. %TODO
+
+\subsubsection{Einreisequarantäne}
+
+\begin{itemize}
+	\item Aufklärung: Reduktion der Skalare der Inneren Kanten
+	\item Impfungen: Kante S->R
+	\item Sperrung von Routen: Entfernen von Reisekanten
+	\item Quarantäne: Zusätzliche Subpopulationen QS und QE als Ziel von Reisekanten. 
+\end{itemize}
+
