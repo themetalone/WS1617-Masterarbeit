@@ -4,7 +4,7 @@
 Zunächst werden Single Population Ansätze untersucht, also Modelle zur Beschreibung einer Gesellschaft, beispielsweise eines Landes oder einer Stadt. Dazu werden üblicherweise SIR-Modelle genutzt.
 
 \subsubsection{SIR Modell}
-
+\ellen
 Das klassische SIR-Modell ist ein Ansatz über gewöhnliche Differenzialgleichungen. Dabei gilt, dass die gesamte Bevölkerungsanzahl sich nicht verändert.\\
 Individuen der Bevölkerung befinden sich in einer von drei Gruppen.\\
 Entweder ist das Individuum gesund und kann angesteckt werden (Gruppe S), es ist krank und kann Personen aus der Gruppe S infizieren (Gruppe I), oder es kann nicht mehr angesteckt werden (immun, tot oder unter Quarantäne) und befindet sich in der Gruppe R.\\
@@ -63,19 +63,27 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
 	\node[state] (F)[above of=H]	{F};
 	\node[state] (D)[right of=F]	{D};
 	\node[state] (R)[below right of=H]	{R};
-	\path 	(S)	edge node {$\lambda$} 					(E)
-			(E)	edge node {$\alpha$}					(I)
-			(I)	edge node {$\delta_1 (1-\iota) \gamma_D$}	(F)
-			(I)	edge node {$\gamma_{H^\iota}$}				(H)
-			(I)	edge [bend right] node {$\gamma_1(1-\iota)(1-\delta_1)$}	(R)
-			(F)	edge node {$\gamma_F$}					(D)
-			(H)	edge node {$\gamma_{DH} \delta_2$}		(D)
-			(H) edge node {$\gamma_{IH}(1-\delta_2)$}	(R);
+	\path 	(S)	edge node {$\alpha \cdot I$} 				(E)
+			(E)	edge node {$1 \cdot E$}						(I)
+			(I)	edge node {$\beta \cdot I$}					(F)
+			(I)	edge node {$\gamma_\cdot I$}				(H)
+			(I)	edge node {$\delta \cdot I$}				(R)
+			(F)	edge node {$1 \cdot F $}					(D)
+			(H)	edge node {$\epsilon \cdot H$}				(D)
+			(H) edge node {$(1-\epsilon) \cdot H $}			(R);
 	
 \end{tikzpicture}
 \end{center}
 \caption{SEIHFRD-Modell}\label{fig:ssec:model}
 \end{figure}
+In der obigen Darstellung entspricht $\alpha$ der Reproduktionsrate, also der Anzahl der Gesunden, die durch einen Infektiösen angesteckt werden. Forscher der Eidgenössischen Technischen Hochschule Zürich (ETH Zürich) stellten fest, dass diese Rate bei Ebola etwa bei 2,18 liegt.\\
+Es kann davon ausgegangen werden, dass alle die ansteckend sind auch Symptome ausbilden.\\
+Mit Hilfe der Reproduktionsrate und dem Wissen über die Menge an Personen, die im Krankenhaus behandelt wurden, konnten die Forscher ebenso die Dunkelziffer abschätzen. Diese liegt für Ebola bei 30\%.\\
+Es starben etwa 50\% der Infizierten bei der Epidemie in Sierra Leone und Guinea. Man kann davon ausgehen, dass diese Rate bei jenen die sich nicht in Behandlung befinden etwas höher liegt, während sie bei denen im Krankenhaus niedriger liegt.\\
+%TODO Literaturangabe (http://currents.plos.org/outbreaks/article/insights-into-the-early-epidemic-spread-of-ebola-in-sierra-leone-provided-by-viral-sequence-data/)
+Laut rbb konnten nach Behandlungen im Krankenhaus sechs von zehn Patienten als geheilt entlassen werden. Das bedeutet, dass $\epsilon$ 0,4 entspricht. \\
+%TODO Literaturangabe (http://www.rbb-online.de/rbbpraxis/rbb_praxis_service/impfungen-und-erkrankungen/ebola.html)
+Damit kann man annehmen, dass ohne Behandlung sechs von zehn Patienten sterben. Das bedeutet für das obige Modell, dass $\beta$ 0,18 entspricht, während $\delta$ 0,12 entspricht, denn $\beta + \delta = 0,3$. Zusätzlich gilt, dass $\beta + \delta + \gamma = 1$. \\
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
 \steffen
 \input{sachanalyse/mpm}
