@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.18 um 09:10:02 AM CET 
+// Generiert: 2017.01.19 um 09:44:53 AM CET 
 //
 
 
@@ -28,10 +28,10 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="zuordnung" type="{http://github.com/themetalone/simpleconfig}zuordnungType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="von" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="nach" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="von" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="nach" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *       &lt;attribute name="flug" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
- *       &lt;attribute name="anteil" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+ *       &lt;attribute name="anteil" type="{http://www.w3.org/2001/XMLSchema}float" default="1" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -46,9 +46,9 @@ import javax.xml.bind.annotation.XmlType;
 public class RouteType {
 
     protected List<ZuordnungType> zuordnung;
-    @XmlAttribute(name = "von")
+    @XmlAttribute(name = "von", required = true)
     protected String von;
-    @XmlAttribute(name = "nach")
+    @XmlAttribute(name = "nach", required = true)
     protected String nach;
     @XmlAttribute(name = "flug")
     protected Boolean flug;
@@ -168,8 +168,12 @@ public class RouteType {
      *     {@link Float }
      *     
      */
-    public Float getAnteil() {
-        return anteil;
+    public float getAnteil() {
+        if (anteil == null) {
+            return  1.0F;
+        } else {
+            return anteil;
+        }
     }
 
     /**

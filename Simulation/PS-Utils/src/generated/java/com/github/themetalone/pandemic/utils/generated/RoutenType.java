@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.18 um 09:10:02 AM CET 
+// Generiert: 2017.01.19 um 09:44:53 AM CET 
 //
 
 
@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="route" type="{http://github.com/themetalone/simpleconfig}routeType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="flugverkehr" type="{http://www.w3.org/2001/XMLSchema}boolean" /&gt;
- *       &lt;attribute name="reisende-subpopulationen" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="flugverkehr" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
+ *       &lt;attribute name="reisende-subpopulationen" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -46,7 +46,7 @@ public class RoutenType {
     protected List<RouteType> route;
     @XmlAttribute(name = "flugverkehr")
     protected Boolean flugverkehr;
-    @XmlAttribute(name = "reisende-subpopulationen")
+    @XmlAttribute(name = "reisende-subpopulationen", required = true)
     protected String reisendeSubpopulationen;
 
     /**
@@ -86,8 +86,12 @@ public class RoutenType {
      *     {@link Boolean }
      *     
      */
-    public Boolean isFlugverkehr() {
-        return flugverkehr;
+    public boolean isFlugverkehr() {
+        if (flugverkehr == null) {
+            return false;
+        } else {
+            return flugverkehr;
+        }
     }
 
     /**

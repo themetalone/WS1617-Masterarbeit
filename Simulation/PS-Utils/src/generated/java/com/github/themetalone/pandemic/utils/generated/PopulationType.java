@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.18 um 09:10:02 AM CET 
+// Generiert: 2017.01.19 um 09:44:53 AM CET 
 //
 
 
@@ -29,10 +29,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="subpopulation" type="{http://github.com/themetalone/simpleconfig}subpopulationType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="uebergang" type="{http://github.com/themetalone/simpleconfig}uebergangType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="modell" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="lebensstandard" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
- *       &lt;attribute name="migrationsanteil" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="lebensstandard" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+ *       &lt;attribute name="migrationsanteil" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -49,14 +48,12 @@ public class PopulationType {
 
     protected List<SubpopulationType> subpopulation;
     protected List<UebergangType> uebergang;
-    @XmlAttribute(name = "name")
+    @XmlAttribute(name = "name", required = true)
     protected String name;
-    @XmlAttribute(name = "modell")
-    protected String modell;
-    @XmlAttribute(name = "lebensstandard")
-    protected Float lebensstandard;
-    @XmlAttribute(name = "migrationsanteil")
-    protected Float migrationsanteil;
+    @XmlAttribute(name = "lebensstandard", required = true)
+    protected float lebensstandard;
+    @XmlAttribute(name = "migrationsanteil", required = true)
+    protected float migrationsanteil;
 
     /**
      * Gets the value of the subpopulation property.
@@ -141,74 +138,34 @@ public class PopulationType {
     }
 
     /**
-     * Ruft den Wert der modell-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getModell() {
-        return modell;
-    }
-
-    /**
-     * Legt den Wert der modell-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setModell(String value) {
-        this.modell = value;
-    }
-
-    /**
      * Ruft den Wert der lebensstandard-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
      */
-    public Float getLebensstandard() {
+    public float getLebensstandard() {
         return lebensstandard;
     }
 
     /**
      * Legt den Wert der lebensstandard-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
      */
-    public void setLebensstandard(Float value) {
+    public void setLebensstandard(float value) {
         this.lebensstandard = value;
     }
 
     /**
      * Ruft den Wert der migrationsanteil-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
      */
-    public Float getMigrationsanteil() {
+    public float getMigrationsanteil() {
         return migrationsanteil;
     }
 
     /**
      * Legt den Wert der migrationsanteil-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
      */
-    public void setMigrationsanteil(Float value) {
+    public void setMigrationsanteil(float value) {
         this.migrationsanteil = value;
     }
 

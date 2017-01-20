@@ -4,31 +4,45 @@
   xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
   zeit="0">
   <populationen>
-    <standard lebensstandard="0.0" migrationsanteil="0.0" modell="" name="">
+    <standard lebensstandard="0.0" migrationsanteil="0.0" name="">
       <subpopulation groesse="10000" name="S"/>
       <subpopulation groesse="5" name="E"/>
-      <subpopulation groesse="0" name="I" sichtbar-infiziert="true"/>
-      <subpopulation groesse="0" name="H" sichtbar-infiziert="true"/>
-      <subpopulation groesse="0" name="F" lebend="false"/>
-      <subpopulation/>
-      <uebergang nach="" von="">
-        <komponente scalar="0.0">
-          <reference>reference</reference>
+      <subpopulation name="I" sichtbar-infiziert="true"/>
+      <subpopulation name="R"/>
+      <subpopulation name="D" lebend="false"/>
+
+      <uebergang von="S" nach="E">
+        <komponente scalar="0.01">
+          <reference>E</reference>
+        </komponente>
+        <komponente scalar="0.01">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="E" nach="I">
+        <komponente>
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="D">
+        <komponente scalar="0.1">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="R">
+        <komponente scalar="0.9">
+          <reference>I</reference>
         </komponente>
       </uebergang>
     </standard>
-    <population lebensstandard="0.0" migrationsanteil="0.0" modell="" name="">
-      <subpopulation groesse="0" lebend="true" name="" sichtbar-infiziert="true"/>
-      <uebergang nach="" von="">
-        <komponente scalar="0.0">
-          <reference>reference</reference>
-        </komponente>
-      </uebergang>
-    </population>
+    <population name="A" lebensstandard="1" migrationsanteil="0.05"/>
+    <population name="B" lebensstandard="1" migrationsanteil="0.02"/>
+    <population name="C" lebensstandard="0.5" migrationsanteil="0.1"/>
   </populationen>
-  <routen flugverkehr="true" reisende-subpopulationen="">
-    <route anteil="0.0" flug="false" nach="" von="">
-      <zuordnung nachSubpopulation="" vonSubpopulation=""/>
-    </route>
+  <routen flugverkehr="true" reisende-subpopulationen="S,E">
+    <route von="A" nach="B" anteil="0.5"/>
+    <route von="B" nach="A" anteil="0.3"/>
+    <route von="B" nach="C" anteil="0.2"/>
+    <route von="C" nach="B" anteil="0.6"/>
   </routen>
 </simulation>

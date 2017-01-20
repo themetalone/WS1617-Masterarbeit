@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.18 um 09:10:02 AM CET 
+// Generiert: 2017.01.19 um 09:44:53 AM CET 
 //
 
 
@@ -28,10 +28,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="populationen" type="{http://github.com/themetalone/simpleconfig}populationenType"/&gt;
  *         &lt;element name="routen" type="{http://github.com/themetalone/simpleconfig}routenType"/&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="datenbank" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="batchgroesse" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
- *       &lt;attribute name="zeit" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
- *       &lt;attribute name="krankheit" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
+ *       &lt;attribute name="datenbank" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="batchgroesse" use="required" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="zeit" use="required" type="{http://www.w3.org/2001/XMLSchema}int" /&gt;
+ *       &lt;attribute name="krankheit" use="required" type="{http://www.w3.org/2001/XMLSchema}float" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -50,14 +50,14 @@ public class SimulationType {
     protected PopulationenType populationen;
     @XmlElement(required = true)
     protected RoutenType routen;
-    @XmlAttribute(name = "datenbank")
+    @XmlAttribute(name = "datenbank", required = true)
     protected String datenbank;
-    @XmlAttribute(name = "batchgroesse")
-    protected Integer batchgroesse;
-    @XmlAttribute(name = "zeit")
-    protected Integer zeit;
-    @XmlAttribute(name = "krankheit")
-    protected Float krankheit;
+    @XmlAttribute(name = "batchgroesse", required = true)
+    protected int batchgroesse;
+    @XmlAttribute(name = "zeit", required = true)
+    protected int zeit;
+    @XmlAttribute(name = "krankheit", required = true)
+    protected float krankheit;
 
     /**
      * Ruft den Wert der populationen-Eigenschaft ab.
@@ -134,72 +134,48 @@ public class SimulationType {
     /**
      * Ruft den Wert der batchgroesse-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
      */
-    public Integer getBatchgroesse() {
+    public int getBatchgroesse() {
         return batchgroesse;
     }
 
     /**
      * Legt den Wert der batchgroesse-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
      */
-    public void setBatchgroesse(Integer value) {
+    public void setBatchgroesse(int value) {
         this.batchgroesse = value;
     }
 
     /**
      * Ruft den Wert der zeit-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
      */
-    public Integer getZeit() {
+    public int getZeit() {
         return zeit;
     }
 
     /**
      * Legt den Wert der zeit-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
      */
-    public void setZeit(Integer value) {
+    public void setZeit(int value) {
         this.zeit = value;
     }
 
     /**
      * Ruft den Wert der krankheit-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
      */
-    public Float getKrankheit() {
+    public float getKrankheit() {
         return krankheit;
     }
 
     /**
      * Legt den Wert der krankheit-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
      */
-    public void setKrankheit(Float value) {
+    public void setKrankheit(float value) {
         this.krankheit = value;
     }
 

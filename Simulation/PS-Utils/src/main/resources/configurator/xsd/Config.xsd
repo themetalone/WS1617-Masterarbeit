@@ -11,10 +11,10 @@
         <element name="populationen" type="scfg:populationenType"></element>
         <element name="routen" type="scfg:routenType"></element>
       </sequence>
-      <attribute name="datenbank" type="string"></attribute>
-      <attribute name="batchgroesse" type="int"></attribute>
-      <attribute name="zeit" type="int"></attribute>
-      <attribute name="krankheit" type="float"></attribute>
+      <attribute name="datenbank" type="string" use="required"></attribute>
+      <attribute name="batchgroesse" type="int" use="required"></attribute>
+      <attribute name="zeit" type="int" use="required"></attribute>
+      <attribute name="krankheit" type="float" use="required"></attribute>
     </complexType>
 
     <complexType name="populationenType">
@@ -29,40 +29,39 @@
         <element name="subpopulation" type="scfg:subpopulationType" maxOccurs="unbounded" minOccurs="0"></element>
         <element name="uebergang" type="scfg:uebergangType" maxOccurs="unbounded" minOccurs="0"></element>
       </sequence>
-      <attribute name="name" type="string"></attribute>
-      <attribute name="modell" type="string"></attribute>
-      <attribute name="lebensstandard" type="float"></attribute>
-      <attribute name="migrationsanteil" type="float"></attribute>
+      <attribute name="name" type="string" use="required"></attribute>
+      <attribute name="lebensstandard" type="float" use="required"></attribute>
+      <attribute name="migrationsanteil" type="float" use="required"></attribute>
     </complexType>
 
     <complexType name="subpopulationType">
-      <attribute name="name" type="string"></attribute>
-      <attribute name="groesse" type="int"></attribute>
-      <attribute name="sichtbar-infiziert" type="boolean"></attribute>
-      <attribute name="lebend" type="boolean"></attribute>
+      <attribute name="name" type="string" use="required"></attribute>
+      <attribute name="groesse" type="int" default="0" use="optional"></attribute>
+      <attribute name="sichtbar-infiziert" type="boolean" use="optional" default="false"></attribute>
+      <attribute name="lebend" type="boolean" use="optional" default="true"></attribute>
     </complexType>
 
     <complexType name="uebergangType">
       <sequence>
         <element name="komponente" type="scfg:uebergangKomponenteType" maxOccurs="unbounded" minOccurs="1"></element>
       </sequence>
-      <attribute name="von" type="string"></attribute>
-      <attribute name="nach" type="string"></attribute>
+      <attribute name="von" type="string" use="required"></attribute>
+      <attribute name="nach" type="string" use="required"></attribute>
     </complexType>
 
     <complexType name="uebergangKomponenteType">
       <sequence>
         <element name="reference" type="string" maxOccurs="unbounded" minOccurs="1"></element>
       </sequence>
-      <attribute name="scalar" type="float"></attribute>
+      <attribute name="scalar" type="float" default="1" use="optional"></attribute>
     </complexType>
 
     <complexType name="routenType">
       <sequence>
         <element name="route" type="scfg:routeType" maxOccurs="unbounded" minOccurs="0"></element>
       </sequence>
-      <attribute name="flugverkehr" type="boolean"></attribute>
-      <attribute name="reisende-subpopulationen" type="string">
+      <attribute name="flugverkehr" type="boolean" use="optional" default="false"></attribute>
+      <attribute name="reisende-subpopulationen" type="string" use="required">
         <annotation>
           <documentation>comma separated</documentation>
         </annotation>
@@ -73,14 +72,14 @@
       <sequence>
         <element name="zuordnung" type="scfg:zuordnungType" minOccurs="0" maxOccurs="unbounded"></element>
       </sequence>
-      <attribute name="von" type="string"></attribute>
-      <attribute name="nach" type="string"></attribute>
-      <attribute name="flug" type="boolean" default="false"></attribute>
-      <attribute name="anteil" type="float"></attribute>
+      <attribute name="von" type="string" use="required"></attribute>
+      <attribute name="nach" type="string" use="required"></attribute>
+      <attribute name="flug" type="boolean" default="false" use="optional"></attribute>
+      <attribute name="anteil" type="float" use="optional" default="1"></attribute>
     </complexType>
 
     <complexType name="zuordnungType">
-      <attribute name="vonSubpopulation" type="string"></attribute>
-      <attribute name="nachSubpopulation" type="string"></attribute>
+      <attribute name="vonSubpopulation" type="string" use="required"></attribute>
+      <attribute name="nachSubpopulation" type="string" use="required"></attribute>
     </complexType>
 </schema>
