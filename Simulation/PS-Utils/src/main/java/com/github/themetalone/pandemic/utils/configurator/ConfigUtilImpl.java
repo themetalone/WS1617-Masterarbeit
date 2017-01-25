@@ -30,7 +30,6 @@ import com.github.themetalone.pandemic.simulation.objects.transmission.component
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.TransmissionComponent;
 import com.github.themetalone.pandemic.utils.generated.PopulationType;
 import com.github.themetalone.pandemic.utils.generated.SimulationType;
-import com.github.themetalone.pandemic.utils.generated.SubpopulationType;
 import com.github.themetalone.pandemic.utils.generated.UebergangType;
 
 /**
@@ -93,29 +92,16 @@ public class ConfigUtilImpl implements ConfigUtil {
 
     // Give the PopulationTypes the standard configuration but do not override existing configurations
     config.getPopulationen().getPopulation().stream().forEach(p -> {
-      if (p.getLebensstandard() == null) {
+      if (p.getLebensstandard() == 0) {
         p.setLebensstandard(standardPopulation.getLebensstandard());
       }
-      if (p.getMigrationsanteil() == null) {
+      if (p.getMigrationsanteil() == 0) {
         p.setMigrationsanteil(standardPopulation.getMigrationsanteil());
       }
       //// Set subpopulations if not present
       standardPopulation.getSubpopulation().forEach(sp -> {
         if (!p.getSubpopulation().stream().filter(psp -> psp.getName().equals(sp.getName())).findAny().isPresent()) {
           p.getSubpopulation().add(sp);
-        } else {
-          // If the subpopulation is already there just fill in the gaps
-          SubpopulationType existingSP =
-              p.getSubpopulation().stream().filter(psp -> psp.getName().equals(sp.getName())).findAny().get();
-          if (existingSP.isLebend() == null && sp.isLebend() != null) {
-            existingSP.setLebend(sp.isLebend());
-          }
-          if (existingSP.isSichtbarInfiziert() == null && sp.isSichtbarInfiziert() != null) {
-            existingSP.setSichtbarInfiziert(sp.isSichtbarInfiziert());
-          }
-          if (existingSP.getGroesse() == null && sp.getGroesse() != null) {
-            existingSP.setGroesse(sp.getGroesse());
-          }
         }
       });
       //// Set transmissions if not present

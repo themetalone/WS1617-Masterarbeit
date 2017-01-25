@@ -2,6 +2,7 @@ package com.github.themetalone.pandemic.simulation.data;
 
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
+import com.github.themetalone.pandemic.simulation.objects.population.Population;
 import com.github.themetalone.pandemic.simulation.objects.transmission.Transmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.TransmissionIdentifier;
 
@@ -10,6 +11,8 @@ import com.github.themetalone.pandemic.simulation.objects.transmission.Transmiss
  *
  */
 public interface PandemicSimulationDataWriter {
+
+  void putPopulation(Population p);
 
   /**
    * @param s to be added to the data storage.

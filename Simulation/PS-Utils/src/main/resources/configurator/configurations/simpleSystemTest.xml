@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="1000" datenbank="testdatabase.h2" krankheit="1"
+  xmlns="http://github.com/themetalone/simpleconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../xsd/Config.xsd " zeit="500">
+  <populationen>
+    <standard lebensstandard="1" migrationsanteil="0.1" name="standard">
+      <subpopulation groesse="1000" lebend="true" name="S" sichtbar-infiziert="false"/>
+      <subpopulation groesse="10" lebend="true" name="E" sichtbar-infiziert="false"/>
+      <subpopulation groesse="0" lebend="true" name="I" sichtbar-infiziert="true"/>
+      <subpopulation groesse="0" lebend="false" name="R" sichtbar-infiziert="false"/>
+      <uebergang von="S" nach="E">
+        <komponente scalar="2.18">
+          <reference>E</reference>
+        </komponente>
+        <komponente scalar="2.18">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.8">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="R">
+        <komponente scalar="0.7">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population name="A" lebensstandard="0.5" migrationsanteil="0.5"/>
+    <population name="B" lebensstandard="1" migrationsanteil="0.1"/>
+    <populaiton name="C" lebensstandard="0.25" migrationsanteil="0.25"/>
+    <population name="D" lebensstandard="1" migrationsanteil="0.1"/>
+  </populationen>
+  <routen flugverkehr="false" reisende-subpopulationen="S,E">
+    <route von="A" nach="B"/>
+    <route von="A" nach="C"/>
+    <route von="B" nach="A"/>
+    <route von="B" nach="D"/>
+    <route von="C" nach="A"/>
+    <route von="C" nach="D"/>
+    <route von="D" nach="B"/>
+    <route von="D" nach="C"/>
+  </routen>
+</simulation>

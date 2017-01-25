@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.2">
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
+      <x>590</x>
       <y>290</y>
       <w>230</w>
       <h>130</h>
@@ -17,13 +16,14 @@ name:varchar(3)
 size:int64
 --
 Primary:popid, hsid
+Secondary:popid
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
+      <x>960</x>
       <y>290</y>
       <w>370</w>
       <h>180</h>
@@ -45,7 +45,7 @@ Secondary:srcPopId, srcHsId, trgPopId, trgHsId</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>490</x>
+      <x>810</x>
       <y>290</y>
       <w>170</w>
       <h>40</h>
@@ -59,7 +59,7 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>570</x>
+      <x>890</x>
       <y>230</y>
       <w>90</w>
       <h>90</h>
@@ -71,7 +71,7 @@ group=1</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>520</x>
+      <x>840</x>
       <y>200</y>
       <w>120</w>
       <h>40</h>
@@ -83,7 +83,7 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
+      <x>590</x>
       <y>590</y>
       <w>230</w>
       <h>130</h>
@@ -96,14 +96,14 @@ tick:int64
 size:int64
 --
 Primary:popId, hsId, tick
-Secondry:popId, hsId
+Secondary:popId, hsId
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>370</x>
+      <x>690</x>
       <y>410</y>
       <w>30</w>
       <h>200</h>
@@ -117,7 +117,7 @@ group=2</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>200</x>
+      <x>520</x>
       <y>480</y>
       <w>120</w>
       <h>40</h>
@@ -129,7 +129,7 @@ group=2</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>310</x>
+      <x>630</x>
       <y>490</y>
       <w>90</w>
       <h>120</h>
@@ -141,7 +141,7 @@ group=2</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
+      <x>960</x>
       <y>610</y>
       <w>370</w>
       <h>180</h>
@@ -162,7 +162,7 @@ Secondary:srcPopId, srcHsId, trgPopId, trgHsId</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>650</x>
+      <x>970</x>
       <y>530</y>
       <w>120</w>
       <h>40</h>
@@ -174,7 +174,7 @@ group=3</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
+      <x>1080</x>
       <y>540</y>
       <w>90</w>
       <h>90</h>
@@ -186,7 +186,7 @@ group=3</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
+      <x>1140</x>
       <y>460</y>
       <w>30</w>
       <h>170</h>
@@ -196,5 +196,137 @@ m1=1
 m2=*
 group=3</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>170</x>
+      <y>290</y>
+      <w>230</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Population
+--
+popid:int32
+name:varchar(3)
+lifestandard:float32
+migrationproportion:float32
+--
+Primary:popid</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>390</x>
+      <y>290</y>
+      <w>220</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>390</x>
+      <y>230</y>
+      <w>130</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>110.0;10.0;110.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>440</x>
+      <y>200</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>belongs to
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>100</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>LivingStates
+--
+popid:int32
+hsid:int32
+--
+Secondary:popid, hsid</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>100</y>
+      <w>180</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>100</y>
+      <w>140</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>0</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>InfectedStates
+--
+popid:int32
+hsid:int32
+--
+Secondary:popid, hsid</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>0</y>
+      <w>180</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>0</y>
+      <w>140</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;290.0</additional_attributes>
   </element>
 </diagram>

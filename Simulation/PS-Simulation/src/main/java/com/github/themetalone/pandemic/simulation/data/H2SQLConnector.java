@@ -1,5 +1,9 @@
 package com.github.themetalone.pandemic.simulation.data;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -36,34 +40,19 @@ public class H2SQLConnector implements SQLConnector {
 
     LOG.info("Using H2SQLConnector with database @ {}", location);
     this.jdbcUrl = this.jdbcPrefix + ":" + location + ";MV_STORE=FALSE;MVCC=FALSE";
+    InputStream sqlFileIS = this.getClass().getResourceAsStream("/src/main/resources/sql/h2ini.sql");
     try {
       Class.forName(this.jdbcDriver);
       Connection initConnection = DriverManager.getConnection(this.jdbcUrl, "", "");
       Statement stmnt = initConnection.createStatement();
-      stmnt.addBatch("CREATE USER IF NOT EXISTS simulation PASSWORD 'simulation' ADMIN");
-      stmnt.addBatch("CREATE SCHEMA IF NOT EXISTS PANDEMIC AUTHORIZATION simulation");
 
-      stmnt.addBatch(
-          "CREATE TABLE IF NOT EXISTS PANDEMIC.HEALTHSTATES (POPID INTEGER, HSID INTEGER ,NAME VARCHAR(255), SIZE BIGINT, "
-              + "PRIMARY KEY (POPID, HSID));");
-      stmnt.addBatch(
-          "CREATE TABLE IF NOT EXISTS PANDEMIC.HEALTHSTATESTATES (POPID INTEGER, HSID INTEGER, TICK BIGINT, SIZE BIGINT, "
-              + "PRIMARY KEY(POPID, HSID, TICK), "
-              + "FOREIGN KEY (POPID, HSID) REFERENCES PANDEMIC.HEALTHSTATES (POPID, HSID));");
-      stmnt.addBatch(
-          "CREATE TABLE IF NOT EXISTS PANDEMIC.TRANSMISSIONS (SRCPOPID INTEGER, SRCHSID INTEGER, TRGPOPID INTEGER, TRGHSID INTEGER, TYPE INTEGER, PRIORITY INTEGER, DESCRIPTION VARCHAR(255), "
-              + "PRIMARY KEY(SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE), "
-              + "FOREIGN KEY (SRCPOPID, SRCHSID) REFERENCES PANDEMIC.HEALTHSTATES (POPID, HSID), "
-              + "FOREIGN KEY (TRGPOPID, TRGHSID) REFERENCES PANDEMIC.HEALTHSTATES (POPID, HSID));");
-      stmnt.addBatch(
-          "CREATE TABLE IF NOT EXISTS PANDEMIC.TRANSMISSIONSTATES (SRCPOPID INTEGER, SRCHSID INTEGER, TRGPOPID INTEGER, TRGHSID INTEGER, TYPE INTEGER, TICK BIGINT, VALUE BIGINT, "
-              + "PRIMARY KEY(SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE, TICK), "
-              + "FOREIGN KEY (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE) REFERENCES PANDEMIC.TRANSMISSIONS (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE));");
+      BufferedReader bufferedSqlFileIS = new BufferedReader(new InputStreamReader(sqlFileIS));
 
-      stmnt.addBatch("DELETE FROM PANDEMIC.HEALTHSTATES WHERE TRUE");
-      stmnt.addBatch("DELETE FROM PANDEMIC.HEALTHSTATESTATES WHERE TRUE");
-      stmnt.addBatch("DELETE FROM PANDEMIC.TRANSMISSIONS WHERE TRUE");
-      stmnt.addBatch("DELETE FROM PANDEMIC.TRANSMISSIONSTATES WHERE TRUE");
+      for (String line; (line = bufferedSqlFileIS.readLine()) != null;) {
+        stmnt.addBatch(line.trim());
+      }
+      bufferedSqlFileIS.close();
+      sqlFileIS.close();
 
       stmnt.executeBatch();
       stmnt.close();
@@ -72,6 +61,8 @@ public class H2SQLConnector implements SQLConnector {
       throw new Error("Could not load h2sql driver!", e);
     } catch (SQLException e) {
       throw new Error("Encountered a SQLException:" + e.getMessage(), e);
+    } catch (IOException e) {
+      throw new Error("Encountered IO Exceptions during database initialization:" + e.getMessage(), e);
     }
 
   }

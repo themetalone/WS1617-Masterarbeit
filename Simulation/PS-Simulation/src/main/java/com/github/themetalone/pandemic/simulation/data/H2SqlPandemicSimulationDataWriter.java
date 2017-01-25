@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
+import com.github.themetalone.pandemic.simulation.objects.population.Population;
 import com.github.themetalone.pandemic.simulation.objects.transmission.Transmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.TransmissionIdentifier;
 
@@ -28,6 +29,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
     this.SQL = sql;
     this.statements = new HashMap<>();
     try {
+      this.statements.put(Tables.POPULATIONS, new BufferedStatement(batchSize, sql.getConnection()
+          .prepareStatement("INSERT INTO PANDEMIC.POPULATIONS (POPID, NAME, LIFE, MIGRATION) VALUES (?,?,?,?);")));
       this.statements.put(Tables.HEALTHSTATES, new BufferedStatement(batchSize, sql.getConnection()
           .prepareStatement("INSERT INTO PANDEMIC.HEALTHSTATES (POPID, HSID, NAME, SIZE) VALUES (?,?,?,?);")));
       this.statements.put(Tables.TRANSMISSIONS, new BufferedStatement(batchSize, sql.getConnection().prepareStatement(
@@ -45,6 +48,23 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   }
 
   @Override
+  public void putPopulation(Population p) {
+
+    try {
+      PreparedStatement stmnt = this.statements.get(Tables.POPULATIONS).getStatement();
+      stmnt.setInt(1, p.POPULATION_ID);
+      stmnt.setString(2, p.NAME);
+      stmnt.setFloat(3, p.LIFE_STANDARD);
+      stmnt.setFloat(4, p.MIGRATION_PROPORTION);
+      stmnt.addBatch();
+    } catch (SQLException e) {
+      close();
+      throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
+    }
+
+  }
+
+  @Override
   public void putHealthState(HealthState s) {
 
     try {
@@ -55,6 +75,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       stmnt.setLong(4, s.getSize());
       stmnt.addBatch();
     } catch (SQLException e) {
+      close();
+      throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
 
     }
   }
@@ -73,6 +95,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       stmnt.setString(7, t.toString());
       stmnt.addBatch();
     } catch (SQLException e) {
+      close();
+      throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
 
     }
   }
@@ -88,6 +112,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       stmnt.setLong(4, size);
       stmnt.addBatch();
     } catch (SQLException e) {
+      close();
+      throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
 
     }
   }
@@ -106,6 +132,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       stmnt.setLong(7, value);
       stmnt.addBatch();
     } catch (SQLException e) {
+      close();
+      throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
 
     }
 
@@ -118,6 +146,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       try {
         s.execute();
       } catch (SQLException e) {
+        throw new Error("Encountered a SQL Exception while executing a statement batch:" + e.getMessage(), e);
       }
     });
     try {
@@ -129,7 +158,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   }
 
   enum Tables {
-    HEALTHSTATES, HEALTHSTATESTATES, TRANSMISSIONS, TRANSMISSIONSTATES;
+    POPULATIONS, HEALTHSTATES, HEALTHSTATESTATES, TRANSMISSIONS, TRANSMISSIONSTATES;
   }
 
   class BufferedStatement {

@@ -68,4 +68,10 @@ public class InnerTransmission extends TransmissionParent {
     return this.COMPONENTS.parallelStream().mapToLong(TransmissionComponent::getValue).sum();
   }
 
+  @Override
+  public String toString() {
+
+    return "Transition:" + this.COMPONENTS.stream().map(c -> c.toString()).reduce("", (s, t) -> s + "+" + t);
+  }
+
 }

@@ -33,4 +33,11 @@ public class MonomialTransmissionComponent implements TransmissionComponent {
         .mapToLong(HealthState::getSize).sum());
   }
 
+  @Override
+  public String toString() {
+
+    return this.SCALE + "*(" + this.STATES.stream().map(id -> HealthStateProvider.getInstance().get(id).getName())
+        .reduce("", (s, t) -> s + "*" + t) + ")";
+  }
+
 }
