@@ -2,6 +2,7 @@ package com.github.themetalone.pandemic.simulation.objects.population;
 
 import java.util.Collection;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.objects.Provider;
 
 /**
@@ -20,6 +21,7 @@ public class PopulationProvider extends Provider<Integer, Population> {
   public PopulationProvider(Collection<Population> targets) {
     super(targets);
     instance = this;
+    targets.stream().forEach(p -> PandemicSimulationDataWriterProvider.getWriter().putPopulation(p));
   }
 
   /**

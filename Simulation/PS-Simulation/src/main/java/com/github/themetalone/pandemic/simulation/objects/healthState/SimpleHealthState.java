@@ -1,5 +1,8 @@
 package com.github.themetalone.pandemic.simulation.objects.healthState;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
 
@@ -19,11 +22,14 @@ public class SimpleHealthState implements HealthState {
 
   private long tick;
 
+  private final Logger LOG;
+
   public SimpleHealthState(int popId, int hsId, String name, long initSize) {
     this.ID = new HealthStateIdentifier(popId, hsId);
     this.NAME = name;
     this.size = initSize;
     this.changes = 0;
+    this.LOG = LoggerFactory.getLogger("SimpleHealthState-" + popId + "-" + hsId);
   }
 
   @Override
@@ -47,8 +53,10 @@ public class SimpleHealthState implements HealthState {
   @Override
   synchronized public void addSize(long addition) throws NotEnoughIndividualsException {
 
-    if (this.size + this.changes + addition < 0)
+    if (this.size + this.changes + addition < 0) {
+      this.LOG.debug("Exceeded current size:{}", this.size + this.changes + addition);
       throw new NotEnoughIndividualsException(this.size + this.changes + addition);
+    }
 
     this.changes += addition;
   }
@@ -69,6 +77,12 @@ public class SimpleHealthState implements HealthState {
   public void setTick(long tick) {
 
     this.tick = tick;
+  }
+
+  @Override
+  public String toString() {
+
+    return "SimpleHealthState [ID=" + this.ID + ", NAME=" + this.NAME + ", size=" + this.size + "]";
   }
 
 }

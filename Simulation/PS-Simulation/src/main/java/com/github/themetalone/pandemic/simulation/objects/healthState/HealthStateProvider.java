@@ -46,7 +46,7 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
   public HealthStateProvider(Collection<HealthState> targets) {
     super(targets);
     instance = this;
-    super.targets.parallelStream().forEach(hs -> PandemicSimulationDataWriterProvider.getWriter().putHealthState(hs));
+    super.targets.stream().forEach(hs -> PandemicSimulationDataWriterProvider.getWriter().putHealthState(hs));
   }
 
   @Override

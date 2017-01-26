@@ -27,7 +27,7 @@ public class H2SQLConnector implements SQLConnector {
 
   private final String jdbcDriver = "org.h2.Driver";
 
-  private static final Logger LOG = LoggerFactory.getLogger(SQLConnector.class);
+  private static final Logger LOG = LoggerFactory.getLogger("SQLConnector");
 
   private final String user = "simulation";
 
@@ -40,7 +40,7 @@ public class H2SQLConnector implements SQLConnector {
 
     LOG.info("Using H2SQLConnector with database @ {}", location);
     this.jdbcUrl = this.jdbcPrefix + ":" + location + ";MV_STORE=FALSE;MVCC=FALSE";
-    InputStream sqlFileIS = this.getClass().getResourceAsStream("/src/main/resources/sql/h2ini.sql");
+    InputStream sqlFileIS = this.getClass().getResourceAsStream("/sql/h2ini.sql");
     try {
       Class.forName(this.jdbcDriver);
       Connection initConnection = DriverManager.getConnection(this.jdbcUrl, "", "");
@@ -48,14 +48,17 @@ public class H2SQLConnector implements SQLConnector {
 
       BufferedReader bufferedSqlFileIS = new BufferedReader(new InputStreamReader(sqlFileIS));
 
+      LOG.info("Initialize Database");
       for (String line; (line = bufferedSqlFileIS.readLine()) != null;) {
-        stmnt.addBatch(line.trim());
+        LOG.info(line);
+        stmnt.execute(line.trim());
       }
       bufferedSqlFileIS.close();
       sqlFileIS.close();
 
-      stmnt.executeBatch();
       stmnt.close();
+      initConnection.commit();
+      initConnection.close();
       this.connection = DriverManager.getConnection(this.jdbcUrl, this.user, this.pw);
     } catch (ClassNotFoundException e) {
       throw new Error("Could not load h2sql driver!", e);

@@ -9,8 +9,12 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.themetalone.pandemic.simulation.Simulation;
 import com.github.themetalone.pandemic.simulation.data.H2SQLConnector;
@@ -44,6 +48,8 @@ public class ConfigUtilImpl implements ConfigUtil {
 
   public final static int OTHERTRAVEL = 2;
 
+  private final Logger LOG = LoggerFactory.getLogger("ConfigUtil");
+
   /**
    * The constructor.
    */
@@ -56,9 +62,11 @@ public class ConfigUtilImpl implements ConfigUtil {
     Path filePath = Paths.get(path);
 
     Unmarshaller um = JAXBContext.newInstance("com.github.themetalone.pandemic.utils.generated").createUnmarshaller();
-    SimulationType simType = (SimulationType) um.unmarshal(filePath.toFile());
-
-    return simType;
+    Object object = um.unmarshal(filePath.toFile());
+    if (object instanceof JAXBElement && ((JAXBElement<?>) object).getValue() instanceof SimulationType) {
+      return (SimulationType) ((JAXBElement<?>) object).getValue();
+    }
+    throw new Error("Could not parse " + path + " as Pandemic Simulation Config");
   }
 
   @Override
@@ -75,10 +83,11 @@ public class ConfigUtilImpl implements ConfigUtil {
 
     // Simulation Object
     Simulation simulation = new Simulation(config.getZeit());
-    // Create Id's
-    config.getPopulationen().getPopulation().stream().forEach(p -> popIdMap.put(p, popIdMap.size()));
-    standardPopulation.getSubpopulation().stream().forEach(sp -> hsIdMap.put(sp.getName(), hsIdMap.size()));
-
+    // Create Id'S
+    config.getPopulationen().getPopulation().stream()
+        .forEach(p -> popIdMap.put(p, config.getPopulationen().getPopulation().indexOf(p)));
+    standardPopulation.getSubpopulation().stream()
+        .forEach(sp -> hsIdMap.put(sp.getName(), standardPopulation.getSubpopulation().indexOf(sp)));
     // sanity checks
     //// travel percentage
     config.getPopulationen().getPopulation().parallelStream().forEach(srcP -> {
@@ -159,6 +168,7 @@ public class ConfigUtilImpl implements ConfigUtil {
     // travel edges
     Collection<String> travelingSubpopulationNames =
         parseTravelSubpopulations(config.getRouten().getReisendeSubpopulationen());
+    // Make Population Id Name Maps
     Map<String, Integer> popNameIdMap = new HashMap<>();
     Map<Integer, String> popIdNameMap = new HashMap<>();
     config.getPopulationen().getPopulation().parallelStream().forEach(p -> {
@@ -214,11 +224,17 @@ public class ConfigUtilImpl implements ConfigUtil {
       });
     }
     // Populate Providers
+    this.LOG.debug("Making Providers");
     PandemicSimulationDataWriterProvider.setWriter(
         new H2SqlPandemicSimulationDataWriter(new H2SQLConnector(config.getDatenbank()), config.getBatchgroesse()));
+    this.LOG.debug("Population Provider");
     new PopulationProvider(populations);
+    this.LOG.debug("HealthState Provider");
     new HealthStateProvider(healthstates);
+    this.LOG.debug("Transmission Provider");
     new TransmissionProvider(transmissions);
+    simulation.addObserver(HealthStateProvider.getInstance());
+    simulation.addObserver(TransmissionProvider.getInstance());
     return simulation;
   }
 

@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
 import com.github.themetalone.pandemic.simulation.objects.population.Population;
@@ -20,6 +23,8 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   private final SQLConnector SQL;
 
   private final Map<Tables, BufferedStatement> statements;
+
+  private final static Logger LOG = LoggerFactory.getLogger("PandemicDataWriter");
 
   /**
    * The constructor.
@@ -41,8 +46,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
           new BufferedStatement(batchSize, sql.getConnection().prepareStatement(
               "INSERT INTO PANDEMIC.TRANSMISSIONSTATES (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE,TICK, VALUE) VALUES (?,?,?,?,?,?,?);")));
     } catch (SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new Error("Could not prepare statements:" + e.getMessage(), e);
     }
 
   }
@@ -50,12 +54,14 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putPopulation(Population p) {
 
+    LOG.debug(p.toString());
     try {
       PreparedStatement stmnt = this.statements.get(Tables.POPULATIONS).getStatement();
       stmnt.setInt(1, p.POPULATION_ID);
       stmnt.setString(2, p.NAME);
       stmnt.setFloat(3, p.LIFE_STANDARD);
       stmnt.setFloat(4, p.MIGRATION_PROPORTION);
+      LOG.debug(stmnt.toString());
       stmnt.addBatch();
     } catch (SQLException e) {
       close();
@@ -67,7 +73,14 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putHealthState(HealthState s) {
 
+    LOG.debug(s.toString());
     try {
+
+      if (this.statements.get(Tables.POPULATIONS).buffer > 0) {
+        LOG.debug("Executing Population Statements");
+        this.statements.get(Tables.POPULATIONS).execute();
+      }
+
       PreparedStatement stmnt = this.statements.get(Tables.HEALTHSTATES).getStatement();
       stmnt.setInt(1, s.getIdentifier().POPULATION_ID);
       stmnt.setInt(2, s.getIdentifier().HEALTHSTATE_ID);
@@ -84,6 +97,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putTransmission(Transmission t) {
 
+    LOG.debug(t.toString());
     try {
       PreparedStatement stmnt = this.statements.get(Tables.TRANSMISSIONS).getStatement();
       stmnt.setInt(1, t.getIdentifier().SOURCE.POPULATION_ID);
@@ -146,13 +160,14 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       try {
         s.execute();
       } catch (SQLException e) {
-        throw new Error("Encountered a SQL Exception while executing a statement batch:" + e.getMessage(), e);
+        LOG.warn("Encountered SQL Error during final batch execution:" + e.getMessage());
       }
     });
     try {
+      this.SQL.getConnection().commit();
       this.SQL.getConnection().close();
     } catch (SQLException e) {
-
+      LOG.warn("Closing SQL connection caused an {}: {}", e.getClass().getName(), e.getMessage());
     }
 
   }
@@ -174,19 +189,20 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       this.statement = statement;
     }
 
-    PreparedStatement getStatement() throws SQLException {
+    synchronized PreparedStatement getStatement() throws SQLException {
 
       this.buffer++;
       if (this.buffer > this.bufferSize) {
         execute();
-        this.buffer = 0;
       }
       return this.statement;
     }
 
-    void execute() throws SQLException {
+    synchronized void execute() throws SQLException {
 
       this.statement.execute();
+      this.buffer = 0;
+      H2SqlPandemicSimulationDataWriter.this.SQL.getConnection().commit();
     }
 
   }

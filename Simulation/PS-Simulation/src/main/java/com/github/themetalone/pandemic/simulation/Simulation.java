@@ -19,7 +19,7 @@ public class Simulation extends Observable {
 
   private final long SIMULATION_TIME;
 
-  private static final Logger LOG = LoggerFactory.getLogger(Simulation.class);
+  private static final Logger LOG = LoggerFactory.getLogger("Simulation");
 
   /**
    * The constructor.

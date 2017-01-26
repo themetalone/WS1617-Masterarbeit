@@ -54,7 +54,7 @@ public class InnerTransmission extends TransmissionParent {
     try {
       HealthStateProvider.getInstance().get(getTarget()).addSize(value);
     } catch (NotEnoughIndividualsException e) {
-      throw new Error("This shouldn't have happened");
+      throw new Error("This shouldn't have happened:" + e.getMessage(), e);
     }
     PandemicSimulationDataWriterProvider.getWriter().putTransmissionExecution(this.ID, value, this.tick);
 

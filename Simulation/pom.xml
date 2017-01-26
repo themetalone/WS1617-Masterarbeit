@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.192</version>
+			<version>1.4.193</version>
 		</dependency>
 		<!-- Core utilities used by other modules. Define this if you use Spring
 			Utility APIs (org.springframework.core.*/org.springframework.util.*) -->

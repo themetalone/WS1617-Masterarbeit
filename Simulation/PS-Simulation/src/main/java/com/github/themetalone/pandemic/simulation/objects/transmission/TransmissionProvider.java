@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.event.ExecuteTransmissionsEvent;
 import com.github.themetalone.pandemic.simulation.event.PandemicSimulationEvent;
@@ -14,6 +17,8 @@ import com.github.themetalone.pandemic.simulation.objects.Provider;
  *
  */
 public class TransmissionProvider extends Provider<TransmissionIdentifier, Transmission> implements Observer {
+
+  private final Logger LOG = LoggerFactory.getLogger("TransmissionProvider");
 
   private static TransmissionProvider instance;
 
@@ -45,7 +50,9 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
    */
   public TransmissionProvider(Collection<Transmission> targets) {
     super(targets);
-    super.targets.parallelStream().forEach(t -> PandemicSimulationDataWriterProvider.getWriter().putTransmission(t));
+    instance = this;
+    this.LOG.debug("Putting targets to Database");
+    super.targets.stream().forEach(t -> PandemicSimulationDataWriterProvider.getWriter().putTransmission(t));
   }
 
   @Override
@@ -57,8 +64,10 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
       ExecuteTransmissionsEvent ete = (ExecuteTransmissionsEvent) arg1;
 
       this.targets.parallelStream().forEach(t -> t.setTick(ete.TICK));
-
-      this.targets.stream().sorted().forEachOrdered(Transmission::transmit);
+      this.targets.stream().sorted().forEachOrdered(t -> {
+        this.LOG.debug("Executing transmission {}", t.toString());
+        t.transmit();
+      });
 
     }
   }

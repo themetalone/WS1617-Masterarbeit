@@ -5,6 +5,9 @@ import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.products.SystemProperties;
 import com.github.themetalone.pandemic.simulation.Simulation;
 import com.github.themetalone.pandemic.utils.configurator.ConfigUtil;
@@ -15,6 +18,8 @@ import com.github.themetalone.pandemic.utils.configurator.ConfigUtilImpl;
  *
  */
 public class SimulationMain {
+
+  private static final Logger LOG = LoggerFactory.getLogger("MAIN");
 
   /**
    * The constructor.
@@ -37,8 +42,11 @@ public class SimulationMain {
     if (!Files.exists(Paths.get(configProperty))) {
       throw new Error("Specified Config \"" + configProperty + "\" isn't a file");
     }
+    LOG.info("Parsing Configuration");
     ConfigUtil configUtil = new ConfigUtilImpl();
+    LOG.info("Building Simulation");
     Simulation simulation = configUtil.makeSimulation(configUtil.parseConfig(configProperty));
+    LOG.info("Running Simulation");
     simulation.run();
   }
 

@@ -69,4 +69,12 @@ public class Population implements Providable {
         .sum();
   }
 
+  @Override
+  public String toString() {
+
+    return "Population [NAME=" + this.NAME + ", LIFE_STANDARD=" + this.LIFE_STANDARD + ", MIGRATION_PROPORTION="
+        + this.MIGRATION_PROPORTION + ", POPULATION_ID=" + this.POPULATION_ID + ", livingStates=" + this.livingStates
+        + ", infectedStates=" + this.infectedStates + "]";
+  }
+
 }
