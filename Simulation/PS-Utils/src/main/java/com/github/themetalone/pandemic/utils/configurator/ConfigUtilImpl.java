@@ -17,9 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.themetalone.pandemic.simulation.Simulation;
-import com.github.themetalone.pandemic.simulation.data.H2SQLConnector;
-import com.github.themetalone.pandemic.simulation.data.H2SqlPandemicSimulationDataWriter;
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
+import com.github.themetalone.pandemic.simulation.data.csv.CsvPandemicDataWriter;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
@@ -90,12 +89,12 @@ public class ConfigUtilImpl implements ConfigUtil {
         .forEach(sp -> hsIdMap.put(sp.getName(), standardPopulation.getSubpopulation().indexOf(sp)));
     // sanity checks
     //// travel percentage
-    config.getPopulationen().getPopulation().parallelStream().forEach(srcP -> {
-      float travelPercentage = config.getRouten().getRoute().parallelStream()
-          .filter(r -> r.getVon().equals(srcP.getName())).map(r -> r.getAnteil()).reduce(new Float(0), (a, b) -> a + b);
+    config.getPopulationen().getPopulation().stream().forEach(srcP -> {
+      float travelPercentage = config.getRouten().getRoute().stream().filter(r -> r.getVon().equals(srcP.getName()))
+          .map(r -> r.getAnteil()).reduce(new Float(0), (a, b) -> a + b);
       if (travelPercentage > 1) {
         float correction = 1 / travelPercentage;
-        config.getRouten().getRoute().parallelStream().forEach(r -> r.setAnteil(r.getAnteil() * correction));
+        config.getRouten().getRoute().stream().forEach(r -> r.setAnteil(r.getAnteil() * correction));
       }
     });
 
@@ -171,20 +170,20 @@ public class ConfigUtilImpl implements ConfigUtil {
     // Make Population Id Name Maps
     Map<String, Integer> popNameIdMap = new HashMap<>();
     Map<Integer, String> popIdNameMap = new HashMap<>();
-    config.getPopulationen().getPopulation().parallelStream().forEach(p -> {
+    config.getPopulationen().getPopulation().stream().forEach(p -> {
       popNameIdMap.put(p.getName(), popIdMap.get(p));
       popIdNameMap.put(popIdMap.get(p), p.getName());
     });
 
-    config.getRouten().getRoute().parallelStream().forEach(r -> {
+    config.getRouten().getRoute().stream().forEach(r -> {
       // If no additional mapping is given
       if (r.getZuordnung().isEmpty()) {
-        travelingSubpopulationNames.parallelStream()
+        travelingSubpopulationNames.stream()
             .forEach(sp -> transmissions.add(new MigrationTransmission(popNameIdMap.get(r.getVon()), hsIdMap.get(sp),
                 popNameIdMap.get(r.getNach()), hsIdMap.get(sp), r.isFlug() ? TRAVELBYPLANE : OTHERTRAVEL, 1,
                 r.getAnteil(), config.getKrankheit())));
       } else {
-        r.getZuordnung().parallelStream()
+        r.getZuordnung().stream()
             .forEach(mapping -> transmissions
                 .add(new MigrationTransmission(popNameIdMap.get(r.getVon()), hsIdMap.get(mapping.getVonSubpopulation()),
                     popNameIdMap.get(r.getNach()), hsIdMap.get(mapping.getNachSubpopulation()),
@@ -193,29 +192,29 @@ public class ConfigUtilImpl implements ConfigUtil {
     });
     // If a global plane network is requested
     if (config.getRouten().isFlugverkehr()) {
-      populations.parallelStream().forEach(srcP -> {
+      populations.stream().forEach(srcP -> {
         // Filter all populations that are not connected via plane to srcP
         Predicate<Population> unconnectedPopulationFilter = filterP -> filterP.POPULATION_ID != srcP.POPULATION_ID
-            && /* ...that has no travel by plane edge coming from src */!transmissions.parallelStream()
+            && /* ...that has no travel by plane edge coming from src */!transmissions.stream()
                 .filter(t -> t.getIdentifier().TYPE == TRAVELBYPLANE
                     && t.getIdentifier().SOURCE.POPULATION_ID == srcP.POPULATION_ID
                     && t.getIdentifier().TARGET.POPULATION_ID == filterP.POPULATION_ID)
                 .findAny().isPresent();
         // number of unconnected other populations
-        int unconnectedPopulations = populations.parallelStream()
+        int unconnectedPopulations = populations.stream()
             /* all other populations ... */
             .filter(unconnectedPopulationFilter).mapToInt(p -> new Integer(1)).sum();
         // defined percentage of traveling population from srcP. Well defined if less or equal 1
-        float connectionLevel = config.getRouten().getRoute().parallelStream()
-            .filter(r -> r.getVon().equals(popIdNameMap.get(srcP.POPULATION_ID))).map(r -> r.getAnteil())
-            .reduce(new Float(0), (a, b) -> a + b);
+        float connectionLevel =
+            config.getRouten().getRoute().stream().filter(r -> r.getVon().equals(popIdNameMap.get(srcP.POPULATION_ID)))
+                .map(r -> r.getAnteil()).reduce(new Float(0), (a, b) -> a + b);
         // connectionLevel > 1 should be impossible by sanity checks above
         if (connectionLevel < 1) {
           // travel percentage of what a single travel by plane route can
           float flightPercentage = (1 - connectionLevel) / unconnectedPopulations;
           // add a route from srcP to each unconnected population for each traveling subpopulation
-          populations.parallelStream().filter(unconnectedPopulationFilter)
-              .forEach(trgP -> travelingSubpopulationNames.parallelStream().map(s -> hsIdMap.get(s)).forEach(hs -> {
+          populations.stream().filter(unconnectedPopulationFilter)
+              .forEach(trgP -> travelingSubpopulationNames.stream().map(s -> hsIdMap.get(s)).forEach(hs -> {
                 transmissions.add(new MigrationTransmission(srcP.POPULATION_ID, hs, trgP.POPULATION_ID, hs,
                     TRAVELBYPLANE, 1, flightPercentage, config.getKrankheit()));
               }));
@@ -225,8 +224,10 @@ public class ConfigUtilImpl implements ConfigUtil {
     }
     // Populate Providers
     this.LOG.debug("Making Providers");
-    PandemicSimulationDataWriterProvider.setWriter(
-        new H2SqlPandemicSimulationDataWriter(new H2SQLConnector(config.getDatenbank()), config.getBatchgroesse()));
+    // PandemicSimulationDataWriterProvider.setWriter(
+    // new H2SqlPandemicSimulationDataWriter(new H2SQLConnector(config.getDatenbank()), config.getBatchgroesse()));
+    PandemicSimulationDataWriterProvider
+        .setWriter(new CsvPandemicDataWriter(config.getDatenbank(), config.getBatchgroesse()));
     this.LOG.debug("Population Provider");
     new PopulationProvider(populations);
     this.LOG.debug("HealthState Provider");

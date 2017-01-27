@@ -29,7 +29,7 @@ public class SimpleHealthState implements HealthState {
     this.NAME = name;
     this.size = initSize;
     this.changes = 0;
-    this.LOG = LoggerFactory.getLogger("SimpleHealthState-" + popId + "-" + hsId);
+    this.LOG = LoggerFactory.getLogger("SimpleHealthState-" + popId + "." + hsId);
   }
 
   @Override
@@ -54,15 +54,15 @@ public class SimpleHealthState implements HealthState {
   synchronized public void addSize(long addition) throws NotEnoughIndividualsException {
 
     if (this.size + this.changes + addition < 0) {
-      this.LOG.debug("Exceeded current size:{}", this.size + this.changes + addition);
-      throw new NotEnoughIndividualsException(this.size + this.changes + addition);
+      this.LOG.debug("Exceeded current size. Actual {}, Requested {}", this.size, this.size + this.changes + addition);
+      throw new NotEnoughIndividualsException(this.size);
     }
 
     this.changes += addition;
   }
 
   @Override
-  public void applyChanges() {
+  synchronized public void applyChanges() {
 
     this.size += this.changes;
     this.changes = 0;

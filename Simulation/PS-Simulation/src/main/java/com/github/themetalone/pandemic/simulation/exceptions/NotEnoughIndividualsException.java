@@ -76,7 +76,7 @@ public class NotEnoughIndividualsException extends PandemicSimulationException {
   /**
    * @return offset
    */
-  public long getOffset() {
+  public long getFeasableSize() {
 
     return this.offset;
   }

@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.data;
+package com.github.themetalone.pandemic.simulation.data.sql;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class H2SQLConnector implements SQLConnector {
 
     LOG.info("Using H2SQLConnector with database @ {}", location);
     this.jdbcUrl = this.jdbcPrefix + ":" + location + ";MV_STORE=FALSE;MVCC=FALSE";
-    InputStream sqlFileIS = this.getClass().getResourceAsStream("/sql/h2ini.sql");
+    InputStream sqlFileIS = this.getClass().getResourceAsStream("/sql/h2ini-sloppy.sql");
     try {
       Class.forName(this.jdbcDriver);
       Connection initConnection = DriverManager.getConnection(this.jdbcUrl, "", "");

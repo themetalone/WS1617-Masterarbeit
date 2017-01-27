@@ -1,4 +1,4 @@
-package com.github.themetalone.pandemic.simulation.data;
+package com.github.themetalone.pandemic.simulation.data.sql;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,6 +8,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriter;
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
+import com.github.themetalone.pandemic.simulation.data.Tables;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthState;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
 import com.github.themetalone.pandemic.simulation.objects.population.Population;
@@ -39,12 +42,12 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
       this.statements.put(Tables.HEALTHSTATES, new BufferedStatement(batchSize, sql.getConnection()
           .prepareStatement("INSERT INTO PANDEMIC.HEALTHSTATES (POPID, HSID, NAME, SIZE) VALUES (?,?,?,?);")));
       this.statements.put(Tables.TRANSMISSIONS, new BufferedStatement(batchSize, sql.getConnection().prepareStatement(
-          "INSERT INTO PANDEMIC.TRANSMISSIONS (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE, PRIORITY, DESCRIPTION) VALUES (?,?,?,?,?,?,?);")));
+          "INSERT INTO PANDEMIC.TRANSMISSIONS (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYP, PRIORITY, DESCRIPTION) VALUES (?,?,?,?,?,?,?);")));
       this.statements.put(Tables.HEALTHSTATESTATES, new BufferedStatement(batchSize, sql.getConnection()
-          .prepareStatement("INSERT INTO PANDEMIC.HEALTHSTATESTATES (POPID, HSID, TICK, SIZE) VALUES (?,?,?,?);))")));
+          .prepareStatement("INSERT INTO PANDEMIC.HEALTHSTATESTATES (POPID, HSID, TICK, SIZE) VALUES (?,?,?,?);")));
       this.statements.put(Tables.TRANSMISSIONSTATES,
           new BufferedStatement(batchSize, sql.getConnection().prepareStatement(
-              "INSERT INTO PANDEMIC.TRANSMISSIONSTATES (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYPE,TICK, VALUE) VALUES (?,?,?,?,?,?,?);")));
+              "INSERT INTO PANDEMIC.TRANSMISSIONSTATES (SRCPOPID, SRCHSID, TRGPOPID, TRGHSID, TYP,TICK, VOLUME) VALUES (?,?,?,?,?,?,?);")));
     } catch (SQLException e) {
       throw new Error("Could not prepare statements:" + e.getMessage(), e);
     }
@@ -73,14 +76,9 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putHealthState(HealthState s) {
 
+    executeStatements(Tables.POPULATIONS);
     LOG.debug(s.toString());
     try {
-
-      if (this.statements.get(Tables.POPULATIONS).buffer > 0) {
-        LOG.debug("Executing Population Statements");
-        this.statements.get(Tables.POPULATIONS).execute();
-      }
-
       PreparedStatement stmnt = this.statements.get(Tables.HEALTHSTATES).getStatement();
       stmnt.setInt(1, s.getIdentifier().POPULATION_ID);
       stmnt.setInt(2, s.getIdentifier().HEALTHSTATE_ID);
@@ -97,6 +95,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putTransmission(Transmission t) {
 
+    executeStatements(Tables.HEALTHSTATES);
     LOG.debug(t.toString());
     try {
       PreparedStatement stmnt = this.statements.get(Tables.TRANSMISSIONS).getStatement();
@@ -118,6 +117,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putHealthStateState(HealthStateIdentifier id, long size, long tick) {
 
+    executeStatements(Tables.TRANSMISSIONS);
     try {
       PreparedStatement stmnt = this.statements.get(Tables.HEALTHSTATESTATES).getStatement();
       stmnt.setInt(1, id.POPULATION_ID);
@@ -135,6 +135,7 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
   @Override
   public void putTransmissionExecution(TransmissionIdentifier id, long value, long tick) {
 
+    executeStatements(Tables.TRANSMISSIONS);
     try {
       PreparedStatement stmnt = this.statements.get(Tables.TRANSMISSIONSTATES).getStatement();
       stmnt.setInt(1, id.SOURCE.POPULATION_ID);
@@ -153,10 +154,24 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
 
   }
 
+  private void executeStatements(Tables table) {
+
+    // if (this.statements.get(table).buffer > 0) {
+    // LOG.debug("Ensure Database Constrains");
+    // try {
+    // this.statements.get(table).execute();
+    // } catch (SQLException e) {
+    // close();
+    // throw new Error("Encountered a SQL Exception while preparing a statement:" + e.getMessage(), e);
+    // }
+    // }
+  }
+
   @Override
   public void close() {
 
-    this.statements.values().parallelStream().forEach(s -> {
+    LOG.info("Closing connection to database ...");
+    this.statements.values().stream().forEach(s -> {
       try {
         s.execute();
       } catch (SQLException e) {
@@ -166,14 +181,11 @@ public class H2SqlPandemicSimulationDataWriter implements PandemicSimulationData
     try {
       this.SQL.getConnection().commit();
       this.SQL.getConnection().close();
+      LOG.info("Connection closed");
     } catch (SQLException e) {
       LOG.warn("Closing SQL connection caused an {}: {}", e.getClass().getName(), e.getMessage());
     }
 
-  }
-
-  enum Tables {
-    POPULATIONS, HEALTHSTATES, HEALTHSTATESTATES, TRANSMISSIONS, TRANSMISSIONSTATES;
   }
 
   class BufferedStatement {

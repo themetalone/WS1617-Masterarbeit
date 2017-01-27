@@ -58,7 +58,7 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
 
       this.targets.parallelStream().forEach(h -> h.setTick(((CommitChangesEvent) arg).TICK));
 
-      this.targets.parallelStream().forEach(h -> h.applyChanges());
+      this.targets.stream().forEach(h -> h.applyChanges());
     }
 
   }

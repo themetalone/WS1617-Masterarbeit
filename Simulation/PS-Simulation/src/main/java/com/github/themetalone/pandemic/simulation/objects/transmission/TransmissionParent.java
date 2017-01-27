@@ -1,5 +1,8 @@
 package com.github.themetalone.pandemic.simulation.objects.transmission;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
 
 /**
@@ -14,12 +17,17 @@ public abstract class TransmissionParent implements Transmission {
 
   protected final int priority;
 
+  protected final Logger LOG;
+
   /**
    * The constructor.
    */
   public TransmissionParent(int srcPopId, int srcHsId, int trgtPopId, int trgtHsId, int type, int priority) {
     this.ID = new TransmissionIdentifier(srcPopId, srcHsId, trgtPopId, trgtHsId, type);
     this.priority = priority;
+    this.LOG = LoggerFactory.getLogger(
+        this.getClass().getSimpleName() + ":" + this.ID.SOURCE.POPULATION_ID + "." + this.ID.SOURCE.HEALTHSTATE_ID
+            + "-(" + this.ID.TYPE + ")->" + this.ID.TARGET.POPULATION_ID + "." + this.ID.TARGET.HEALTHSTATE_ID);
   }
 
   @Override

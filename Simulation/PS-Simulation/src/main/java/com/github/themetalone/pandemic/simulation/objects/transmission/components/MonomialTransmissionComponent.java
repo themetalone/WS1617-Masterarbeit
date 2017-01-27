@@ -37,7 +37,7 @@ public class MonomialTransmissionComponent implements TransmissionComponent {
   public String toString() {
 
     return this.SCALE + "*(" + this.STATES.stream().map(id -> HealthStateProvider.getInstance().get(id).getName())
-        .reduce("", (s, t) -> s + "*" + t) + ")";
+        .reduce("1", (s, t) -> s + "*" + t) + ")";
   }
 
 }

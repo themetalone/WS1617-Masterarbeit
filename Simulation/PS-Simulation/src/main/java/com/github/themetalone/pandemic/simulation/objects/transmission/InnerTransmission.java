@@ -38,13 +38,17 @@ public class InnerTransmission extends TransmissionParent {
   public void transmit() {
 
     long value = getValue();
+    this.LOG.debug("{}.{}--({})-->{}.{}", this.ID.SOURCE.POPULATION_ID, this.ID.SOURCE.HEALTHSTATE_ID, value,
+        this.ID.TARGET.POPULATION_ID, this.ID.TARGET.HEALTHSTATE_ID);
     if (value < 0)
       throw new Error(
           "Transmission with " + this.ID.toString() + " calculated less than zero transmission volume " + value);
     try {
       HealthStateProvider.getInstance().get(getSource()).addSize(-value);
     } catch (NotEnoughIndividualsException e) {
-      value = e.getOffset();
+      this.LOG.debug("Not enough Individuals in {}.{}. Feasable size={}", this.ID.SOURCE.POPULATION_ID,
+          this.ID.SOURCE.HEALTHSTATE_ID, e.getFeasableSize());
+      value = e.getFeasableSize();
       try {
         HealthStateProvider.getInstance().get(getSource()).addSize(-value);
       } catch (NotEnoughIndividualsException e1) {
