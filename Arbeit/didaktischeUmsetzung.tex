@@ -3,11 +3,32 @@
 Mit dieser Unterrichtsreihe sollen vor allem zwei Dinge aus dem Lehrplan umgesetzt werden. Zum einen soll der Computer den Mathematikunterricht unterstützen und bereichern. Erst durch den Computereinsatz entsteht die Möglichkeit, realitätsnahe Modellierungen durchzuführen und auszuwerten. \\
 Zusätzlich sollen die SuS den Prozess der mathematischen Modellbildung lernen. Die Betrachtung der Krankheitsausbreitung bietet sich dafür in besonderer Weise an. Zunächst ist die Motivation sehr hoch, da die SuS bei vielen Krankheiten, wie Grippe, selbst betroffen sind. Zudem lässt sich der Kreislauf der Modellbildung sehr gut nachvollziehen, da die SuS immer wieder feststellen werden, dass sie bestimmte Aspekte nicht ausreichend berücksichtigt haben und ihr Modell die Realität noch nicht zufriedenstellend beschreibt.\\
 Um die Motivation zu erhalten sollte mit dem einfachsten Modell gestartet werden. Daher wird zunächst der Single Population Ansatz untersucht.
-\subsection{Single Population Ansätze}
+\subsection{Einordnung in den Lehrplan}
+\steffen
+\textbf{REF?}
+Das \emph{mathematische Modellieren (K3)} ist eine der sechs allgemeinen mathematischen Kompetenzen, die im Mathematikunterricht gefördert werden sollen, und steht im Mittelpunkt der Reihe. Das im ersten Teil der Reihe entwickelte Modell kann schnell als unzureichend für große Gebiete erkannt werden. In Folge dessen wird der bereits bekannte Modellierungskreislauf erneut angestoßen. 
+
+Durch den Übergang von Tabellen auf eine Netzwerksdarstellung und deren erneute Auswertung in Tabellenform werden auch die Kompetenzen \emph{Mathematische Darstellungen Verwenden (K4)} und \emph{Mit symbolischen, formalen und technischen Aspekten der Mathematik umgehen (K5)} bei den SuS gefördert. 
+
+Innerhalb des Modellierungskreislaufes müssen die Unzulänglichkeiten des aktuellen Modelles sowie mögliche Erweiterungen aufgezeigt und begründet werden. Damit wird die Kompetenz \emph{Mathematisch argumentieren (K1)} gefördert.
+
+Inhaltlich lässt sich die Reihe der Leitidee \emph{Daten und Zufall (L5)} der Klassenstufe 9 bis 10 für den Mittleren Schulabschluss zuordnen. Obwohl das hier verwendete \emph{SEIHFRD}-Modell deterministisch ist, repräsentieren die Übergangskoeffizienten doch Mittelwerte. Zudem werden im Verlauf der Reihe aus der Simulation generierte Daten statistisch ausgewertet. 
+
+
+\subsection{Single Population Ansätze}\label{ssec:did:spa}
 \ellen
 Die Unterrichtsreihe sollte wie der Modellierungskreislauf aufgebaut werden. Die SuS sollten also zunächst über Ebola informiert werden. Danach können sie selbstständig verschiedene Modelle erstellen, anhand derer der Verlauf von Ebola rekonstruiert werden kann. Mit geschickter Auswahl der Vorbereitungsliteratur kann man jedoch dafür sorgen, dass einige SuS auf ein Modell kommen, dass dem SIR-Modell sehr nahe kommt. Falls jedoch ein Modell entsteht, dass besser ist, sollte die Lehrkraft in der Lage sein, darauf zu reagieren und diese Modell dann zu verwenden.\\
 Die SuS können mit ihrem Modell und mit der Hilfe eines Tabellenkalkulationsprogramms einen Krankheitsverlauf für eine kleine Population simulieren. Dabei sollte ihnen auffallen, dass das Modell noch schwächen hat. Beispielsweise wir nicht zwischen toten und immunen Individuen unterschieden. Zudem hat jeder der erkrankt die selben Chancen geheilt zu werden, egal ob dieser behandelt wird oder nicht.\\
  Durch diese Erkenntnisse, sind die SuS in der Lage das Modell zu verbessern. Somit durchlaufen sie schon mehrere Male den Modellierungskreislauf.\\
  Um zuletzt auf das SEIHFRD-Modell zu kommen brauchen die SuS wahrscheinlich die Hilfe der Lehrkraft, denn die Einführung der Klasse \glqq E\grqq{} könnte Probleme bereiten.\\
  Diese Klasse kann jedoch durch die Lehrkraft, mit Verweis auf die Methoden zur Eindämmung der Krankheitsausbreitung, eingeführt werden. So machen beispielsweise Quarantänen nur dann Sinn, wenn es die Klasse \glqq E\grqq{} gibt, da sonst nicht zwischen denen unterschieden werden kann, die bereits ansteckend sind, aber selbst noch keine Symptome zeigen und jenen, bei denen die Krankheit bereits vollständig ausgebrochen ist.  
-\subsection{Netzwerkansätze}
+\subsection{Netzwerkansätze}\steffen
+\subsubsection*{Relevanz des Inhaltes}
+Nachdem die Schülerinnen und Schüler in Abschnitt \ref{ssec:did:spa} ein Modell für eine einzelne Population entwickelt haben, wird die Erweiterung auf mehrere Populationen der nächste Schritt sein. Die Verwendung einer einzelnen globalen Population liefert schnell Gründe, wieso mehrere Populationen ,zum Beispiel eine pro Nation, sinnvoll sind. Da mit der Erweiterung als Schülervorschlag gerechnet werden muss, wäre es frustrierend und demotivierend für die Schüler, den Modellentwicklungsprozess an dieser Stelle abzubrechen.
+\subsubsection*{Benötigtes Vorwissen}
+Explizit benötigen die Schüler das Wissen, dass bereits für den ersten Teil benötigt wird. Zudem wird auf dem Wissen und den erworbenen Kompetenzen der vorherigen Stunden aufgebaut, nämlich dem Modellbildungsprozess und der Funktionsweise der \emph{SIR}-Modelle. Bezüglich der Rechenoperationen wird zudem, je nach Vorschlag der Lerngruppe, noch das Potenzieren mit rationalen Exponenten benötigt. Dies wird dem Lehrplan entsprechend in Klassenstufe 9/10 eingeführt. Falls das Potenzieren mit rationalen Exponenten noch nicht behandelt wurde, kann dies auch weggelassen werden. Eine alternative Modellierung der Infektionseinschätzung in Gleichung \ref{eq:ssec:multiPop:infRisk} aus Abschnitt \ref{ssec:multiPop} wäre darunter beispielsweise
+\begin{align}
+	1+\sigma\cdot \vert 1- \frac{i_B}{i_A}\vert.
+\end{align}
+\subsubsection*{Didaktische Reduktion des Inhalts}
+Das Aufbrechen des bisherigen \emph{SIR}-Modells zu einem netzwerksbasierten Modell wird mit hoher Wahrscheinlichkeit die Schüler überfordern. Aus diesem Grund, sollte der Übergang organisch durch die Erweiterung des Modells stattfinden. Während der Modellierung wird gegenüber den Schülern der Begriff des ``Netzwerkes'' nicht explizit erwähnt.
