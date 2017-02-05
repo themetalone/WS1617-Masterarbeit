@@ -56,7 +56,7 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
       return;
     if (arg instanceof CommitChangesEvent) {
 
-      this.targets.parallelStream().forEach(h -> h.setTick(((CommitChangesEvent) arg).TICK));
+      this.targets.stream().forEach(h -> h.setTick(((CommitChangesEvent) arg).TICK));
 
       this.targets.stream().forEach(h -> h.applyChanges());
     }

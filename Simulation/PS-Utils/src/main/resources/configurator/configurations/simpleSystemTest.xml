@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<simulation batchgroesse="1000" datenbank="testdatabase.h2" krankheit="1"
+<simulation batchgroesse="1000" datenbank="simpleSystemTest/simpleSystemTest" krankheit="1"
   xmlns="http://github.com/themetalone/simpleconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../xsd/Config.xsd " zeit="500">
   <populationen>
@@ -29,7 +29,7 @@
     </standard>
     <population name="A" lebensstandard="0.5" migrationsanteil="0.5"/>
     <population name="B" lebensstandard="1" migrationsanteil="0.1"/>
-    <populaiton name="C" lebensstandard="0.25" migrationsanteil="0.25"/>
+    <population name="C" lebensstandard="0.25" migrationsanteil="0.25"/>
     <population name="D" lebensstandard="1" migrationsanteil="0.1"/>
   </populationen>
   <routen flugverkehr="false" reisende-subpopulationen="S,E">

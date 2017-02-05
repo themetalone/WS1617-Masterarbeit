@@ -66,8 +66,6 @@ public class SimpleHealthState implements HealthState {
 
     this.size += this.changes;
     this.changes = 0;
-    PandemicSimulationDataWriterProvider.getWriter().putHealthStateState(this.ID, this.size, this.tick);
-
   }
 
   /**
@@ -76,6 +74,7 @@ public class SimpleHealthState implements HealthState {
   @Override
   public void setTick(long tick) {
 
+    PandemicSimulationDataWriterProvider.getWriter().putHealthStateState(this.ID, this.size, this.tick);
     this.tick = tick;
   }
 

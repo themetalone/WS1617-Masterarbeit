@@ -1,5 +1,6 @@
 package com.github.themetalone.pandemic.simulation.data.csv;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -23,7 +24,7 @@ public class CsvConnector {
    */
   public CsvConnector(Path target) throws IOException {
     target.toFile().createNewFile();
-    this.csvPrinter = new CSVPrinter(new FileWriter(target.toFile()), CSVFormat.EXCEL);
+    this.csvPrinter = new CSVPrinter(new BufferedWriter(new FileWriter(target.toFile())), CSVFormat.EXCEL);
   }
 
   public void writeRecords(List<String[]> records) throws IOException {

@@ -32,25 +32,25 @@ public class CsvPandemicDataWriter implements PandemicSimulationDataWriter {
    * The constructor.
    */
   public CsvPandemicDataWriter(String location, int bufferSize) {
-    Paths.get(location).toFile().mkdirs();
+    Paths.get(location).toFile().getParentFile().mkdirs();
     this.buffers = new HashMap<>();
     try {
       this.buffers.put(Tables.POPULATIONS,
           new BufferedCsvTable(bufferSize, new String[] { "POPID", "NAME", "LIFE", "MIGRATION" },
-              new CsvConnector(Paths.get(location + "population.csv"))));
+              new CsvConnector(Paths.get(location + "-population.csv"))));
       this.buffers.put(Tables.HEALTHSTATES,
           new BufferedCsvTable(bufferSize, new String[] { "POPID", "HSID", "NAME", "SIZE" },
-              new CsvConnector(Paths.get(location + "healthstates.csv"))));
+              new CsvConnector(Paths.get(location + "-healthstates.csv"))));
       this.buffers.put(Tables.TRANSMISSIONS,
           new BufferedCsvTable(bufferSize,
               new String[] { "SRCPOPID", "SRCHSID", "TRGPOPID", "TRGHSID", "TYPE", "PRIORITY", "DESCRIPTION" },
-              new CsvConnector(Paths.get(location + "transmissiosn.csv"))));
+              new CsvConnector(Paths.get(location + "-transmissiosn.csv"))));
       this.buffers.put(Tables.HEALTHSTATESTATES, new BufferedCsvTable(bufferSize,
-          new String[] { "POPID", "HSID", "TICK", "SIZE" }, new CsvConnector(Paths.get(location + "hsstates.csv"))));
+          new String[] { "POPID", "HSID", "TICK", "SIZE" }, new CsvConnector(Paths.get(location + "-hsstates.csv"))));
       this.buffers.put(Tables.TRANSMISSIONSTATES,
           new BufferedCsvTable(bufferSize,
               new String[] { "SRCPOPID", "SRCHSID", "TRGPOPID", "TRGHSID", "TYPE", "TICK", "VOLUME" },
-              new CsvConnector(Paths.get(location + "tstates.csv"))));
+              new CsvConnector(Paths.get(location + "-tstates.csv"))));
     } catch (IOException e) {
       throw new Error("Cannot initalize csv writer", e);
     }
