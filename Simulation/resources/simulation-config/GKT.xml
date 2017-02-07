@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="0" datenbank="target/target/gtk" krankheit="0.0" xmlns="http://github.com/themetalone/simpleconfig"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
+  zeit="36">
+  <populationen>
+    <standard lebensstandard="0.0" migrationsanteil="0.0" name="">
+      <subpopulation groesse="11500000" name="G"/>
+      <subpopulation groesse="4108" name="K" sichtbar-infiziert="true"/>
+      <subpopulation name="T" lebend="false"/>
+
+      <uebergang von="G" nach="K">
+        <komponente scalar="2.18">
+          <reference>K</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="K" nach="G">
+        <komponente scalar="0.5">
+          <reference>K</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="K" nach="T">
+        <komponente scalar="0.5">
+          <reference>K</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population name="A" />
+  </populationen>
+  <routen flugverkehr="false" reisende-subpopulationen="S"/>
+</simulation>

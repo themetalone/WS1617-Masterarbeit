@@ -12,8 +12,10 @@ public class HealthStateStateRecordFactory {
 
   public HealthStateStateRecord parse(CSVRecord csv) throws HeaderException {
 
-    if (csv.get(0) instanceof String) {
-      throw new HeaderException();
+    try {
+      Integer.valueOf(csv.get(0));
+    } catch (NumberFormatException e) {
+      throw new HeaderException("This seems to be the header:" + csv.toString(), e);
     }
 
     HealthStateStateRecord result = new HealthStateStateRecord();
