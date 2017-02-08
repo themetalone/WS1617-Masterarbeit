@@ -7,19 +7,58 @@ Ziel der Unterrichtsreihe ist es, die Schüler den mathematischen Modellierungsk
 \input{projekt/reihenplanung}
 \subsection{Projektstunde 1 \& 2}\ellen
 \subsubsection{Bemerkungen zur Lerngruppe}
+Bei der Planung der ersten beiden Stunden war uns lediglich bekannt, dass es sich um Schülerinnen und Schüler der zehnten Klasse eines Gymnasiums für Hochbegabte handelt\\
+Zudem seien die Grundlagen der Schülerinnen und Schüler höchst unterschiedlich. Der Umgang mit Tabellenkalkulationsprogrammen sollte jedoch in Grundzügen beherrscht werden. 
 \subsubsection{Methodische Überlegungen}
-%\subsubsection{Verlaufsskizze}
+Um die Motivation zu fördern und eine möglichst hohe Nachhaltigkeit zu erhalten, sollen die Unterrichtsstunden handlungsorientiert ausgerichtet werden. Dazu sollen die Schülerinnen und Schüler zunächst alleine Rechenoperationen formulieren, mit deren Hilfe die Größe der Klassen (Gesund, Krank und Tod) berechnet werden können.\\
+Die Schülerinnen und Schüler haben bereits vorher im Mathematikunterricht gelernt, wie sie aus Texten Terme aufstellt. Dadurch können die Schülerinnen und Schüler früh Erfolge erringen um dadurch die Motivation zu behalten und um ihnen die Angst vor dem Simulieren nehmen.\\
+Durch die Einzelarbeit ist gewährleistet, dass alle Schülerinnen und Schüler sich am Unterricht beteiligen. Sobald alle Schülerinnen und Schüler ihre Terme aufgestellt haben, vergleichen sie ihre mit denen ihres Nachbarn.\\
+Dadurch können die Schülerinnen und Schüler mathematisches argumentieren einüben. Zusätzlich entsteht eine gewisse Sicherheit bezüglich des eigenen Vorgehens, dadurch kann die Hemmschwelle gesenkt werden, die eigenen Ergebnisse der Klasse vorzustellen.\\
+Nachdem sich alle Gruppen auf Vorschriften geeinigt haben, werden diese der Klasse vorgestellt.\\
+In der Klasse werden die Vorschriften vorgestellt. Dabei sollten falsche Vorschriften nicht direkt durch die Lehrperson korrigiert werden. Die Schülerinnen und Schüler können später über die Gleichungen diskutieren und gemeinsam eine korrekte Lösung erarbeiten.\\
+Mit diesen Vorschriften sollen die Schülerinnen und Schüler dann eine kleine Simulation mit Hilfe von Tabellenkalkulationsprogrammen erstellen.\\
+Der Umgang mit solchen Programmen sollte in Grundzügen bereits beherrscht werden und wird an dieser Stelle vertieft.\\
+Nachdem diese Programme angefertigt und in der Klasse besprochen wurden, sollen die Schülerinnen und Schüler Vorschläge zur Verbesserung des Modells machen. Manche dieser Vorschläge werden dann in einem zweiten Programm umgesetzt.\\
+Dadurch haben die Schülerinnen und Schüler den Modellierungskreislauf durchgeführt. 
+\subsubsection{Verlaufsskizze}
 \input{projekt/VerlaufsplanErsteStunde}
 \subsubsection{Materialien}
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/Arbeitsblatt_1}}
 \subsubsection{Erwartungshorizont}
+Da die Schülerinnen und Schüler bereits gelernt haben, wie sie Gleichungen aufstellen wird erwartet, dass sie zunächst einige Schritte ausprobieren und danach eine Vorschrift für eine beliebige Zeit angeben. Dies könnte dann etwa so aussehen:\\
+Zunächst sollten die Kranken betrachtet werden, da diese lediglich von der Anzahl der Kranken zuvor abhängt.\\
+$ K(1) = K$\\
+$ K(2) = 2,18 \cdot K(1) - K(1) = 1,18 \cdot K(1)$\\
+$ K(3) = 1,18 \cdot K(2) = 1,18^2 \cdot K(1)$\\
+$ K(t) = 1,18^{t-1} \cdot K(1)$\\
+
+Danach können sie eine Vorschrift für die Gesunden mit der gleichen Vorgehensweise finden.\\
+$ G(1) = G$\\
+$ G(2) = G(1) - 2,18 \cdot K(1) + 0,5 \cdot K(1) = G(1)- 1,68 \cdot K(1)$\\
+$ G(3) = G(2) - 1,68 \cdot K(2)$\\
+$ G(t) = G(t-1) - 1,68 \cdot K(t-1)$\\
+Diese Gleichung kann selbstverständlich auch anders formuliert werden und explizit dargestellt werden. Diese Darstellung lässt sich jedoch leicht mit Tabellenkalkulationsprogrammen durch ziehen der Formeln umsetzen.\\
+
+Ebenso sollen die Schülerinnen und Schüler Vorschriften für die Anzahl der Toten angeben.\\
+$ T(1) = 0 $\\
+$ T(t) = T(t-1) + 0,5 \cdot K(t-1)$\\
+
+
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/erwartung_gtk}}\newpage
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/erwartung_gtih}}\newpage
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/erwartung_gktihb}}\newpage
 \subsubsection{Schülerprodukte}
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/leistung_1_1}}\newpage
 \noindent\frame{\includegraphics[width=\textwidth]{projekt/leistung_1_2}}\newpage
+Alle Produkte der Schülergruppen entsprechen mindestens dem Erwartungshorizont. Das oben angeführte Beispiel zeigt aber zusätzlich ein Schülerprodukt, das die Erwartungen weit übertrifft. Darin zeigt sich, dass eine Differenzierung der Aufgabenstellungen dringend notwendig ist. Einige Gruppen benötigten viel Zeit um sich mit dem Tabellenkalkulationsprogramm vertraut zu machen, während das obige Beispiel zeigt, dass es auch Gruppen gab die nach Bearbeitung der Aufgabe noch die Zeit hatten, einen Graphen zu plotten der den Verlauf nochmal verdeutlicht.  
+
 \subsubsection{Reflexion der Stunde}
+Die Schülerinnen und Schüler haben zum Teil neue Funktionen der Tabellenkalkulationsprogramme kennen gelernt. Zudem haben sie Grundlegende Vorgänge der Modellbildung genutzt und eigenständig Modelle aufgestellt. In diesem Zusammenhang wurde auch das Aufstellen von Funktionen wiederholt und vertieft.\\
+Die Schülerbeteiligung war sehr hoch, ohne Anstoß durch die Lehrperson haben sie die Vorschläge der Gruppen gemeinsam korrigiert und in einem angenehmen Klima fachlich diskutiert. Zusätzlich wurden schon früh Verbesserungsvorschläge für das Modell angebracht.\\
+Da die Klasse unbekannt ist, war die Zusammensetzung in der Partnerarbeit nicht optimal. Wenn man die Lerngruppe besser kennt, könnte man Teams bilden, die sich gegenseitig unterstützen. Dadurch könnten die großen Unterschiede im Zeitbedarf angepasst werden.\\
+Ist dies jedoch nicht möglich, sollte es Aufgaben geben, die die besonders schnellen zusätzlich erledigen können.\\
+Statt der beiden Simulationen konnten die Gruppen in der Stunde nur eine Simulation durchführen. Dies ist jedoch von Vorteil für die nächste Sitzung, da an diesem Tag acht von siebzehn Schülern fehlten.\\
+Daher wird in der nächsten Stunde eine größere Wiederholung stattfinden. Von allen Gruppen wird dann lediglich die zweite Simulation durchgeführt und die dritte Simulation steht für die besonders schnellen Schülerinnen und Schüler zur Verfügung. 
 \newpage
 \subsection{Projektstunde 3 \& 4}\ellen
 \subsubsection{Bemerkungen zur Lerngruppe}
