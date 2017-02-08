@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
 import com.github.themetalone.pandemic.simulation.event.CommitChangesEvent;
 import com.github.themetalone.pandemic.simulation.event.ExecuteTransmissionsEvent;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
 
 /**
  * @author steffen
@@ -43,6 +44,9 @@ public class Simulation extends Observable {
       callTransmissions(t);
       callStates(t);
     }
+    // write the last healthState states to the data system
+    HealthStateProvider.getInstance().getAll().stream().forEach(hs -> PandemicSimulationDataWriterProvider.getWriter()
+        .putHealthStateState(hs.getIdentifier(), hs.getSize(), this.SIMULATION_TIME));
     PandemicSimulationDataWriterProvider.getWriter().close();
   }
 

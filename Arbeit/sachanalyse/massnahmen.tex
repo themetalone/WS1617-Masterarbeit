@@ -49,12 +49,12 @@ Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopu
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
 	\node[state] (S)				{S};
-	\node[state] (E) [right of=S]	{E};
+	\node[state] (E) [right =4cm of S]	{E};
 	\node[state] (I) [right of=E]	{I};
 	\node[state] (H) [right of=I]	{H};
-	\node[state] (F)[above of=H]	{F};
+	\node[state] (F)[above of=I]	{F};
 	\node[state] (D)[right of=F]	{D};
-	\node[state] (R)[below right of=H]	{R};
+	\node[state] (R)[below of=H]	{R};
 	\node[state] (QS)[below of=S] {$Q_S$};
 	\node[state] (QE)[below of=E] {$Q_E$};
 	\node (X) [below of=QS] {};
@@ -70,7 +70,7 @@ Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopu
 			(QS) edge node {$q_S\cdot Q_S$} (S)
 			(QS) edge node {$\alpha\cdot Q_E$} (QE)
 			(QE) edge node {$q_E\cdot Q_E$} (E)
-			(QE) edge [bend right] node {$(1-q_E)\cdot Q_E$}	(H)
+			(QE) edge node {$(1-q_E)\cdot Q_E$}	(H)
 			(X) edge node {} (QS)
 			(Y) edge node {} (QE)
 			;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="0" datenbank="target/SIHFRD/sihfrd" krankheit="1" xmlns="http://github.com/themetalone/simpleconfig"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
+  zeit="36">
+  <populationen>
+    <standard lebensstandard="0.0" migrationsanteil="0.0" name="" groesse="4108">
+      <subpopulation groesse="11500000" name="S"/>
+      <subpopulation name="I" groesse="4108" sichtbar-infiziert="true"/>
+      <subpopulation name="H" sichtbar-infiziert="true"/>
+      <subpopulation name="R"></subpopulation>
+      <subpopulation name="F" lebend="false"/>
+      <subpopulation name="D" lebend="false"/>
+
+      <uebergang von="S" nach="I">
+        <komponente scalar="2.18">
+          <reference>I</reference>
+        </komponente>
+        <komponente scalar="0.2">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="H">
+        <komponente scalar="0.7">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="R">
+        <komponente scalar="0.15">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="F">
+        <komponente scalar="0.15">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="R">
+        <komponente scalar="0.6">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="D">
+        <komponente scalar="0.4">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="F" nach="D">
+        <komponente scalar="1">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population name="A" lebensstandard="1" migrationsanteil="0"/>
+  </populationen>
+  <routen flugverkehr="false" reisende-subpopulationen="S"/>
+</simulation>

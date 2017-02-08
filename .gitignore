@@ -6,3 +6,6 @@ Arbeit/Masterarbeit.pdf
 *.toc
 *.pdf
 Simulation/target/
+*.class
+Simulation/PS-Products/PS-Simulation-Product/target/
+Simulation/PS-Products/PS-Analysis-Product/target/
