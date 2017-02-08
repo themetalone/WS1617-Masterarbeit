@@ -3,7 +3,10 @@ package com.github.themetalone.pandemic.simulation.objects.transmission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
+import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateIdentifier;
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
 
 /**
  * @author steffen
@@ -28,6 +31,35 @@ public abstract class TransmissionParent implements Transmission {
     this.LOG = LoggerFactory.getLogger(
         this.getClass().getSimpleName() + ":" + this.ID.SOURCE.POPULATION_ID + "." + this.ID.SOURCE.HEALTHSTATE_ID
             + "-(" + this.ID.TYPE + ")->" + this.ID.TARGET.POPULATION_ID + "." + this.ID.TARGET.HEALTHSTATE_ID);
+  }
+
+  @Override
+  public void transmit() {
+
+    long value = getValue();
+    this.LOG.debug("{}.{}--({})-->{}.{}", this.ID.SOURCE.POPULATION_ID, this.ID.SOURCE.HEALTHSTATE_ID, value,
+        this.ID.TARGET.POPULATION_ID, this.ID.TARGET.HEALTHSTATE_ID);
+    if (value < 0)
+      throw new Error(
+          "Transmission with " + this.ID.toString() + " calculated less than zero transmission volume " + value);
+    try {
+      HealthStateProvider.getInstance().get(getSource()).addSize(-value);
+    } catch (NotEnoughIndividualsException e) {
+      this.LOG.debug("Not enough Individuals in {}.{}. Feasable size={}", this.ID.SOURCE.POPULATION_ID,
+          this.ID.SOURCE.HEALTHSTATE_ID, e.getFeasableSize());
+      value = e.getFeasableSize();
+      try {
+        HealthStateProvider.getInstance().get(getSource()).addSize(-value);
+      } catch (NotEnoughIndividualsException e1) {
+        throw new Error("This shouldn't have happened");
+      }
+    }
+    try {
+      HealthStateProvider.getInstance().get(getTarget()).addSize(value);
+    } catch (NotEnoughIndividualsException e) {
+      throw new Error("This shouldn't have happened:" + e.getMessage(), e);
+    }
+    PandemicSimulationDataWriterProvider.getWriter().putTransmissionExecution(this.ID, value, this.tick);
   }
 
   @Override
@@ -68,5 +100,7 @@ public abstract class TransmissionParent implements Transmission {
 
     return this.priority - o.getPriority();
   }
+
+  protected abstract long getValue();
 
 }

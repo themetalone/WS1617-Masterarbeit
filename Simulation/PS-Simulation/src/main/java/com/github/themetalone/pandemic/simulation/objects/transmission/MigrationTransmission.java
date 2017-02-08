@@ -1,5 +1,6 @@
 package com.github.themetalone.pandemic.simulation.objects.transmission;
 
+import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
 import com.github.themetalone.pandemic.simulation.objects.population.Population;
 import com.github.themetalone.pandemic.simulation.objects.population.PopulationProvider;
 
@@ -33,6 +34,17 @@ public class MigrationTransmission extends TransmissionParent {
   @Override
   public void transmit() {
 
+  }
+
+  @Override
+  public String toString() {
+
+    return "Travel:Proportion=" + this.travelProportion + ";Severity:" + this.severity;
+  }
+
+  @Override
+  protected long getValue() {
+
     Population src = PopulationProvider.getInstance().get(super.ID.SOURCE.POPULATION_ID);
     Population trg = PopulationProvider.getInstance().get(super.ID.TARGET.POPULATION_ID);
 
@@ -43,13 +55,7 @@ public class MigrationTransmission extends TransmissionParent {
 
     double value =
         (trg.LIFE_STANDARD / src.LIFE_STANDARD) * (src.MIGRATION_PROPORTION) * this.travelProportion * infection;
-
-  }
-
-  @Override
-  public String toString() {
-
-    return "Travel:Proportion=" + this.travelProportion + ";Severity:" + this.severity;
+    return new Double(HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize() * value).longValue();
   }
 
 }

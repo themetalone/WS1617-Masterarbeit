@@ -2,9 +2,6 @@ package com.github.themetalone.pandemic.simulation.objects.transmission;
 
 import java.util.Collection;
 
-import com.github.themetalone.pandemic.simulation.data.PandemicSimulationDataWriterProvider;
-import com.github.themetalone.pandemic.simulation.exceptions.NotEnoughIndividualsException;
-import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.TransmissionComponent;
 
 /**
@@ -34,39 +31,10 @@ public class InnerTransmission extends TransmissionParent {
     this.COMPONENTS = components;
   }
 
-  @Override
-  public void transmit() {
-
-    long value = getValue();
-    this.LOG.debug("{}.{}--({})-->{}.{}", this.ID.SOURCE.POPULATION_ID, this.ID.SOURCE.HEALTHSTATE_ID, value,
-        this.ID.TARGET.POPULATION_ID, this.ID.TARGET.HEALTHSTATE_ID);
-    if (value < 0)
-      throw new Error(
-          "Transmission with " + this.ID.toString() + " calculated less than zero transmission volume " + value);
-    try {
-      HealthStateProvider.getInstance().get(getSource()).addSize(-value);
-    } catch (NotEnoughIndividualsException e) {
-      this.LOG.debug("Not enough Individuals in {}.{}. Feasable size={}", this.ID.SOURCE.POPULATION_ID,
-          this.ID.SOURCE.HEALTHSTATE_ID, e.getFeasableSize());
-      value = e.getFeasableSize();
-      try {
-        HealthStateProvider.getInstance().get(getSource()).addSize(-value);
-      } catch (NotEnoughIndividualsException e1) {
-        throw new Error("This shouldn't have happened");
-      }
-    }
-    try {
-      HealthStateProvider.getInstance().get(getTarget()).addSize(value);
-    } catch (NotEnoughIndividualsException e) {
-      throw new Error("This shouldn't have happened:" + e.getMessage(), e);
-    }
-    PandemicSimulationDataWriterProvider.getWriter().putTransmissionExecution(this.ID, value, this.tick);
-
-  }
-
   /**
    * @return the summed up value of all components
    */
+  @Override
   protected long getValue() {
 
     return this.COMPONENTS.parallelStream().mapToLong(TransmissionComponent::getValue).sum();
