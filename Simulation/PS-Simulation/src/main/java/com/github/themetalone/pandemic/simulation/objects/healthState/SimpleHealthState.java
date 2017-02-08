@@ -24,11 +24,14 @@ public class SimpleHealthState implements HealthState {
 
   private final Logger LOG;
 
+  private long negativeChange;
+
   public SimpleHealthState(int popId, int hsId, String name, long initSize) {
     this.ID = new HealthStateIdentifier(popId, hsId);
     this.NAME = name;
     this.size = initSize;
     this.changes = 0;
+    this.negativeChange = 0;
     this.LOG = LoggerFactory.getLogger("SimpleHealthState-" + popId + "." + hsId);
   }
 
@@ -53,11 +56,14 @@ public class SimpleHealthState implements HealthState {
   @Override
   synchronized public void addSize(long addition) throws NotEnoughIndividualsException {
 
-    if (this.size + this.changes + addition < 0) {
-      this.LOG.debug("Exceeded current size. Actual {}, Requested {}", this.size, this.size + this.changes + addition);
-      throw new NotEnoughIndividualsException(this.size);
+    if (addition < 0 && this.size + this.negativeChange + addition < 0) {
+      this.LOG.debug("Exceeded current size. Actual {}, Requested {}", this.size + this.negativeChange,
+          this.negativeChange + addition);
+      throw new NotEnoughIndividualsException(this.size + this.negativeChange);
     }
-
+    if (addition < 0) {
+      this.negativeChange += addition;
+    }
     this.changes += addition;
   }
 
@@ -66,6 +72,7 @@ public class SimpleHealthState implements HealthState {
 
     this.size += this.changes;
     this.changes = 0;
+    this.negativeChange = 0;
   }
 
   /**
