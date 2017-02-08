@@ -34,7 +34,7 @@ public abstract class TransmissionParent implements Transmission {
   }
 
   @Override
-  public void transmit() {
+  public final void transmit() {
 
     long value = getValue();
     this.LOG.debug("{}.{}--({})-->{}.{}", this.ID.SOURCE.POPULATION_ID, this.ID.SOURCE.HEALTHSTATE_ID, value,

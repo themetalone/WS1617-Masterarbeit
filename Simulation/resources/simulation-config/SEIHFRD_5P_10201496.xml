@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="0" datenbank="target/SEIHFRD_5P_10201496/SEIHFRD_5P_10201496" krankheit="1"
+  xmlns="http://github.com/themetalone/simpleconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
+  zeit="36">
+  <!-- 5P_10201396 meint: 5 Populationen mit bidirektionaler Adjazenzmatrix, deren binäre Darstellung von links nach rechts und oben nach unten [10201396]_10 ergibt-->
+  <!-- ABCDE -->
+  <!-- Ax1001 -->
+  <!-- B x111 -->
+  <!-- C x10 -->
+  <!-- D x0 -->
+  <!-- E x -->
+  <!-- 10201396 ergibt sich aus der Binärdarstellung der Matrixeinträge von links nach rechts und von oben nach unten. -->
+  <populationen>
+    <standard lebensstandard="0.0" migrationsanteil="0.0" name="" groesse="4108">
+      <subpopulation groesse="11500000" name="S"/>
+      <subpopulation name="E" groesse="4108"/>
+      <subpopulation name="I" sichtbar-infiziert="true"/>
+      <subpopulation name="H" sichtbar-infiziert="true"/>
+      <subpopulation name="R"/>
+      <subpopulation name="F" lebend="false"/>
+      <subpopulation name="D" lebend="false"/>
+
+      <uebergang von="S" nach="E">
+        <komponente scalar="2.18">
+          <reference>E</reference>
+        </komponente>
+        <komponente scalar="2.18">
+          <reference>I</reference>
+        </komponente>
+        <komponente scalar="0.2">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.8">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="H">
+        <komponente scalar="0.7">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="R">
+        <komponente scalar="0.15">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="F">
+        <komponente scalar="0.15">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="R">
+        <komponente scalar="0.6">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="D">
+        <komponente scalar="0.4">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="F" nach="D">
+        <komponente scalar="1">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population name="A" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="B" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="C" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="D" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="E" lebensstandard="1" migrationsanteil="0.1"/>
+  </populationen>
+  <routen flugverkehr="false" reisende-subpopulationen="S,E">
+    <route von="A" nach="B"/>
+    <route von="A" nach="E"/>
+    <route von="B" nach="A"/>
+    <route von="B" nach="C"/>
+    <route von="B" nach="D"/>
+    <route von="B" nach="E"/>
+    <route von="C" nach="B"/>
+    <route von="C" nach="D"/>
+    <route von="D" nach="B"/>
+    <route von="D" nach="C"/>
+    <route von="E" nach="A"/>
+    <route von="E" nach="B"/>
+  </routen>
+</simulation>

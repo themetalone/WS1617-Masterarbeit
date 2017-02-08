@@ -32,11 +32,6 @@ public class MigrationTransmission extends TransmissionParent {
   }
 
   @Override
-  public void transmit() {
-
-  }
-
-  @Override
   public String toString() {
 
     return "Travel:Proportion=" + this.travelProportion + ";Severity:" + this.severity;
