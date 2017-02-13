@@ -1,0 +1,8 @@
+language: java
+install: true
+script: mvn clean package
+deploy:
+  provider: script
+  script: travis/deploy.sh
+  on:
+    branch: master_simulation
