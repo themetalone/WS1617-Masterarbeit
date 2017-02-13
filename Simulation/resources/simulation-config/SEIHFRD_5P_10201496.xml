@@ -4,17 +4,10 @@
   xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
   zeit="36">
   <!-- 5P_10201396 meint: 5 Populationen mit bidirektionaler Adjazenzmatrix, deren binäre Darstellung von links nach rechts und oben nach unten [10201396]_10 ergibt-->
-  <!-- ABCDE -->
-  <!-- Ax1001 -->
-  <!-- B x111 -->
-  <!-- C x10 -->
-  <!-- D x0 -->
-  <!-- E x -->
-  <!-- 10201396 ergibt sich aus der Binärdarstellung der Matrixeinträge von links nach rechts und von oben nach unten. -->
   <populationen>
     <standard lebensstandard="0.0" migrationsanteil="0.0" name="" groesse="4108">
       <subpopulation groesse="11500000" name="S"/>
-      <subpopulation name="E" groesse="4108"/>
+      <subpopulation name="E"/>
       <subpopulation name="I" sichtbar-infiziert="true"/>
       <subpopulation name="H" sichtbar-infiziert="true"/>
       <subpopulation name="R"/>
@@ -43,12 +36,12 @@
         </komponente>
       </uebergang>
       <uebergang von="I" nach="R">
-        <komponente scalar="0.15">
+        <komponente scalar="0.09">
           <reference>I</reference>
         </komponente>
       </uebergang>
       <uebergang von="I" nach="F">
-        <komponente scalar="0.15">
+        <komponente scalar="0.21">
           <reference>I</reference>
         </komponente>
       </uebergang>
@@ -68,10 +61,12 @@
         </komponente>
       </uebergang>
     </standard>
-    <population name="A" lebensstandard="1" migrationsanteil="0.1"/>
-    <population name="B" lebensstandard="1" migrationsanteil="0.1"/>
-    <population name="C" lebensstandard="1" migrationsanteil="0.1"/>
-    <population name="D" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="A" lebensstandard="2" migrationsanteil="0.1"/>
+    <population name="B" lebensstandard="1" migrationsanteil="0.3"/>
+    <population name="C" lebensstandard="1" migrationsanteil="0.1">
+      <subpopulation name="E" groesse="4100"/>
+    </population>
+    <population name="D" lebensstandard="2" migrationsanteil="0.1"/>
     <population name="E" lebensstandard="1" migrationsanteil="0.1"/>
   </populationen>
   <routen flugverkehr="false" reisende-subpopulationen="S,E">

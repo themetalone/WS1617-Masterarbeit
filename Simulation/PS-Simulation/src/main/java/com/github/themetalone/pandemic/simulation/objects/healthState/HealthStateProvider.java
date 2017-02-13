@@ -46,7 +46,11 @@ public class HealthStateProvider extends Provider<HealthStateIdentifier, HealthS
   public HealthStateProvider(Collection<HealthState> targets) {
     super(targets);
     instance = this;
-    super.targets.stream().forEach(hs -> PandemicSimulationDataWriterProvider.getWriter().putHealthState(hs));
+    super.targets.stream().sorted((a, b) -> {
+      return a.getIdentifier().POPULATION_ID == b.getIdentifier().POPULATION_ID
+          ? a.getIdentifier().HEALTHSTATE_ID - b.getIdentifier().HEALTHSTATE_ID
+          : a.getIdentifier().POPULATION_ID - b.getIdentifier().POPULATION_ID;
+    }).forEach(hs -> PandemicSimulationDataWriterProvider.getWriter().putHealthState(hs));
   }
 
   @Override

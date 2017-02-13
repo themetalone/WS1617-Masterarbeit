@@ -43,8 +43,8 @@ public class MigrationTransmission extends TransmissionParent {
     Population src = PopulationProvider.getInstance().get(super.ID.SOURCE.POPULATION_ID);
     Population trg = PopulationProvider.getInstance().get(super.ID.TARGET.POPULATION_ID);
 
-    double ia = src.infectedPopulation() / src.livingPopulation();
-    double ib = trg.infectedPopulation() / trg.livingPopulation();
+    double ia = ((double) src.infectedPopulation()) / ((double) src.livingPopulation());
+    double ib = ((double) trg.infectedPopulation()) / ((double) trg.livingPopulation());
 
     double infection = Math.pow(ia / ib, this.severity);
 

@@ -52,7 +52,24 @@ public class TransmissionProvider extends Provider<TransmissionIdentifier, Trans
     super(targets);
     instance = this;
     this.LOG.debug("Putting targets to Database");
-    super.targets.stream().forEach(t -> PandemicSimulationDataWriterProvider.getWriter().putTransmission(t));
+    super.targets.stream().sorted((a, b) -> {
+      if (a.getSource().POPULATION_ID == b.getSource().POPULATION_ID) {
+        if (a.getSource().HEALTHSTATE_ID == b.getSource().HEALTHSTATE_ID) {
+          if (a.getTarget().POPULATION_ID == b.getTarget().POPULATION_ID) {
+            if (a.getTarget().HEALTHSTATE_ID == b.getTarget().HEALTHSTATE_ID) {
+              if (a.getIdentifier().TYPE == b.getIdentifier().TYPE) {
+                return a.getPriority() - b.getPriority();
+              }
+              return a.getIdentifier().TYPE - b.getIdentifier().TYPE;
+            }
+            return a.getTarget().HEALTHSTATE_ID - b.getTarget().HEALTHSTATE_ID;
+          }
+          return a.getTarget().POPULATION_ID - b.getTarget().POPULATION_ID;
+        }
+        return a.getSource().HEALTHSTATE_ID - b.getSource().HEALTHSTATE_ID;
+      }
+      return a.getSource().POPULATION_ID - b.getSource().POPULATION_ID;
+    }).forEach(t -> PandemicSimulationDataWriterProvider.getWriter().putTransmission(t));
   }
 
   @Override

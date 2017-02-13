@@ -30,7 +30,9 @@ public class AnalysisMain {
     String csv = System.getProperty(SystemProperties.ANALYSIS_CSV);
 
     if (folder == null || prefix == null || csv == null) {
-      throw new Error("Some properties were not set");
+      throw new Error(
+          "Some properties were not set. Make sure to set:-D" + SystemProperties.ANALYSIS_FOLDER + "=\"...\" -D"
+              + SystemProperties.ANALYSIS_CSV + "=\"...\" -D" + SystemProperties.ANALYSIS_PREFIX + "=\"...\"");
     }
     PopulationSeparationUtil util = new PopulationSeparationUtil();
     util.writeData(util.separateRecords(util.readHealthStateStates(new File(csv))), Paths.get(folder), prefix);

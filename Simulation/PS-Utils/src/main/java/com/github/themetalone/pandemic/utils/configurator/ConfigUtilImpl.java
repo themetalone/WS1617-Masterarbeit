@@ -3,9 +3,10 @@ package com.github.themetalone.pandemic.utils.configurator;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Predicate;
 
 import javax.xml.bind.JAXBContext;
@@ -72,11 +73,12 @@ public class ConfigUtilImpl implements ConfigUtil {
   public Simulation makeSimulation(SimulationType config) {
 
     // Init
-    Map<PopulationType, Integer> popIdMap = new HashMap<>();
-    Map<String, Integer> hsIdMap = new HashMap<>();
-    Collection<Population> populations = new HashSet<>();
-    Collection<HealthState> healthstates = new HashSet<>();
-    Collection<Transmission> transmissions = new HashSet<>();
+    Map<PopulationType, Integer> popIdMap = new TreeMap<>((a, b) -> a.getName().compareTo(b.getName()));
+    Map<String, Integer> hsIdMap = new LinkedHashMap<>();
+    Collection<Population> populations = new LinkedList<>();
+    Collection<HealthState> healthstates = new LinkedList<>();
+    Collection<Transmission> transmissions = new LinkedList<>();
+    Map<Integer, Float> popIdMigrationCorrectionMap = new TreeMap<>();
 
     PopulationType standardPopulation = config.getPopulationen().getStandard();
 
@@ -90,11 +92,14 @@ public class ConfigUtilImpl implements ConfigUtil {
     // sanity checks
     //// travel percentage
     config.getPopulationen().getPopulation().stream().forEach(srcP -> {
+      this.LOG.debug("Calculating travel volumina for {}", srcP.getName());
       float travelPercentage = config.getRouten().getRoute().stream().filter(r -> r.getVon().equals(srcP.getName()))
           .map(r -> r.getAnteil()).reduce(new Float(0), (a, b) -> a + b);
       if (travelPercentage > 1) {
         float correction = 1 / travelPercentage;
-        config.getRouten().getRoute().stream().forEach(r -> r.setAnteil(r.getAnteil() * correction));
+        this.LOG.debug("Travel volumina is {}, correcting it by {}", travelPercentage, correction);
+        config.getRouten().getRoute().stream().filter(r -> r.getVon().equals(srcP.getName()))
+            .forEach(r -> r.setAnteil(r.getAnteil() * correction));
       }
     });
 
@@ -131,8 +136,8 @@ public class ConfigUtilImpl implements ConfigUtil {
     // Create Nodes
     config.getPopulationen().getPopulation().stream().forEach(p -> {
 
-      Collection<Integer> infectousStates = new HashSet<>();
-      Collection<Integer> livingStates = new HashSet<>();
+      Collection<Integer> infectousStates = new LinkedList<>();
+      Collection<Integer> livingStates = new LinkedList<>();
 
       p.getSubpopulation().stream().forEach(sp -> {
         if (hsIdMap.get(sp.getName()) == null) {
@@ -153,9 +158,9 @@ public class ConfigUtilImpl implements ConfigUtil {
 
     // Create inner transmissions
     config.getPopulationen().getPopulation().stream().forEach(p -> p.getUebergang().stream().forEach(t -> {
-      Collection<TransmissionComponent> components = new HashSet<>();
+      Collection<TransmissionComponent> components = new LinkedList<>();
       t.getKomponente().stream().forEach(c -> {
-        Collection<HealthStateIdentifier> refs = new HashSet<>();
+        Collection<HealthStateIdentifier> refs = new LinkedList<>();
         c.getReference().stream().map(r -> new HealthStateIdentifier(popIdMap.get(p), hsIdMap.get(r)))
             .forEach(refs::add);
         components.add(new MonomialTransmissionComponent(c.getScalar(), refs));
@@ -168,11 +173,21 @@ public class ConfigUtilImpl implements ConfigUtil {
     Collection<String> travelingSubpopulationNames =
         parseTravelSubpopulations(config.getRouten().getReisendeSubpopulationen());
     // Make Population Id Name Maps
-    Map<String, Integer> popNameIdMap = new HashMap<>();
-    Map<Integer, String> popIdNameMap = new HashMap<>();
+    Map<String, Integer> popNameIdMap = new TreeMap<>((a, b) -> a.compareTo(b));
+    Map<Integer, String> popIdNameMap = new TreeMap<>();
     config.getPopulationen().getPopulation().stream().forEach(p -> {
       popNameIdMap.put(p.getName(), popIdMap.get(p));
       popIdNameMap.put(popIdMap.get(p), p.getName());
+    });
+
+    // make migration correction
+    config.getPopulationen().getPopulation().stream().forEach(p -> {
+      // sum of all neighbors life standards
+      float lsSum = config.getRouten().getRoute().stream()
+          .filter(r -> r.getNach().equals(p.getName())).map(r -> popIdMap.keySet().stream()
+              .filter(filterPop -> filterPop.getName().equals(r.getNach())).findAny().get())
+          .map(targetPop -> targetPop.getLebensstandard()).reduce(0F, (a, b) -> a + b).floatValue();
+      popIdMigrationCorrectionMap.put(popIdMap.get(p), 1 / (lsSum / p.getLebensstandard()));
     });
 
     config.getRouten().getRoute().stream().forEach(r -> {
@@ -181,7 +196,7 @@ public class ConfigUtilImpl implements ConfigUtil {
         travelingSubpopulationNames.stream()
             .forEach(sp -> transmissions.add(new MigrationTransmission(popNameIdMap.get(r.getVon()), hsIdMap.get(sp),
                 popNameIdMap.get(r.getNach()), hsIdMap.get(sp), r.isFlug() ? TRAVELBYPLANE : OTHERTRAVEL, 1,
-                r.getAnteil(), config.getKrankheit())));
+                r.getAnteil() * popIdMigrationCorrectionMap.get(popNameIdMap.get(r.getVon())), config.getKrankheit())));
       } else {
         r.getZuordnung().stream()
             .forEach(mapping -> transmissions
@@ -242,7 +257,7 @@ public class ConfigUtilImpl implements ConfigUtil {
   private Collection<String> parseTravelSubpopulations(String input) {
 
     String[] split = input.split(",");
-    Collection<String> output = new HashSet<>();
+    Collection<String> output = new LinkedList<>();
     for (String s : split) {
       output.add(s.trim());
     }
