@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.02.12 um 07:15:58 PM CET 
+// Generiert: 2017.02.13 um 03:11:13 PM CET 
 //
 
 
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="groesse" type="{http://www.w3.org/2001/XMLSchema}int" default="0" /&gt;
+ *       &lt;attribute name="groesse" type="{http://www.w3.org/2001/XMLSchema}long" default="0" /&gt;
  *       &lt;attribute name="sichtbar-infiziert" type="{http://www.w3.org/2001/XMLSchema}boolean" default="false" /&gt;
  *       &lt;attribute name="lebend" type="{http://www.w3.org/2001/XMLSchema}boolean" default="true" /&gt;
  *     &lt;/restriction&gt;
@@ -43,7 +43,7 @@ public class SubpopulationType {
     @XmlAttribute(name = "name", required = true)
     protected String name;
     @XmlAttribute(name = "groesse")
-    protected Integer groesse;
+    protected Long groesse;
     @XmlAttribute(name = "sichtbar-infiziert")
     protected Boolean sichtbarInfiziert;
     @XmlAttribute(name = "lebend")
@@ -78,12 +78,12 @@ public class SubpopulationType {
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public int getGroesse() {
+    public long getGroesse() {
         if (groesse == null) {
-            return  0;
+            return  0L;
         } else {
             return groesse;
         }
@@ -94,10 +94,10 @@ public class SubpopulationType {
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link Long }
      *     
      */
-    public void setGroesse(Integer value) {
+    public void setGroesse(Long value) {
         this.groesse = value;
     }
 

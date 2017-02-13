@@ -30,6 +30,7 @@ import com.github.themetalone.pandemic.simulation.objects.transmission.InnerTran
 import com.github.themetalone.pandemic.simulation.objects.transmission.MigrationTransmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.Transmission;
 import com.github.themetalone.pandemic.simulation.objects.transmission.TransmissionProvider;
+import com.github.themetalone.pandemic.simulation.objects.transmission.components.ConstantTransmissionComponent;
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.MonomialTransmissionComponent;
 import com.github.themetalone.pandemic.simulation.objects.transmission.components.TransmissionComponent;
 import com.github.themetalone.pandemic.utils.generated.PopulationType;
@@ -163,7 +164,8 @@ public class ConfigUtilImpl implements ConfigUtil {
         Collection<HealthStateIdentifier> refs = new LinkedList<>();
         c.getReference().stream().map(r -> new HealthStateIdentifier(popIdMap.get(p), hsIdMap.get(r)))
             .forEach(refs::add);
-        components.add(new MonomialTransmissionComponent(c.getScalar(), refs));
+        components.add(c.getKonstante() > 0 ? new ConstantTransmissionComponent(c.getKonstante())
+            : new MonomialTransmissionComponent(c.getScalar(), refs));
       });
       transmissions.add(new InnerTransmission(popIdMap.get(p), hsIdMap.get(t.getVon()), popIdMap.get(p),
           hsIdMap.get(t.getNach()), INNERTRANSMISSION, 0, components));

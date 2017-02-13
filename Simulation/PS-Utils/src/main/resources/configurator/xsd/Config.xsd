@@ -69,7 +69,7 @@
           <annotation>
             <documentation>Name der Krankheitsklasse</documentation>
           </annotation></attribute>
-      <attribute name="groesse" type="int" default="0" use="optional">
+      <attribute name="groesse" type="long" default="0" use="optional">
         <annotation>
           <documentation>Initiale Groesse der Krankheitsklasse. Groesser 0</documentation>
         </annotation></attribute>
@@ -101,18 +101,24 @@
     </complexType>
 
     <complexType name="uebergangKomponenteType">
-        <annotation>
-          <documentation>Summand der Uebergangskante</documentation>
-        </annotation>
-        <sequence>
+      <annotation>
+        <documentation>Summand der Uebergangskante</documentation>
+      </annotation>
+      <sequence>
         <element name="reference" type="string" maxOccurs="unbounded" minOccurs="1">
           <annotation>
-            <documentation>Referenz auf einen Krankheitszustand. Angegeben mit dessen Namen. </documentation>
-          </annotation></element>
+            <documentation>Referenz auf einen Krankheitszustand. Angegeben mit dessen Namen.</documentation>
+          </annotation>
+        </element>
       </sequence>
       <attribute name="scalar" type="float" default="1" use="optional">
         <annotation>
           <documentation>Skalarer Faktor des Summanden</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="konstante" type="long" use="optional" fixed="0">
+        <annotation>
+          <documentation>Bezeichnet einen konstanten Uebergang. Wenn dieser Wert groesser als 0 ist, werden scalar und Referenzen ignoriert</documentation>
         </annotation></attribute>
     </complexType>
 
