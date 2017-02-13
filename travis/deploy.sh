@@ -9,7 +9,9 @@ echo targetpath: ${targetpath}
 echo server: ${server}
 
 echo --------------rebuild at ${now}
+cd Simulation
 mvn -B -q -DskipTests=true -Dmaven.javadoc.skip=true package
+cd ../
 
 echo --------------preparing package
 cp ${targetpath}PS-Analysis-Product/target/PandemicAnalysis-jar-with-dependencies.jar ${deployment}/java/PandemicAnalysis.
