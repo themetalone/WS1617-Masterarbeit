@@ -1,4 +1,4 @@
-\subsection{Identifikation von Maßnahmen}\steffen
+\steffen\subsection{Identifikation von Maßnahmen}
 Nachdem nun das \emph{SIR}-Modell für die Untersuchung von Pandemien erweitert wurde, werden nun Maßnahmen zur Eindämmung und deren Entsprechung im Netzwerkmodell beschrieben. 
 
 \subsubsection{Lokale Maßnahmen}
@@ -41,7 +41,7 @@ Während die beiden eben beschriebenen Maßnahmen die Eindämmung einer Krankhei
 Der Schutz vor Krankheiten, der durch die Isolation einer Population von den restlichen Populationen entsteht, ist offensichtlich sehr effektiv, setzt man eine reine Mensch-zu-Mensch Übertragung vorraus. Wirtschaftlich kann dieser Schutz eine Population vor große Probleme stellen. Reisekanten, auf denen wirtschaftlich notwendige Güter, wie beispielsweise Nahrungsmittel, transportiert werden, können nicht dauerhaft gesperrt werden. 
 
 \subsubsection{Einreisequarantäne}
-Eine andere Maßnahme, mit der die Einreise kranker Individuen verhindert werden soll, ist die Einrichtung einer Quarantäne bei kontrollierbaren Reisewegen, wie Flugzeugen oder Schiffen. Dabei werden die Einreisenden für eine gewisse Zeit von der restlichen Population isoliert. Erkrankende Individuen werden, im Falle des in dieser Arbeit verwendeten \emph{SEIHFRD}-Modells, hospitalisiert und Individuen, die nicht erkranken, werden in die Population entlassen. Wichtig ist dabei die Dauer der Quarantäne. Da Inkubationszeiten nur statistische Durchschnittwerte sind, kann nie eine Wahrscheinlichkeit von 0 für den Fall erreicht werden, dass ein infiziertes Individuum nicht in die Population entlassen wird. Generell sind lange Quarantänezeiten problematisch in der Umsetzung. Betrachtet man sich beispielsweie das Ebola-Fieber, so wird dessen Inkubationszeit von \textbf{REF?Eichner} im Schnitt mit $12,7$ Tagen angegeben, bei einer Standardabweichung von $4,3$ Tagen. Um die Wahrscheinlichkeit einer falsch-negativen Infektionsprognose auf $1\%$ zu senken, benötigt man, nach \textbf{REF?Eichner:4}, $25$ Tage Quarantäne. Dabei wird vorrausgsetzt, dass die Indiviuen in der Quarantäne sich nicht gegenseitig infizieren können. Je nach Attraktivität der Population, kann es organisiatorisch schwer bis unmöglich sein, für alle ankommenden eine $25$-tägige Quarantäne zu verhängen. Die Frage, wie sicher die Quarantäne ist, hängt von den organisatorischen Möglichkeiten der Population, sowie ihrer Einschätzung der Gefährlichkeit der Kranheit ab. 
+Eine andere Maßnahme, mit der die Einreise kranker Individuen verhindert werden soll, ist die Einrichtung einer Quarantäne bei kontrollierbaren Reisewegen, wie Flugzeugen oder Schiffen. Dabei werden die Einreisenden für eine gewisse Zeit von der restlichen Population isoliert. Erkrankende Individuen werden, im Falle des in dieser Arbeit verwendeten \emph{SEIHFRD}-Modells, hospitalisiert und Individuen, die nicht erkranken, werden in die Population entlassen. Wichtig ist dabei die Dauer der Quarantäne. Da Inkubationszeiten nur statistische Durchschnittwerte sind, kann nie eine Wahrscheinlichkeit von 0 für den Fall erreicht werden, dass ein infiziertes Individuum nicht in die Population entlassen wird. Generell sind lange Quarantänezeiten problematisch in der Umsetzung. Betrachtet man sich beispielsweie das Ebola-Fieber, so wird dessen Inkubationszeit von \textbf{REF?Eichner} im Schnitt mit $12,7$ Tagen angegeben, bei einer Standardabweichung von $4,3$ Tagen. Um die Wahrscheinlichkeit einer falsch-negativen Infektionsprognose auf $1\%$ zu senken, benötigt man, nach \textbf{REF?Eichner:4}, $25$ Tage Quarantäne. Dabei wird vorrausgsetzt, dass die Indiviuen in der Quarantäne sich nicht gegenseitig infizieren können. Je nach Attraktivität der Population, kann es organisiatorisch schwer bis unmöglich sein, für alle ankommenden eine $25$-tägige Quarantäne zu verhängen. Die Frage, wie sicher die Quarantäne ist, hängt von den organisatorischen Möglichkeiten der Population, sowie ihrer Einschätzung der Gefährlichkeit der Krankheit ab. 
 
 Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopulationen umsetzen. Für jede reisende Subpopulation, in unserem Modell also $S$ und $E$, wird eine Quarantäne-Subpopulation, $Q_S$ und $Q_E$, eingeführt. Eingehende Kanten kontrollierbarer Reisewege haben dann diese Quarantäne-Subpopulationen als Ziel. Die Quarantäne-Subpopulationen werden mit zugehörigen reisenden Subpopulationen mittels einer inneren Kante unidirektional verbunden, und zwar von der Quarantäne in die Population. Das Volumen der Kanten richtet sich nach der veranschlagten Sicherheit der Quarantäne. Ob es zwischen $Q_S$ und $Q_E$ eine innere Kante gibt, hängt davon ab, ob sich die Individuen in der Quarantäne infizieren können. Weiterhin gibt es eine Kante von $Q_E$ nach $H$, da sichtbar Infizierte direkt hospitalisiert werden. 
 
@@ -50,34 +50,26 @@ Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopu
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
 	\node[state] (S)				{S};
 	\node[state] (E) [right =4cm of S]	{E};
-	\node[state] (I) [right of=E]	{I};
+	\node (I) [right of=E]	{\dots};
 	\node[state] (H) [right of=I]	{H};
-	\node[state] (F)[above of=I]	{F};
-	\node[state] (D)[right of=F]	{D};
-	\node[state] (R)[below of=H]	{R};
 	\node[state] (QS)[below of=S] {$Q_S$};
 	\node[state] (QE)[below of=E] {$Q_E$};
 	\node (X) [below of=QS] {};
 	\node (Y) [below of=QE] {};
 	\path 	(S)	edge node {$\alpha \cdot (I+E)+ \omega \cdot F$}(E)
-			(E)	edge node {$1 \cdot E$}							(I)
-			(I)	edge node {$\beta \cdot I$}						(F)
-			(I)	edge node {$\gamma\cdot I$}					(H)
-			(I)	edge node {$\delta \cdot I$}					(R)
-			(F)	edge node {$1 \cdot F $}						(D)
-			(H)	edge node {$\epsilon \cdot H$}					(D)
-			(H) edge node {$(1-\epsilon) \cdot H $}				(R)
+			(E)	edge node {}							(I)
+			(I)	edge node {}					(H)
 			(QS) edge node {$q_S\cdot Q_S$} (S)
-			(QS) edge node {$\alpha\cdot Q_E$} (QE)
+			(QS) edge node {$\alpha_Q\cdot Q_E$} (QE)
 			(QE) edge node {$q_E\cdot Q_E$} (E)
-			(QE) edge node {$(1-q_E)\cdot Q_E$}	(H)
+			(QE) edge[bend right] node {$(1-q_E)\cdot Q_E$}	(H)
 			(X) edge node {} (QS)
 			(Y) edge node {} (QE)
 			;
 	
 \end{tikzpicture}
 \end{center}
-\caption{SEIHFRD-Modell mit Quarantäne-Subpopulationen $Q_S$ und $Q_E$}\label{fig:ssec:actions:quarantine}
+\caption{Ausschnitt aus dem SEIHFRD-Modell mit Quarantäne-Subpopulationen $Q_S$ und $Q_E$}\label{fig:ssec:actions:quarantine}
 \end{figure}
 \subsection{Auswertung der Maßnahmen}
 \input{massnahmen/model}
