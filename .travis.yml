@@ -3,11 +3,11 @@ jdk: oraclejdk8
 addons:
   apt:
     packages:
-      - oracle-java8-installer
-      - p7zip-full
+    - oracle-java8-installer
+    - p7zip-full
 install: true
 script: travis/build.sh
-before_deploy: "chmod +x travis/deploy.sh"
+before_deploy: chmod +x travis/deploy.sh
 deploy:
   provider: script
   script: travis/deploy.sh
@@ -16,4 +16,8 @@ deploy:
   skip_cleanup: true
 branches:
   except:
-    - master
+  - master
+env:
+  global:
+  - secure: T7ApFkr4YmzuFf0ksQkdaMlE/qWSW2Y1/aQTzgbiFvXU9yoH4MKT0G/mVcoaBFTqmO1MJPBnF/UDnjkrYHvFvXtmahto6PNV4ur5+xXJSdSm6Ny21kfK+43H495ncZsbmCioTE2SC2AxTgE4WhL+r7XhdKEtd9AszCvhQgdv3kZhJcHJLhHjBTGzgH5i1Ngxp+5CJTuYBD2/Geqk410jiZYc9jG15fYgBY+ipi/VHrb2zkqRAHDQXtl9T2215UzPtBlIs76LntX5bxWm+rVwhjSvI5nu683AJGT39ZL/ojyToI+GFzsRwMRsHymgVQj2pDOayhrKUCIdnpucUN24edONVshzBIOsQHABGPQWEitDQ4E03tfLeuFkFgNIzo+dKdcnKosxWs/pRMiFgGST5iRJxnBs8UMXlV1d6wkFuLHbuA8qRZgeNE8RmgEMDa8AVM29uXRWqLljsPyg0aH8IDR1ZTkGUrgNFcEtyVfddHmqRUcWysOAxmWZw3d+19LcHPM5KaR9CYUB5CY5lZdBOOcrgS+bZ3ej1mzJZDbINWyotOigD5ZjlK62bxJGGXbt9J9x3euVAZ2qV1qqusyPTUroCSDrTvKSyAMj4do8VdndfBnQUXlozzP1AEHrvjiPImoFPkmjTo0i0Cm/KHq1eJ0tUsIGgteqm7qHzhUJ4Qg=
+  - secure: Ji1bRvS9AtX1SkEfKCThhETCXR68A6pd6O+iWC0KFiRx9gWWmPOTjLhn/0V3g5cmIYRG0AZjqs/tA3N0/jZFvH60arshnGOZYJkqK0vOKgBUPd3Y5h/tNJHoBxJw7JI4oXEFi9qRQGSTl0hbhhoHpCpP/rA0x34uwcXfFXMUh59UgwC+Ge5sZo4URVN1F8KDLYrGCb6JFunOde16r+0lom6FxS4zNcrJzrQUn4xfeMh4oW7j80tjiv5gvLKRBC64uwk5lmcqMvz/XOj2Aiw5i7TSvFO2HQxWzT4znDN3885vJ8SYDE73sa1HhJobOWWAKHmooOJTTFfmfhecqxlh5ZDovCbN3LhdwKZfMKyrkv9VWwK0pEXNZtPAxA3Vo7Eg2USj1JMXFaz/U9UctSIunDOM5Oj3f2TJu+qzx6PozpDFV0S/SENrpVciw/c5robJnVZ2UpHH0oHabcxNeCMUT4E7mhE9MG5P+gp7AaZry2ZP2vf4RM0S6B0bOJo2GUuPfTAppRIFyZPK7Gzhyg+hxoS+vi/3DUJ6rGwOAsTkWPxtoarn+1ABbho1aI7/l9bpmRZxzZ9dW447M3u0hZS5Wh0p/dRS+P13desfDVUcHdQGQ+GJ92FSSTpgUarfBd7Y+0pAqJ243VoxScnRpaiRWRqg3JiFb3NJ7roh73R6M54=

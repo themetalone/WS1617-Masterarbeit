@@ -2,7 +2,7 @@
 
 now=$(date +%y%m%d%H%M%S)
 targetpath="Simulation/PS-Products/"
-server="ftp://ftp-deploy@minka.dynv6.net/"
+server="ftp://minka.dynv6.net/"
 deployment="travis/Pandemic\ Simulation/"
 
 echo targetpath: ${targetpath}
@@ -22,4 +22,4 @@ echo --------------zipping
 
 echo --------------uploading to server
 # only the first one with --ftp-create-dirs and -S since errors should occur here first and after creation the ftp-create-dirs flag isn't needed anymore
-curl --verbose --ftp-create-dirs --ftp-ssl -k -S -T travis/PandemicSimulation.zip ${server}PandemicSimulation/${now}/
+curl --ftp-create-dirs --ftp-ssl -k -S -T travis/PandemicSimulation.zip ${server}PandemicSimulation/${now}/ --user ${ftp_user}:${ftp_pw}
