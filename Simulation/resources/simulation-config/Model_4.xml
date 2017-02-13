@@ -96,7 +96,7 @@
         </komponente>
       </uebergang>
     </population>
-    <population name="C" lebensstandard="1" migrationsanteil="0.1">
+    <population name="C" lebensstandard="1" migrationsanteil="0.2">
       <subpopulation name="E" groesse="4100"/>
       <uebergang von="E" nach="I">
         <komponente scalar="0.9">
@@ -104,14 +104,14 @@
         </komponente>
       </uebergang>
     </population>
-    <population name="D" lebensstandard="2" migrationsanteil="0.1">
+    <population name="D" lebensstandard="0.5" migrationsanteil="0.2">
       <uebergang von="E" nach="I">
         <komponente scalar="0.9">
           <reference>E</reference>
         </komponente>
       </uebergang>
     </population>
-    <population name="E" lebensstandard="1" migrationsanteil="0.1">
+    <population name="E" lebensstandard="2" migrationsanteil="0.2">
       <uebergang von="E" nach="I">
         <komponente scalar="0.9">
           <reference>E</reference>
