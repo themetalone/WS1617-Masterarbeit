@@ -6,7 +6,7 @@ addons:
       - oracle-java8-installer
       - p7zip-full
 install: true
-script: mvn clean package
+script: travis/build.sh
 before_deploy: "chmod +x travis/deploy.sh"
 deploy:
   provider: script
@@ -14,3 +14,6 @@ deploy:
   on:
     branch: master_simulation
   skip_cleanup: true
+branches:
+  except:
+    - master
