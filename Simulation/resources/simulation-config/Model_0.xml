@@ -3,9 +3,15 @@
   xmlns="http://github.com/themetalone/simpleconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
   zeit="36">
-  <!-- 5P_10201396 meint: 5 Populationen mit bidirektionaler Adjazenzmatrix, deren binäre Darstellung von links nach rechts und oben nach unten [10201396]_10 ergibt-->
+  <!--  D
+        |\
+      A-B-C
+       \|
+        E
+        Mit Infizierten zu Beginn nur in C
+ -->
   <populationen>
-    <standard lebensstandard="0.0" migrationsanteil="0.0" name="" groesse="4108">
+    <standard name="">
       <subpopulation groesse="11500000" name="S"/>
       <subpopulation name="E"/>
       <subpopulation name="I" sichtbar-infiziert="true"/>
@@ -26,7 +32,7 @@
         </komponente>
       </uebergang>
       <uebergang von="E" nach="I">
-        <komponente scalar="0.8">
+        <komponente scalar="1">
           <reference>E</reference>
         </komponente>
       </uebergang>
@@ -61,15 +67,44 @@
         </komponente>
       </uebergang>
     </standard>
-    <population name="A" lebensstandard="2" migrationsanteil="0.1"/>
-    <population name="B" lebensstandard="1" migrationsanteil="0.3"/>
-    <population name="C" lebensstandard="1" migrationsanteil="0.1">
-      <subpopulation name="E" groesse="4100"/>
+    <population name="A" lebensstandard="2" migrationsanteil="0.1">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
     </population>
-    <population name="D" lebensstandard="2" migrationsanteil="0.1"/>
-    <population name="E" lebensstandard="1" migrationsanteil="0.1"/>
+    <population name="B" lebensstandard="1" migrationsanteil="0.3">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.7">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="C" lebensstandard="1" migrationsanteil="0.2">
+      <subpopulation name="E" groesse="4100"/>
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="D" lebensstandard="0.5" migrationsanteil="0.2">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="E" lebensstandard="2" migrationsanteil="0.2">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
   </populationen>
-  <routen flugverkehr="false" reisende-subpopulationen="S,E">
+  <routen reisende-subpopulationen="S,E">
     <route von="A" nach="B"/>
     <route von="A" nach="E"/>
     <route von="B" nach="A"/>

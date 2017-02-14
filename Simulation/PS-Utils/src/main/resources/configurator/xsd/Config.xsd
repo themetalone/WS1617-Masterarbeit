@@ -11,16 +11,34 @@
         <element name="populationen" type="scfg:populationenType"></element>
         <element name="routen" type="scfg:routenType"></element>
       </sequence>
-      <attribute name="datenbank" type="string" use="required"></attribute>
-      <attribute name="batchgroesse" type="int" use="required"></attribute>
-      <attribute name="zeit" type="int" use="required"></attribute>
-      <attribute name="krankheit" type="float" use="required"></attribute>
+      <attribute name="datenbank" type="string" use="required">
+        <annotation>
+          <documentation>Name der Datenhaltung, die verwendet wird. </documentation>
+        </annotation></attribute>
+      <attribute name="batchgroesse" type="int" use="required">
+        <annotation>
+          <documentation>Groesse des Zwischenspeichers fuer die Datenhaltung</documentation>
+        </annotation></attribute>
+      <attribute name="zeit" type="int" use="required">
+        <annotation>
+          <documentation>Dauer der Simulation in diskreten Zeiteinheiten</documentation>
+        </annotation></attribute>
+      <attribute name="krankheit" type="float" use="required">
+        <annotation>
+          <documentation>Schwere der Krankheit. Mindestens 1</documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="populationenType">
       <sequence>
-            <element name="standard" type="scfg:populationType" maxOccurs="1" minOccurs="1"></element>
-            <element name="population" type="scfg:populationType" maxOccurs="unbounded" minOccurs="1"></element>
+            <element name="standard" type="scfg:populationType" maxOccurs="1" minOccurs="1">
+              <annotation>
+                <documentation>Die Blaupause fuer die Populationen. Populationen werden mit diesem Standard initialisiert</documentation>
+              </annotation></element>
+            <element name="population" type="scfg:populationType" maxOccurs="unbounded" minOccurs="1">
+              <annotation>
+                <documentation>Verwendete Populationen. </documentation>
+              </annotation></element>
       </sequence>
     </complexType>
 
@@ -29,57 +47,129 @@
         <element name="subpopulation" type="scfg:subpopulationType" maxOccurs="unbounded" minOccurs="0"></element>
         <element name="uebergang" type="scfg:uebergangType" maxOccurs="unbounded" minOccurs="0"></element>
       </sequence>
-      <attribute name="name" type="string" use="required"></attribute>
-      <attribute name="lebensstandard" type="float" use="required"></attribute>
-      <attribute name="migrationsanteil" type="float" use="required"></attribute>
+      <attribute name="name" type="string" use="required">
+        <annotation>
+          <documentation>Name der Population</documentation>
+        </annotation></attribute>
+      <attribute name="lebensstandard" type="float" use="required">
+        <annotation>
+          <documentation>Lebensstandard der Population, groesser 0</documentation>
+        </annotation></attribute>
+      <attribute name="migrationsanteil" type="float" use="required">
+        <annotation>
+          <documentation>Migrationsanteil der Population. Zwischen 0 und 1</documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="subpopulationType">
-      <attribute name="name" type="string" use="required"></attribute>
-      <attribute name="groesse" type="int" default="0" use="optional"></attribute>
-      <attribute name="sichtbar-infiziert" type="boolean" use="optional" default="false"></attribute>
-      <attribute name="lebend" type="boolean" use="optional" default="true"></attribute>
+        <annotation>
+          <documentation>Klasse des Krankheitsverlaufes</documentation>
+        </annotation>
+        <attribute name="name" type="string" use="required">
+          <annotation>
+            <documentation>Name der Krankheitsklasse</documentation>
+          </annotation></attribute>
+      <attribute name="groesse" type="long" default="0" use="optional">
+        <annotation>
+          <documentation>Initiale Groesse der Krankheitsklasse. Groesser 0</documentation>
+        </annotation></attribute>
+      <attribute name="sichtbar-infiziert" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>Wenn 'true' wird diese Krankheitsklasse als infizierter Anteil der Population wahrgenommen</documentation>
+        </annotation></attribute>
+      <attribute name="lebend" type="boolean" use="optional" default="true">
+        <annotation>
+          <documentation>Wenn 'false' gilt diese Klasse als tot. </documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="uebergangType">
-      <sequence>
+        <annotation>
+          <documentation>Ein Uebergang zwischen zwei Krankheitsklassen. </documentation>
+        </annotation>
+        <sequence>
         <element name="komponente" type="scfg:uebergangKomponenteType" maxOccurs="unbounded" minOccurs="1"></element>
       </sequence>
-      <attribute name="von" type="string" use="required"></attribute>
-      <attribute name="nach" type="string" use="required"></attribute>
+      <attribute name="von" type="string" use="required">
+        <annotation>
+          <documentation>Abgebende Krankheitsklasse</documentation>
+        </annotation></attribute>
+      <attribute name="nach" type="string" use="required">
+        <annotation>
+          <documentation>Empfangende Krankheitsklasse</documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="uebergangKomponenteType">
+      <annotation>
+        <documentation>Summand der Uebergangskante</documentation>
+      </annotation>
       <sequence>
-        <element name="reference" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+        <element name="reference" type="string" maxOccurs="unbounded" minOccurs="1">
+          <annotation>
+            <documentation>Referenz auf einen Krankheitszustand. Angegeben mit dessen Namen.</documentation>
+          </annotation>
+        </element>
       </sequence>
-      <attribute name="scalar" type="float" default="1" use="optional"></attribute>
+      <attribute name="scalar" type="float" default="1" use="optional">
+        <annotation>
+          <documentation>Skalarer Faktor des Summanden</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="konstante" type="long" use="optional" fixed="0">
+        <annotation>
+          <documentation>Bezeichnet einen konstanten Uebergang. Wenn dieser Wert groesser als 0 ist, werden scalar und Referenzen ignoriert</documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="routenType">
       <sequence>
         <element name="route" type="scfg:routeType" maxOccurs="unbounded" minOccurs="0"></element>
       </sequence>
-      <attribute name="flugverkehr" type="boolean" use="optional" default="false"></attribute>
+      <attribute name="flugverkehr" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>Wenn 'true', dann wird zwischen allen Populationen, zwischen denen noch keine Flugverbindung besteht, eine Flugverbindung erzeugt. Der Kantenanteil wird gleichmaessig aus dem verbleibenden Migrationsanteil erechnet.</documentation>
+        </annotation></attribute>
       <attribute name="reisende-subpopulationen" type="string" use="required">
         <annotation>
-          <documentation>comma separated</documentation>
+          <documentation>Die reisenden Subpopulationen. Durch Kommata getrennt. Z.B.: 'S,E'</documentation>
         </annotation>
       </attribute>
     </complexType>
 
     <complexType name="routeType">
-      <sequence>
-        <element name="zuordnung" type="scfg:zuordnungType" minOccurs="0" maxOccurs="unbounded"></element>
+        <annotation>
+          <documentation>Eine Reisekante zwischen zwei Populationen. Die Kanten werden automatisch zwischen allen reisenden Krankheitszustaenden erzeugt</documentation>
+        </annotation>
+        <sequence>
+        <element name="zuordnung" type="scfg:zuordnungType" minOccurs="0" maxOccurs="unbounded">
+          <annotation>
+            <documentation>Ersetzt die automatische Erzeugung von Routenkanten zwischen den reisenden Krankheitszustaenden. </documentation>
+          </annotation></element>
       </sequence>
-      <attribute name="von" type="string" use="required"></attribute>
-      <attribute name="nach" type="string" use="required"></attribute>
-      <attribute name="flug" type="boolean" default="false" use="optional"></attribute>
-      <attribute name="anteil" type="float" use="optional" default="1"></attribute>
+      <attribute name="von" type="string" use="required">
+        <annotation>
+          <documentation>Startpopulation</documentation>
+        </annotation></attribute>
+      <attribute name="nach" type="string" use="required">
+        <annotation>
+          <documentation>Zielpopulation</documentation>
+        </annotation></attribute>
+      <attribute name="flug" type="boolean" default="false" use="optional">
+        <annotation>
+          <documentation>Wenn 'true' ist die Route eine Flugroute</documentation>
+        </annotation></attribute>
+      <attribute name="anteil" type="float" use="optional" default="1">
+        <annotation>
+          <documentation>Anteil an dem Migrationsanteil. Zwischen 0 und 1</documentation>
+        </annotation></attribute>
     </complexType>
 
     <complexType name="zuordnungType">
-      <attribute name="vonSubpopulation" type="string" use="required"></attribute>
+      <attribute name="vonSubpopulation" type="string" use="required">
+        <annotation>
+          <documentation></documentation>
+        </annotation></attribute>
       <attribute name="nachSubpopulation" type="string" use="required"></attribute>
     </complexType>
 </schema>
