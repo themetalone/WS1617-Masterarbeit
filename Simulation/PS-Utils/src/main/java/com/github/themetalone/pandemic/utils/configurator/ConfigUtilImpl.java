@@ -189,6 +189,8 @@ public class ConfigUtilImpl implements ConfigUtil {
           .filter(r -> r.getNach().equals(p.getName())).map(r -> popIdMap.keySet().stream()
               .filter(filterPop -> filterPop.getName().equals(r.getNach())).findAny().get())
           .map(targetPop -> targetPop.getLebensstandard()).reduce(0F, (a, b) -> a + b).floatValue();
+      this.LOG.debug("Migration correction for {}: ls:{} lsum:{} final value:{}", p.getName(), p.getLebensstandard(),
+          lsSum, 1 / (lsSum / p.getLebensstandard()));
       popIdMigrationCorrectionMap.put(popIdMap.get(p), 1 / (lsSum / p.getLebensstandard()));
     });
 
