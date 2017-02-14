@@ -9,3 +9,4 @@ Simulation/target/
 *.class
 Simulation/PS-Products/PS-Simulation-Product/target/
 Simulation/PS-Products/PS-Analysis-Product/target/
+Simulation/PS-Utils/src/generated/
