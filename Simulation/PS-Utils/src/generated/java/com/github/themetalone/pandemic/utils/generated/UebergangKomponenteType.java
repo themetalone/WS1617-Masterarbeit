@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.11 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.01.28 um 09:48:25 PM CET 
+// Generiert: 2017.02.13 um 03:11:13 PM CET 
 //
 
 
@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+ * Summand der Uebergangskante
+ * 
  * <p>Java-Klasse für uebergangKomponenteType complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="scalar" type="{http://www.w3.org/2001/XMLSchema}float" default="1" /&gt;
+ *       &lt;attribute name="konstante" type="{http://www.w3.org/2001/XMLSchema}long" fixed="0" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -47,6 +50,8 @@ public class UebergangKomponenteType {
     protected List<String> reference;
     @XmlAttribute(name = "scalar")
     protected Float scalar;
+    @XmlAttribute(name = "konstante")
+    protected Long konstante;
 
     /**
      * Gets the value of the reference property.
@@ -103,6 +108,34 @@ public class UebergangKomponenteType {
      */
     public void setScalar(Float value) {
         this.scalar = value;
+    }
+
+    /**
+     * Ruft den Wert der konstante-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public long getKonstante() {
+        if (konstante == null) {
+            return  0L;
+        } else {
+            return konstante;
+        }
+    }
+
+    /**
+     * Legt den Wert der konstante-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setKonstante(Long value) {
+        this.konstante = value;
     }
 
 }

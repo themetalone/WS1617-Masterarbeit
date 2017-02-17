@@ -55,9 +55,9 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
   Das SEIHFR-Modell bietet diese Möglichkeiten, jedoch wird dieses, um die Auswertung zu vereinfachen, um die Klasse D erweitert. Diese Klasse beschreibt jene, die durch die Krankheit gestorben sind. 
   \begin{figure}
 \begin{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3.5cm]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
 	\node[state] (S)				{S};
-	\node[state] (E) [right of=S]	{E};
+	\node[state] (E) [right =4cm of S]	{E};
 	\node[state] (I) [right of=E]	{I};
 	\node[state] (H) [right of=I]	{H};
 	\node[state] (F)[above of=H]	{F};
@@ -87,4 +87,3 @@ Damit kann man annehmen, dass ohne Behandlung sechs von zehn Patienten sterben. 
 \subsection{Erweiterung auf mehrere miteinander interagierende Populationen}\label{ssec:multiPop}
 \steffen
 \input{sachanalyse/mpm}
-\input{sachanalyse/massnahmen}

@@ -1,0 +1,64 @@
+\subsubsection{Verwendetes Modell}
+Im Folgenden werden die soeben beschriebenen Maßnahmen in einem \emph{SEIHFRD}-Modell mit miteinander interagierenden Populationen untersucht. Es werden fünf Populationen in einem einfachen Netzwerk verwendet, das in Abbildung \ref{fig:ssec:sim:pops} dargestellt ist. Die Populationen unterscheiden sich sowohl in ihrem Lebensstandard als auch ihrem Migrationsanteil. Jede Population umfasst $11,5\cdot 10^6$ Individuen, von denen jeweils $4100$ latent infiziert sind. Das \emph{SEIHFRD}-Modell jeder Population ist in Abbildung \ref{fig:ssec:sim:sir} dargestellt. Es wird von einer uniformen Infektionsrate von $2,18$, einer Hospitalisierung von $70\%$ und einer Letalität der Krankheit von $50\%$ ohne und $40\%$ mit Hospitalisierung ausgegangen. Weiterhin finden rituelle Begräbnisse statt, die mit einer Infektionsrate von $0,2$ die Krankheit weiterverbreiten.
+
+Es werden insgesamt fünf Konfigurationen untersucht. Als Basis zum Vergleich der Wirksamkeit der Maßnahmen dient die eben beschriebene Modellkonfiguration. Untersucht werden die Auswirkungen von 
+\begin{enumerate}
+\item erhöhter Hygiene in den Populationen \emph{A} und \emph{E}. Die erhöhte Hygiene manifestiert sich im Modell durch eine Reduktion des Ansteckungsfaktors auf $1,18$ und dem Wegfall der Ansteckung durch rituelle Begräbnisse (Abb. \ref{fig:ssec:model}: $\alpha = 1,18~\&~\omega = 0$).
+\item Impfungen in Population \emph{A}. Es wird angenommen, dass \emph{A} $10.000$ (Abb. \ref{fig:ssec:actions:vac}: $\epsilon\cdot p = 10.000$) erfolgreiche Impfungen pro Zeitintervall durchführen kann. 
+\item der Einführung einer Quarantäne für Einreisende in Population \emph{A}. Eine Ansteckung innerhalb der Quarantäne wird durch entsprechende Vorsichtsmaßnahmen verhindert. Dadurch wird nur die Quarantäne-Subpopulation $Q_E$ benötigt. Es wird weiterhin angenommen, dass die Quarantäne eine $99\%$ Effektivität aufweist. (Abb. \ref{fig:ssec:actions:quarantine}: $q_S=1$, $\alpha_Q=0$ \& $q_E=0,01$)
+\item einer Kombination aus Impfungen und Quarantäne in Population $A$. Die Parameter werden aus den beiden obigen Fällen übernommen.
+\end{enumerate}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto, node distance=4cm]
+	\node[state] (A) [text width=2cm,align=center] {\textbf{A}\\$L_A=2$\\$M_A=0,1$};
+	\node[state] (B) [text width=2cm,align=center,right of=A]	{\textbf{B}\\$L_B=1$\\$M_B=0,3$};
+	\node[state] (C) [text width=2cm,align=center,right of=B]	{\textbf{C}\\$L_C=1$\\$M_C=0,2$};
+	\node[state] (D) [text width=2cm,align=center,above of=B]	{\textbf{D}\\$L_D=0,5$\\$M_D=0,2$};
+	\node[state] (E) [text width=2cm,align=center,below of=B]	{\textbf{E}\\$L_E=2$\\$M_E=0,2$};
+	\path	(A) edge node {} (B)
+			(A) edge node {} (E)
+			(B) edge node {} (C)
+			(B) edge node {} (D)
+			(B) edge node {} (E)
+			(C) edge node {} (D);
+\end{tikzpicture}
+\end{center}
+\caption{Populationsnetzwerk für die Simulation. Ungerichtete Kanten repräsentieren bidirektionale Wege}\label{fig:ssec:sim:pops}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
+	\node[state] (S)				{S};
+	\node[state] (E) [right =4.5cm of S]	{E};
+	\node[state] (I) [right =3.5cm of E]	{I};
+	\node[state] (H) [right of=I]	{H};
+	\node[state] (F)[above of=I]	{F};
+	\node[state] (D)[right of=F]	{D};
+	\node[state] (R)[below of=H]	{R};
+	\node (QS)[below of=S] {};
+	\node (QE)[below of=E] {};
+	\node (X) [above of=S] {};
+	\node (Y) [above of=E] {};
+	\path 	(S)	edge node {$2,18 \cdot (I+E)+ 0,2 \cdot F$}(E)
+			(E)	edge node {$(1-M_X) \cdot E$}							(I)
+			(I)	edge node {$0,15 \cdot I$}						(F)
+			(I)	edge node {$0,7\cdot I$}					(H)
+			(I)	edge [bend right] node {$0,15 \cdot I$}					(R)
+			(F)	edge node {$F $}						(D)
+			(H)	edge node {$0,4\cdot H$}					(D)
+			(H) edge node {$0,6 \cdot H $}				(R)
+			(QS) edge node {$T^{*,X}$} (S)
+			(QE) edge node {$T^{*,X}$} (E)
+			(S) edge node {$T^{X,*}$} (X)
+			(E) edge node {$T^{X,*}$} (Y)
+			;
+	
+\end{tikzpicture}
+\end{center}
+\caption{SEIHFRD-Modell für die Auswertung der Maßnahmen mit $X \in \lbrace A,B,C,D,E\rbrace$ und $M_X$ dem Migrationsanteil von $X$}\label{fig:ssec:sim:sir}
+\end{figure}
+\subsubsection{Auswertung der Simulation}\ellen

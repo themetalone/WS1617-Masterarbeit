@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation batchgroesse="0" datenbank="target/SEIHFRD_5P_10201496/SEIHFRD_5P_10201496" krankheit="1"
+  xmlns="http://github.com/themetalone/simpleconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://github.com/themetalone/simpleconfig ../../../PS-Utils/src/main/resources/configurator/xsd/Config.xsd "
+  zeit="36">
+  <!-- D
+    |\
+    A-B-C
+    \|
+    E
+    Mit Infizierten zu Beginn nur in C. A verhaengt eine Quarantaene auf Einreisende. Diese laesst nur 1% Infizierte durch.
+    Ansteckung in der Q ist nicht moeglich
+  -->
+  <populationen>
+    <standard name="">
+      <subpopulation groesse="11500000" name="S"/>
+      <subpopulation name="E"/>
+      <subpopulation name="I" sichtbar-infiziert="true"/>
+      <subpopulation name="H" sichtbar-infiziert="true"/>
+      <subpopulation name="R"/>
+      <subpopulation name="F" lebend="false"/>
+      <subpopulation name="D" lebend="false"/>
+
+      <uebergang von="S" nach="E">
+        <komponente scalar="2.18">
+          <reference>E</reference>
+        </komponente>
+        <komponente scalar="2.18">
+          <reference>I</reference>
+        </komponente>
+        <komponente scalar="0.2">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="E" nach="I">
+        <komponente scalar="1">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="H">
+        <komponente scalar="0.7">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="R">
+        <komponente scalar="0.09">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="I" nach="F">
+        <komponente scalar="0.21">
+          <reference>I</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="R">
+        <komponente scalar="0.6">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="H" nach="D">
+        <komponente scalar="0.4">
+          <reference>H</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="F" nach="D">
+        <komponente scalar="1">
+          <reference>F</reference>
+        </komponente>
+      </uebergang>
+    </standard>
+    <population name="A" lebensstandard="2" migrationsanteil="0.1">
+      <subpopulation name="Q"/>
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="Q" nach="E">
+        <komponente scalar="0.01">
+          <reference>Q</reference>
+        </komponente>
+      </uebergang>
+      <uebergang von="Q" nach="H">
+        <komponente scalar="0.99">
+          <reference>Q</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="B" lebensstandard="1" migrationsanteil="0.3">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.7">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="C" lebensstandard="1" migrationsanteil="0.2">
+      <subpopulation name="E" groesse="4100"/>
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="D" lebensstandard="0.5" migrationsanteil="0.2">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+    <population name="E" lebensstandard="2" migrationsanteil="0.2">
+      <uebergang von="E" nach="I">
+        <komponente scalar="0.9">
+          <reference>E</reference>
+        </komponente>
+      </uebergang>
+    </population>
+  </populationen>
+  <routen reisende-subpopulationen="S,E">
+    <route von="A" nach="B"/>
+    <route von="A" nach="E"/>
+    <route von="B" nach="A">
+      <zuordnung vonSubpopulation="S" nachSubpopulation="S"/>
+      <zuordnung vonSubpopulation="E" nachSubpopulation="Q"/>
+    </route>
+    <route von="B" nach="C"/>
+    <route von="B" nach="D"/>
+    <route von="B" nach="E"/>
+    <route von="C" nach="B"/>
+    <route von="C" nach="D"/>
+    <route von="D" nach="B"/>
+    <route von="D" nach="C"/>
+    <route von="E" nach="A">
+      <zuordnung vonSubpopulation="S" nachSubpopulation="S"/>
+      <zuordnung vonSubpopulation="E" nachSubpopulation="Q"/>
+    </route>
+    <route von="E" nach="B"/>
+  </routen>
+</simulation>
