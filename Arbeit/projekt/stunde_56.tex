@@ -28,10 +28,22 @@ Die Evaluation der Ergebnisse erfolgt, wie schon zuvor, mit einer vorgelagerten 
 
 Sollte die Lerngruppe schneller als erwartet die Aufträge erledigen und evaluieren, dient als Stundenpuffer die Implementierung des erarbeiteten Modells für zwei Populationen in einer Tabellenkalkulation. Besonderheit soll dabei sein, dass es diesmal einen ``Patienten 0'' gibt, von dem die Krankheit ausgeht. Dieser Anwendungsfall dürfte Interesse in der Klasse wecken, zumal bisher immer nur der Verlauf einer bereits ausgebrochenen Krankheit simuliert wurde. Aufgrund der komplexen Iterationsvorschriften, die sich durch die zweite Population ergeben, wird nicht erwartet, dass alle Schüler diese Aufgabe noch in dieser Stunde fertig stellen. Schüler denen dies doch gelingt, werden aufgefordert, ihren Klassenkameraden zu helfen. Ziel des Auftrages ist es, die Schüler erkennen zu lassen, dass eine Tabellenkalkulation nicht mehr die beste Wahl für eine Simulation des erarbeiteten Modells ist. Die Motivation der Aufgabe erwächst aus dem Modellierungskreislauf. Die Frage, ob die simulierten Werte adäquat die Wirklichkeit beschreiben und welche Schwächen das Modell noch hat, werden auf die nachfolgende Stunde verschoben.
 
+Die obige Planung bezieht sich auf die Situation, dass eine 7. und 8. Stunde mit der Klasse zur Verfügung stehen. Für den Fall, dass diese Doppelstunde die letzte in dieser Reihe ist, muss die zweite Hälfte der Stunde um geplant werden, um das Reihenziel, die Durchführung des Modellierungskreislaufs, zu erreichen. Auf die Modellierung von mehreren Populationen wird verzichtet und stattdessen wird die Simulation und Evaluation des Modells behandelt. Damit werden die bisher unterrepräsentierten Teile des Modellierungskreislaufs in den Vordergrund gerückt.
 
+In diesem Fall werden der bereits geplante Stundeneinstieg übernommen. Der erste Auftrag wird ebenfalls übernommen, jedoch ohne die Puffer-Aufgabe. Als Puffer dient die absichtlich offen gehaltene Anzahl an zu modellierenden Maßnahmen. Auch die Planung der Evaluation der Ergebnisse bleibt unverändert. 
+
+Um den Bezug zur Reihe aufrecht zu erhalten, wird der Modellierungskreislauf noch einmal besprochen. Ziel ist es, den Schülern den Weg aufzuzeigen, den sie bisher im Modellierungskreislauf genommen haben und die nächsten Schritte zu planen. Ein Lehrervortrag kann an dieser Stelle Zeit sparen, während eine schülerzentrierte Diskussion das selbstbestimmte Lernen der Schüler fördert. Da die Klasse meiner Meinung nach noch nicht viel Kontakt mit schülerzentriertem Unterricht hatte, entscheide ich mich für den letzteren Ansatz. Es wird erwartet, dass die Schüler als nächsten Schritt das Simulieren eines Krankheitsverlaufs identifizieren werden. 
+
+Dementsprechend soll im nächsten Schritt das erstellte Modell und die Maßnahmen an einem Fallbeispiel untersucht werden. Die Schüler erhalten als Aufgabe, ihre bereits vorhandene Tabellenkalkulation ab Zeitschritt $10$ entsprechend anzupassen. Die Aufgabe ist bewusst offen formuliert. Die Schüler können sich entscheiden, die eigenen Ergebnisse oder die anderer Gruppen umzusetzen. Als Fallbeispiel dient der Ebola-Ausbruch in Sierra Leone in 2014. Da die Klasse sich bisher als vergleichsweise leistungsstark präsentiert hat, wird von zu viel Restriktion in der Ausgestaltung der Aufgabe abgesehen. 
+
+Bei der Evaluation sollen im Idealfall alle Gruppen ihre Ergebnisse präsentieren. Dopplungen sind hier eher unwahrscheinlich, da jede Gruppe andere Maßnahmen implementiert. Bei der Präsentation soll vor allem immer die Frage ``Haben die Maßnahmen Wirkung gezeigt?'' im Vordergrund stehen. Dadurch wird der Sinn und Kontext des Auftrags betont. Die Klasse wird zudem aufgefordert, die Ergebnisse zu diskutieren und deren Plausibilität zu bewerten. 
+
+Am Ende der Stunde steht, dem Modellierungskreislauf folgend, die Evaluation der Simulationsergebnisse mit den realen Daten. Diese werden massiv von den Schülerergebnissen abweichen. Wichtig ist, dies nicht unkommentiert im Raum stehen zu lassen, sondern mit den Schülern zu diskutieren, wo der Unterschied herkommt und wie man in weiteren Iterationen das Modell verbessern könnte. Ein Lehrervortrag wäre an dieser Stelle unangebracht, da sich die Stunde dem Ende neigt und die Aufmerksamkeit der Schüler am Unterricht tendenziell schwerer aufrecht zu erhalten ist. 
+
+Den Abschluss bildet eine Feedback-Runde zur gesamten Reihe. Damit die Schüler, die noch nicht so sehr mit dem Prinzip des konstruktiven Feedbacks vertraut zu sein scheinen, ihre Meinung auch offen wiedergeben können, wird das Feedback nicht mündlich sondern anonymisiert und schriftlich erfolgen. 
 
 \begin{landscape}
-\subsubsection{Verlaufsskizze}
+\subsubsection{Verlaufsskizze Version 1}
 \noindent
 \begin{longtable}{|C{0.3\textwidth}|L{0.8\textwidth}|L{0.4\textwidth}|}
 \hline
@@ -57,8 +69,40 @@ Evaluation&Einflussfaktoren werden gesammelt und anschließend von den Schülern
 Auftragsübergabe&``Erzeugt eine TK, mit der die Interaktion zwischen zwei modellierten Populationen beschrieben wird. Die Simulation beginnt dieses mal mit nur einem Infizierten in einer der beiden Populationen''&\\\hline
 Erarbeitung&Bis Stundenende&Einzel-/Gruppenarbeit\\
 \end{longtable}
+
 \end{landscape}
+\begin{landscape}
+\subsubsection{Verlaufsskizze Version 2 (durchgeführt)}
+\noindent
+\begin{longtable}{|C{0.3\textwidth}|L{0.8\textwidth}|L{0.4\textwidth}|}
+\hline
+Phase & Arbeitsauftrag & Sozialform\\
+\hline\hline
+\endhead
+Einstieg& Wdh: Zustandsmodell \& Iterationsvorschriften. ``Ein Individuum namens Alice ist gesund. Beschreibe anhand des Modells, was mit Alice in den nächsten Tagen passiert''
+
+Anschließend:``Wieso sieht $K(n)$ so aus?'' in TPS& Unterrichtsgespräch\\\hline
+Auftragsübergabe&``Welche Möglichkeiten gibt es, die Ausbreitung einer Krankheit zu verhindern oder zu verlangsamen? Modelliert mindestens 2 Maßnahmen und integriert diese in das bestehende Modell.''&\\\hline
+Erarbeitung&Zeitansatz $\approx$ 15min&Einzel- oder Partnerarbeit\\\hline
+Evaluation&Schüler präsentieren Ihre Ergebnisse&Schülerpräsentation \& Diskussion\\\hline
+Reflexion&``Welche Teile des Modellierungskreislaufs haben wir schon abgearbeitet, welche fehlen noch?''&Schülergespräch\\\hline
+Auftragsübergabe&``Es sollen nun Vorhersagen mit eurem Modell getroffen werden. Implementiert dafür das Modell für Sierra Leone ($7\cdot 10^6$ Einwohner, $15$ Infizierte zu beginn). Implementiert ab $n=10$ zwei Maßnahmen. Wie wirken sich die Maßnahmen aus?''&\\\hline
+Erarbeitung&Zeitansatz $\approx$ 20min&Einzel-/Gruppenarbeit\\\hline
+Evaluation&Schülergruppen präsentieren ihre Ergebnisse. Da die Auswahl der zu implementierenden Maßnahmen frei ist, sind verschiedene Kombinationen zu erwarten. Mehrere Gruppen präsentieren&Schülerpräsentation\\\hline
+Reflexion&``Vergleichen wir das mit realen Daten. Was fällt auf? Bildet das Modell die Wirklichkeit gut genug ab?'' und anschließend ``Woher kommen die Unterschiede. Wie könnte man das Modell verbessern?''&Diskussion\\\hline
+Abschluss&Ausblick auf Weiterführendes und allgemeines Feedback der Klasse zur Reihe&Feedbackrunde\\\hline
+\end{longtable}
+\end{landscape}
+
 \subsubsection{Materialien}
 \subsubsection{Erwartungshorizont}
 \subsubsection{Schülerprodukte}
 \subsubsection{Reflexion der Stunde}
+Meines Erachtens nach haben die meisten Schüler die Lernziele erreicht. Die Schüler konnten das Modell der Vorstunde erklären und Maßnahmen zur Eindämmung modellieren. Ebenso sind die verschiedenen Stadien des Modellierungskreislaufs von den Schülern verstanden und durchlaufen worden. Ausnahme bildeten 2 Schüler, die heute generell wenig Motivation zeigten. 
+
+Ich bin der Mitarbeit der Klasse sehr zufrieden. Die Beteiligung an Fragen und Diskussionen war hoch und bisher eher ruhige Schülerinnen und Schüler haben sich eingebracht. Das handlungsorientierte Stundenkonzept wurde von der Klasse erneut gut angenommen. Die Ergebnisse, sofern vorhanden, entsprachen meinen Erwartungen an die Klasse.
+
+Weniger zufrieden bin ich mit meiner Handhabung der weniger motivierten Schüler. Meine Versuche, die Schüler doch zur Mitarbeit zu motivieren, zeigten unterm Strich nur bei 2 von 4 Wirkung. Ein ähnlich gelagertes Problem hatte ich mit einer anderen Gruppe, die zwar motiviert mitgearbeitet, aber sich zu sehr in Details verloren hat, wodurch sie am Ende der Bearbeitungszeit des zweiten Auftrags kein fertiges Produkt vorweisen konnte. An dieser Stelle hätte ich müssen das Problem früher erkennen und entsprechend gegensteuern. Bezüglich des Vorwissens, wurde die Erfahrung der Schüler mit Excel von mir falsch eingeschätzt. Zwei Schüler hatten massive Probleme mit der Handhabung, wodurch sich in diesen beiden Fällen die oben beschriebene Demotivation erklären lässt. Die Aufwandseinschätzung des zweiten Arbeitsauftrages deckte sich nicht mit der tatsächlichen Leistung der Klasse, die meisten Gruppen haben nach 15 Minuten zusätzlicher Zeit keine verwertbaren Ergebnisse gehabt. Eine Neukonzeption der Aufgabe wäre folglich angebracht. Gleichzeitig fehlte eine Pufferaufgabe für die beiden Gruppen, die in der veranschlagten Zeit präsentierbare Ergebnisse generieren konnten. Weiterhin wurde meine Körperhaltung stellenweise als ablehnend empfunden. 
+
+In Zukunft würde ich den Stundenaufbau im Prinzip beibehalten. Es muss aber eine bessere Analyse der Lerngruppe und deren Vorwissens erfolgen, um die Machbarkeit und den Aufwand der einzelnen Aufträge besser abschätzen zu können. Eine Reduktion der Gestaltungsfreiheit liegt auf Grund der Probleme im zweiten Auftrag nahe. Der Arbeitsauftrag könnte in kleinere Schritte aufgeteilt werden oder die Evaluation vom ersten Auftrag verbindlich für alle Gruppen festgehalten werden. Zudem muss ich an meiner Körpersprache und dem Klassenmanagement noch arbeiten. 
+\subsubsection{Feedback der Schüler}
