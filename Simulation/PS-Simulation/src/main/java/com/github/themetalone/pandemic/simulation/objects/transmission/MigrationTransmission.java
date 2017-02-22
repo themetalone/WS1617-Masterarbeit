@@ -19,6 +19,8 @@ public class MigrationTransmission extends TransmissionParent {
 
   protected final float travelProportion;
 
+  protected final static double upperBound = 2;
+
   /**
    * The constructor.
    *
@@ -57,7 +59,9 @@ public class MigrationTransmission extends TransmissionParent {
         (trg.LIFE_STANDARD / src.LIFE_STANDARD) * (src.MIGRATION_PROPORTION) * this.travelProportion * infection;
     LOG.debug("Travel {}: factor:{}, sourceSize:{}", super.ID.toString(), value,
         HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize());
-    return new Double(HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize() * value).longValue();
+    return new Double(
+        HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize() * (value > upperBound ? upperBound : value))
+            .longValue();
   }
 
 }
