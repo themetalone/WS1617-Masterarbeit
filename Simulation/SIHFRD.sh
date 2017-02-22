@@ -1,2 +1,0 @@
-java -Dcom.github.themetalone.pandemic.config="resources/simulation-config/SIHFRD.xml" -jar PS-Products/PS-Simulation-Product/target/PandemicSimulation-jar-with-dependencies.jar
-java -Dcom.github.themetalone.pandemic.analysis.prefix="population-" -Dcom.github.themetalone.pandemic.analysis.folder="target/SIHFRD/pretty/" -Dcom.github.themetalone.pandemic.analysis.csv="target/SIHFRD/SIHFRD-hsstates.csv" -jar PS-Products/PS-Analysis-Product/target/PandemicAnalysis-jar-with-dependencies.jar

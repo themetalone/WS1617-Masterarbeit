@@ -1,5 +1,8 @@
 package com.github.themetalone.pandemic.simulation.objects.transmission;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.themetalone.pandemic.simulation.objects.healthState.HealthStateProvider;
 import com.github.themetalone.pandemic.simulation.objects.population.Population;
 import com.github.themetalone.pandemic.simulation.objects.population.PopulationProvider;
@@ -10,9 +13,13 @@ import com.github.themetalone.pandemic.simulation.objects.population.PopulationP
  */
 public class MigrationTransmission extends TransmissionParent {
 
+  private final static Logger LOG = LoggerFactory.getLogger("Travel");
+
   protected final float severity;
 
   protected final float travelProportion;
+
+  protected final static double upperBound = 2;
 
   /**
    * The constructor.
@@ -43,14 +50,18 @@ public class MigrationTransmission extends TransmissionParent {
     Population src = PopulationProvider.getInstance().get(super.ID.SOURCE.POPULATION_ID);
     Population trg = PopulationProvider.getInstance().get(super.ID.TARGET.POPULATION_ID);
 
-    double ia = ((double) src.infectedPopulation()) / ((double) src.livingPopulation());
-    double ib = ((double) trg.infectedPopulation()) / ((double) trg.livingPopulation());
+    double infectionAtSource = ((double) src.infectedPopulation()) / ((double) src.livingPopulation());
+    double infectionAtTarget = ((double) trg.infectedPopulation()) / ((double) trg.livingPopulation());
 
-    double infection = Math.pow(ia / ib, this.severity);
+    double infection = Math.pow(infectionAtSource / infectionAtTarget, this.severity);
 
     double value =
         (trg.LIFE_STANDARD / src.LIFE_STANDARD) * (src.MIGRATION_PROPORTION) * this.travelProportion * infection;
-    return new Double(HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize() * value).longValue();
+    LOG.debug("Travel {}: factor:{}, sourceSize:{}", super.ID.toString(), value,
+        HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize());
+    return new Double(
+        HealthStateProvider.getInstance().get(super.ID.SOURCE).getSize() * (value > upperBound ? upperBound : value))
+            .longValue();
   }
 
 }

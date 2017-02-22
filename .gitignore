@@ -12,3 +12,4 @@ Simulation/PS-Products/PS-Analysis-Product/target/
 *.out
 *.nav
 *.snm
+Simulation/PS-Utils/src/generated/
