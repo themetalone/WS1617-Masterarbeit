@@ -72,4 +72,42 @@ Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopu
 \caption{Ausschnitt aus dem SEIHFRD-Modell mit Quarantäne-Subpopulationen $Q_S$ und $Q_E$}\label{fig:ssec:actions:quarantine}
 \end{figure}
 \subsection{Auswertung der Maßnahmen}
-\input{massnahmen/model}
+\ellen
+Nachdem die Simulation durchgeführt wurde, wurden die Ergebnisse mit Hilfe von Excel ausgewertet. Dabei zeigt sich, dass die größten Veränderungen in der Population A auftreten.\\
+\begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A0}
+\caption{Population A ohne Einflussnahme}
+\label{fig:ssec:actions:A0}
+\end{figure}
+ Bei Abbildung \ref{fig:ssec:actions:A0} handelt es sich um den Krankheitsverlauf, innerhalb der Population A, ohne Einflussnahme. Dabei kann man sehen, dass die Anzahl der gesunden Individuen innerhalb der Population zunächst ansteigt. Dies ist auf die Migration zurückzuführen. Etwa die Hälfte der Bevölkerung überlebt die Epidemie uns bildet eine Immunität aus (51\%).\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A1}
+\caption{Population A mit erhöhter Hygiene}
+\label{fig:ssec:actions:A1}
+\end{figure}
+  Durch die erhöhte Hygiene und die daraus resultierende geringere Ansteckungsrate, kommt es nur zu geringen Unterschieden im Krankheitsverlauf. Wie zu erwarten steigt die Anzahl der Infizierten langsamer an als vorher. Zusätzlich befinden sich am Ende weniger Menschen in dieser Population. Ohne Maßnahmen gibt es 16.466.684 Immune und Tote in A, während es bei erhöhter Hygiene lediglich 16.351.824 sind. Dies könnte darauf zurückgeführt werden, dass durch die verlangsamte Krankheitsausbreitung die Zeit für Migration verlängert wird. Die Überlebensrate steigt leicht auf 51,03\%. Siehe dazu die Abbildung \ref{fig:ssec:actions:A1}\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A2}
+\caption{Population A mit Impfen}
+\label{fig:ssec:actions:A2}
+\end{figure}
+  Durch das Impfen steigt die Immunisierungsrate an. Dadurch steigt die Überlebensrate auf 51,39\%. Siehe dazu Abbildung \ref{fig:ssec:actions:A2}.\\
+  \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A3}
+\caption{Population A mit Quarantäne}
+\label{fig:ssec:actions:A3}
+\end{figure}
+  Durch die Quarantäne steigt die Überlebensrate sogar stärker an als zuvor (auf 52,14\%). Dies kann jedoch auch daran liegen, dass sich die Zuwanderung signifikant verändert hat. Wodurch dies ausgelöst wird, ist durch die vorliegenden Daten nicht ersichtlich, jedoch befinden sich am Ende der Simulation 23.508.184 Tote und Immune in der Population A. Siehe dazu Abbildung \ref{fig:ssec:actions:A3}\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A4}
+\caption{Population A mit Impfen und Quarantäne}
+\label{fig:ssec:actions:A4}
+\end{figure}
+  Wie zu erwarten war, steigt die Überlebensrate weiter an, wenn zwei Maßnahmen kombiniert werden.\\
+  Zusätzlich bleibt die Gesamtpopulation erhöht, sogar leicht höher als bei der Quarantäne alleine. Es befinden sich nun 23.542.177 Immune und Tote innerhalb der Population. Siehe dazu Abbildung \ref{fig:ssec:actions:A4}\\
+   Bei den weiteren Populationen ist der Einfluss der Maßnahmen sehr gering. Dies könnte unter anderem daran liegen, dass der auswandernde Anteil an der Population A der geringste ist. Somit sind die anderen Populationen von einer größeren Abwanderung betroffen.\\
+   In den anderen Populationen liegt die Überlebensrate immer bei etwa 51\%. Es gibt jedoch Populationen, bei denen die Einflussname zu geringeren Überlebensquoten führt. Dies liegt jedoch, wie bereits erwähnt eher an den Migrationsbewegungen als an einer wirklichen Verschlechterung der Situation.\\
+   Durch die Auswertung wurde ersichtlich, dass das Modell die Realität noch nicht ausreichend abbildet. Das hier vorgestellte und untersuchte Modell kann nahezu beliebig weitergeführt werden. Beispielsweise können weitere Maßnahmen implementiert werden, dazu gehören Schulschließungen oder Einreisestopps.\\
+   Um dieser Komplexität gerecht zu werden, kann die Simulation für Projektwochen eingesetzt werden. Es handelt sich dabei offensichtlich um eine Kombination aus Mathematik und Informatik. Hinzu kommen jedoch auch Schnittmengen mit den Fächern Deutsch -- durch das einüben von Lesekompetenz und Formulierungen über Zusammenhänge --, Geschichte -- durch die Betrachtung früherer Epidemien --, Sozialkunde -- durch die Urteilsbildung bezüglich der durchführbaren Maßnahmen -- und weitere andere.\\
+   Bei der Umsetzung für diese Arbeit stand jedoch keine Projektwoche zur Verfügung, weshalb lediglich das grundlegende Modell simuliert und ausgewertet wurde.
+   \input{massnahmen/model}
