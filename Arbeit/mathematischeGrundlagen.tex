@@ -45,9 +45,8 @@ M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kont
 \ellen
 Auch das IDEA-Modell (Incidence decay witz exponential adjustment) versucht die Ausbreitung von Infektionskrankheiten zu beschreiben. Dieses Modell benutzt keine Differentialgleichungen, sondern beschränkt sich auf eine Funktion:\\
 \begin{align}
-I_t &=(\dfrac{R_0}{(1+d)^t})^t
+I_t &=\left(\dfrac{R_0}{(1+d)^t}\right)^t
 \end{align}
-%TODO äußere Klammer schön machen
 Dabei beschreibt $I_t$ die Menge der Krankheitsfälle zum Zeitpunkt t, $R_0$ die Grundreproduktionsrate und $d$ ist ein Kontrollparameter, der dafür sorgt, dass die Anzahl der Krankheitsfälle nicht zu stark ansteigt. 
 \subsubsection{Wahl eines Modells}
 Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekannten Größen oder Operationen für die SuS auftreten. Da jedoch lediglich die Klasse der Infizierten beschrieben wird, ist sie für die weitere Arbeit kaum zu nutzen, da die Untersuchung der Removed-Klasse nicht möglich ist.\\
@@ -76,11 +75,10 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
 \end{center}
 \caption{SEIHFRD-Modell}\label{fig:ssec:model}
 \end{figure}
-In der obigen Darstellung entspricht $\alpha$ der Reproduktionsrate, also der Anzahl der Gesunden, die durch einen Infektiösen angesteckt werden. Forscher der Eidgenössischen Technischen Hochschule Zürich (ETH Zürich) stellten fest, dass diese Rate bei Ebola etwa bei 2,18 liegt.\\
+In der obigen Darstellung entspricht $\alpha$ der Reproduktionsrate, also der Anzahl der Gesunden, die durch einen Infektiösen angesteckt werden. Forscher der Eidgenössischen Technischen Hochschule Zürich (ETH Zürich) stellten fest, dass diese Rate bei Ebola etwa bei 2,18 liegt (\cite{Stadler2014}).\\
 Es kann davon ausgegangen werden, dass alle die ansteckend sind auch Symptome ausbilden.\\
 Mit Hilfe der Reproduktionsrate und dem Wissen über die Menge an Personen, die im Krankenhaus behandelt wurden, konnten die Forscher ebenso die Dunkelziffer abschätzen. Diese liegt für Ebola bei 30\%.\\
 Es starben etwa 50\% der Infizierten bei der Epidemie in Sierra Leone und Guinea. Man kann davon ausgehen, dass diese Rate bei jenen die sich nicht in Behandlung befinden etwas höher liegt, während sie bei denen im Krankenhaus niedriger liegt.\\
-%TODO Literaturangabe (http://currents.plos.org/outbreaks/article/insights-into-the-early-epidemic-spread-of-ebola-in-sierra-leone-provided-by-viral-sequence-data/)
 Laut rbb konnten nach Behandlungen im Krankenhaus sechs von zehn Patienten als geheilt entlassen werden. Das bedeutet, dass $\epsilon$ 0,4 entspricht. \\
 %TODO Literaturangabe (http://www.rbb-online.de/rbbpraxis/rbb_praxis_service/impfungen-und-erkrankungen/ebola.html)
 Damit kann man annehmen, dass ohne Behandlung sechs von zehn Patienten sterben. Das bedeutet für das obige Modell, dass $\beta$ 0,18 entspricht, während $\delta$ 0,12 entspricht, denn $\beta + \delta = 0,3$. Zusätzlich gilt, dass $\beta + \delta + \gamma = 1$. \\

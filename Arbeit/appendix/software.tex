@@ -16,7 +16,7 @@ Die Simulation läuft in diskreten Zeitschritten ab. Demzufolge wird auch von de
 \caption{Berechnung eines Iterationsschritts als UML-Aktivitätsdiagramm}\label{fig:ssec:sw:activity}
 \end{figure}
 \subsubsection*{Verwendung}
-Die Software wird in Form von zwei ausführbaren \texttt{jar}-Dateien bereitgestellt, deren Verwendung nachfolgend erklärt wird. Die Dateien sind über den Webdienst \emph{Github} gehostet. 
+Die Software wird in Form von zwei ausführbaren \texttt{jar}-Dateien bereitgestellt, deren Verwendung nachfolgend erklärt wird. Die Dateien sind über den Webdienst \emph{Github} gehostet und kann unter \url{https://github.com/themetalone/WS1617-Masterarbeit/releases} heruntergeladen werden. 
 
 
 Die Datei \texttt{PS-Simulation-Product.jar} beinhaltet die eigentliche Simulationsdatei. Für die Ausführung ist der Laufzeitparameter \texttt{com.github.themetalone.pandemic.config} nötig, dessen Wert auf eine entsprechende Konfigurationsdatei zeigt. Die Konfigurationsdatei ist in XML verfasst und kennt die folgenden Elemente
@@ -53,7 +53,7 @@ Die Datei \texttt{PS-Simulation-Product.jar} beinhaltet die eigentliche Simulati
 \item[\texttt{<routen>}:] Ein Container für beliebig viele \texttt{<route>}-Elemente. \texttt{<routen>} hat die Attribute:
 \begin{itemize}
 	\item \texttt{reisende-subpopulationen}: definiert die Subpopulationen, deren Individuen reisen können. Der Wertebereich wird durch den Ausdruck $Subpopulation(,Subpopulation)^*$ beschrieben (Beispiel: \texttt{S,E}). 
-	\item \textbf{flugverkehr}: definiert, ob ein Flugverkehrsnetz automatisch generiert werden soll. Der Wertebereich ist boolesch. Falls das Attribut nicht gesetzt wird, wird \texttt{false} angenommen. Bei \texttt{true} wird eine zusätzliche Reisekante zwischen den reisenden Subpopulationen aller Populationen erzeugt. Die Kanten werden als Flugrouten gekennzeichnet. Der Anteil am noch nicht zugewiesenen Migrationsanteil einer Population wird gleichmäßig auf die neu erzeugten Kanten verteilt. Wird für die Population bereits eine Flugroute definiert, wird bei der automatischen Generierung diese Flugroute ausgelassen. 
+	\item \texttt{flugverkehr}: definiert, ob ein Flugverkehrsnetz automatisch generiert werden soll. Der Wertebereich ist boolesch. Falls das Attribut nicht gesetzt wird, wird \texttt{false} angenommen. Bei \texttt{true} wird eine zusätzliche Reisekante zwischen den reisenden Subpopulationen aller Populationen erzeugt. Die Kanten werden als Flugrouten gekennzeichnet. Der Anteil am noch nicht zugewiesenen Migrationsanteil einer Population wird gleichmäßig auf die neu erzeugten Kanten verteilt. Wird für die Population bereits eine Flugroute definiert, wird bei der automatischen Generierung diese Flugroute ausgelassen. 
 \end{itemize}
 \item[\texttt{<route>}:] Definiert eine unidirektionale Route zwischen zwei Populationen. Dadurch werden Reisekanten zwischen den reisenden Subpopulationen der verbundenen Populationen erzeugt. Ein \texttt{<route>}-Element besteht aus beliebig vielen \texttt{<zuordnung>}-Elementen und hat die Attribute:\begin{itemize}
 	\item \texttt{von}: die Startpopulation, angegeben durch ihren Namen.
@@ -66,5 +66,14 @@ Die Datei \texttt{PS-Simulation-Product.jar} beinhaltet die eigentliche Simulati
 	\item \texttt{nachSubpopulation}: referenziert eine Subpopulation in der Zielpopulation. Der Wertebereich ist analog zu dem von \texttt{vonSubpopulation}
 \end{itemize} 
 \end{description}
+In der aktuellen Implementierung von \texttt{PS-Simulation} werden die erzeugten Simulationsdaten als CSV-Dateien gespeichert. Erfasst werden initial die Populationen (\texttt{*-population.csv}, deren Subpopulationen (\texttt{*-healthstates.csv}) und die Kanten zwischen den Subpopulationen (\texttt{*-transmissions.csv}). Zudem werden in jedem Zeitschritt die Größen der Subpopulationen (\texttt{*-hsstates.csv}) und die übertragenen Individuen in jeder Kante (\texttt{*-tsstates.csv}). Die zeitabhängigen Daten sind jedoch noch nicht intuitiv lesbar, sondern spiegeln den Zustand der Simulation über die Simulationsdauer maschinenlesbar wider.
 
-\subsubsection*{Lizenzen}
+Eine intuitiv lesbare Darstellung der Subpopulationsgrößen wird durch die Datei \texttt{PS-Analysis-Product.jar} erzeugt. Die aktuelle Implementierung nimmt CSV-Daten als Input, die von \texttt{PS-Simulation-Product.jar} erzeugt wurden. Für eine Ausführung der Software müssen die folgenden Laufzeitparameter angegeben werden: 
+
+\noindent\texttt{com.github.themetalone.pandemic.analysis}
+\begin{itemize}
+	\item \texttt{.csv}: Pfad zur \texttt{*-hsstates.csv}-Datei
+	\item \texttt{.folder}: Pfad zu dem Ordner, in dem die Ergebnisse gespeichert werden sollen
+	\item \texttt{.prefix}: Das Prefix der zu erzeugenden Dateien. Die Dateien werden nach dem Schema \texttt{[Prefix]-[Populationsnummer].csv} benannt. 
+\end{itemize}
+\texttt{PS-Analysis-Product.jar} erzeugt für jede Population eine tabellarische Übersicht der Größen der Subpopulationen während dem Simulationszeitraum. 
