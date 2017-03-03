@@ -13,3 +13,4 @@ Simulation/PS-Products/PS-Analysis-Product/target/
 *.nav
 *.snm
 Simulation/PS-Utils/src/generated/
+*.sav

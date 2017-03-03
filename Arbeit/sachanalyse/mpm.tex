@@ -1,16 +1,21 @@
 Die bisherigen Ansätze betrachten jeweils nur eine Population. Um die Auswirkungen von Schließungen bestimmter Transportwege zu untersuchen reicht die Betrachtung einer isolierten Population nicht aus. Im Folgenden werden zwei Ansätze zur Modellierung von mehren miteinander agierenden Populationen während einer Infektion untersucht und anschließend darauf aufbauend das Model aus \ref{ssec:spa} auf mehrere Populationen erweitert. Für die eigentliche Erweiterung des Modells wird sich auf eine \emph{SIR}-Modellierung beschränkt und zusätzliche Subpopulationen erst bei Bedarf in Betracht gezogen.
-\subsubsection{Simulation von Tagesabläufen in verschiedenen Gruppen}
-\cite{Capasso1978} beschreiben in ihrer Arbeit ein Infektionsmodell, mit dem sich die Ausbreitung einer Infektionskrankheit in einer isolierten Stadt beschreiben lässt. Im Gegensatz zu den SIR-Modellen werden in diesem Modell die Individuen direkt simuliert. Innerhalb der Population werden die Individuen in sogenannten \emph{Mixing Groups} zusammengefasst, in denen sich die Individuen untereinander anstecken können. Je nach Interpretation repräsentieren die \emph{Mixing Groups} Haushalte, Schulklassen, Arbeitsplätze oder Krankenhausabteilungen. Jedes Individuum hat dabei eine fest zugeteilte Haushalts- und Beschäftigungs-Gruppe, zwischen denen im Laufe eines Tages gependelt wird. Dies entspricht dem Arbeits- beziehungsweise dem Schulalltag der Individuen.
+\subsubsection{Verwandte Arbeiten}
+\cite{Milne2008} beschreiben in ihrer Arbeit ein Infektionsmodell, mit dem sich die Ausbreitung einer Infektionskrankheit in einer isolierten Stadt beschreiben lässt. Im Gegensatz zu den SIR-Modellen werden in diesem Modell die Individuen direkt simuliert. Innerhalb der Population werden die Individuen in sogenannten \emph{Mixing Groups} zusammengefasst, in denen sich die Individuen untereinander anstecken können. Je nach Interpretation repräsentieren die \emph{Mixing Groups} Haushalte, Schulklassen, Arbeitsplätze oder Krankenhausabteilungen. Jedes Individuum hat dabei eine fest zugeteilte Haushalts- und Beschäftigungsgruppe, zwischen denen im Laufe eines Tages gependelt wird. Dies entspricht dem Arbeits- beziehungsweise dem Schulalltag der Individuen.
 
-Für die Modellierung der Krankheit werden die drei grundlegenden Zustände \emph{infizierbar}, \emph{infiziert} und \emph{immunisiert}. Die \emph{Infizierten} unterteilen sich noch zusätzlich in die mit Symptomen und die ohne. Damit ist diese Modellierung äquivalent zu der eines \emph{SEIR}-Modells.
+Für die Modellierung der Krankheit werden die drei grundlegenden Zustände \emph{infizierbar}, \emph{infiziert} und \emph{immunisiert} beschrieben. Die \emph{Infizierten} unterteilen sich noch zusätzlich in die mit Symptomen und die ohne. Damit ist diese Modellierung einem \emph{SEIR}-Modell ähnlich. Ziel der Arbeit ist es, die Auswirkung von nicht-medikamentösen Maßnahmen bei einer Grippeepidemie zu evaluieren. Die Maßnahmen, darunter auch reduzierter Kontakt innerhalb der Population oder der Schließung von Schulen, zeigten reduzierte Ansteckungsraten.
 
+Zur Veranschaulichung des Modells dient Abbildung \ref{fig:ssec:multipop:milne}, in der eine Population mit Arbeitsplätzen, Schulen und Krankenhäusern dargestellt ist. Die Ansteckung erfolgt nur innerhalb der so genannten ``Mixing Groups''. Die in der Abbildung verwendeten ``Hubs'' dienen nur dem Erhalt der Übersichtlichkeit. Die direkte Simulation von Individuen ist nur in kleinen Populationen praktikabel. Eine größere Population wird aber durch die Wahl einer Stichprobe ebenfalls berechenbar.
 
-behandelt die Effektivität von Schulschließungen während einer Grippewelle. Arbeitet mit Individuen, die sich zwischen verschiedenen Gruppen hin und her bewegen (explizit: Familie, Schule, Arbeit und Krankenhaus). Die Übertragungsraten sind abhängig von der Gruppe, in der sich ein Individuum befindet. Das Schließen von Schulen zeigt in der Simulation eindeutige Effekte.
-\subsubsection{Erweiterung des SIR-Modells}
-\cite{Sattenspiel1995} Erweiterung des SIR-Models um Reisen zwischen den Populationen. Individuen reisen zu einem Ziel und kehren zurück. Die Reisebereitschaft ist invariant unter Infektionen oder anderen Faktoren. Im Prinzip ein Zusammenschluss von Mobilitäts- und SIR-Modell
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{res/diagramme/milne2008}
+\caption{\cite[Figure 1. Idealised household and hub contact network]{Milne2008}}\label{fig:ssec:multipop:milne}
+\end{figure}
 
+\cite{Sattenspiel1995} nähert sich der Modellierung von Krankheitsausbreitungen von einer anderen Richtung. Die Basis bildet ein Modell zur Beschreibung von Mobilität zwischen verschiedenen Regionen, in das ein \emph{SIR}-Modell integriert wird. Das Modell beschreibt dabei eine Population, die auf voneinander entfernte Regionen aufgeteilt ist. Die Kontakte zwischen beliebigen Individuen der Gesamtpopulation sind somit nicht mehr zufällig, die zwischen Individuen in der gleichen Region dagegen bleiben es aber. Das Modell lässt sich somit beispielsweise als mehrere verbundene \emph{SIR}-Modelle interpretieren.
+
+Die Mobilität in dem Modell umfasst sowohl einen temporären als auch einen permanenten Austausch von Individuen zwischen den verschiedenen Regionen. Der permanente Austausch ist dabei nicht explizit modelliert, wird aber durch eine entsprechend lange ``Verweildauer'' erreicht. Um die temporäre Verweildauer zu erreichen, muss für jede Bewegung die Menge der bewegten Individuen und die Startregion persistent gemacht werden. Bei schwach partitionierten Populationen, wie sie in der Arbeit untersucht wurden, ist dieser Ansatz durchführbar. Bei stärkerer Partition wächst aber die Menge an Bewegungsinformation exponentiell.
 \subsubsection{Vom SIR-Modell zur Netzwerksbasierten Pandemie-Simulation}
-Für die Simulation einer Pandemie wird der Netzwerksansatz von \citep{Capasso1978} mit der Erweiterung des SIR-Modells von \citep{Sattenspiel1995} kombiniert. 
+Für die Simulation einer Pandemie wird der Netzwerksansatz von \citep{Milne2008} mit der Erweiterung des SIR-Modells von \citep{Sattenspiel1995} kombiniert. 
 
 Sei 
 \begin{align}
@@ -121,7 +126,7 @@ Modelliert man eine gefährliche Krankheit wie das Ebolavirus, wirkt sich deren 
 	T^{A,B}_d =& f_{inf}(i_A,i_B, \sigma)&\text{mit}\\
 	f_{inf}(i_A,i_B,\sigma) \in& \mathbb{R}^+&\text{der Infektionseinschätzung von A bzgl. B,}\label{eq:ssec:multiPop:infRisk}\\
 	i_X =& \frac{|X.I|}{|X|}&\text{dem Infektionsquotienten und}\\
-	\sigma \geq&1 & \text{die Schwere der Krankheit}
+	\sigma \geq&1 & \text{die Schwere der Krankheit}\label{eq:ssec:multiPop:severity}
 \end{align}
 In dem erweiterten \emph{SEIHFRD}-Modell (siehe Abbildung \ref{fig:ssec:model}) berechnet sich der der Infektionsquotient via 
 \begin{align}
@@ -142,7 +147,7 @@ Für dieses Modell wählen wir
 	f_{inf} :& [0,1]\times [0,1] \times \mathbb{R}^+ \rightarrow  \mathbb{R}^+\\
 			 & (i_A,i_B,\sigma)\longmapsto								\begin{cases}c_{inf}&\text{, wenn } i_B = 0 \vee \frac{i_A}{i_B} > c_{inf} \\\left( \frac{i_A}{i_B}\right)^\sigma &\text{, sonst}\end{cases}\nonumber			  
 \end{align}
-Für den Fall $i_B$ wird eine Konstante $c_inf$ angegeben, die gleichzeitig als obere Schranke fungiert. Eine obere Schranke ist auch notwendig, denn für $i_A >0$ fest und $i_B\rightarrow 0$ gilt $\frac{i_A}{i_B}\rightarrow \infty$. Innerhalb des Modells würde dies bedeuten, dass bereits aus einer nur leicht infizierten Population alle Individuen innerhalb eines einzelnen Zeitschrittes in eine völlig gesunde Population ``fliehen'' würden. Für den weiteren Verlauf wird $c_inf = 2$ gesetzt. 
+Für den Fall $i_B$ wird eine Konstante $c_inf$ angegeben, die gleichzeitig als obere Schranke fungiert. Eine obere Schranke ist auch notwendig, denn für $i_A >0$ fest und $i_B\rightarrow 0$ gilt $\frac{i_A}{i_B}\rightarrow \infty$. Innerhalb des Modells würde dies bedeuten, dass bereits aus einer nur leicht infizierten Population alle Individuen innerhalb eines einzelnen Zeitschrittes in eine völlig gesunde Population ``fliehen'' würden. Für den weiteren Verlauf wird $c_{inf} = 2$ gesetzt. 
 
 Der Reisefaktor wird auf alle Subpopulationen unverändert angewandt. Man erhält damit für zwei \emph{SEIR}-Populationen das in Abbildung \ref{fig:ssec:multiPop:travelSEIR} dargestellte Netzwerk.
 \begin{figure}
