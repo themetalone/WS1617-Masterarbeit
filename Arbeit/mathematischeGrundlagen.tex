@@ -80,11 +80,7 @@ Es kann davon ausgegangen werden, dass alle die ansteckend sind auch Symptome au
 Mit Hilfe der Reproduktionsrate und dem Wissen über die Menge an Personen, die im Krankenhaus behandelt wurden, konnten die Forscher ebenso die Dunkelziffer abschätzen. Diese liegt für Ebola bei 30\%.\\
 Es starben etwa 50\% der Infizierten bei der Epidemie in Sierra Leone und Guinea. Man kann davon ausgehen, dass diese Rate bei jenen die sich nicht in Behandlung befinden etwas höher liegt, während sie bei denen im Krankenhaus niedriger liegt.\\
 
-%TODO Literaturangabe (http://currents.plos.org/outbreaks/article/insights-into-the-early-epidemic-spread-of-ebola-in-sierra-leone-provided-by-viral-sequence-data/)
-Caitlin Rivers et al. geben in ihrem Paper an, dass die Sterblichkeitsrate durch Krankenhausaufenthalte nicht verändert wird.
-%TODO Literaturangabe Caitlin M Rivers (1. Paper)
-Eine Studie von Ärzte ohne Grenzen kommt jedoch zu dem Schluss, dass ein Malariamedikament die Sterblichkeitsrate um 31\% senkt. 
-%TODO Literaturangabe res/bib/aog
+\cite{Rivers} geben in ihrem Paper an, dass die Sterblichkeitsrate durch Krankenhausaufenthalte nicht verändert wird. Eine Studie von Ärzte ohne Grenzen kommt jedoch zu dem Schluss, dass ein Malariamedikament die Sterblichkeitsrate um 31\% senkt (\cite{AerzteGrenzen2016}).
 Daher setzen wir die Sterblichkeitsrate im Krankenhaus $\epsilon = 0.4$. Dadurch ist die Überlebenswahrscheinlichkeit gegenüber dem Ausbleiben einer Behandlung leicht erhöht. Dies wirkt mit dem Alltagsverständnis vereinbar, jedoch ist die Verbesserung von 31\% zu hoch, da die Verfügbarkeit des Malariamedikaments nicht in allen Krankenhäusern und für alle Patienten gewährleistet werden kann.
 
 Damit kann man annehmen, dass ohne Behandlung sechs von zehn Patienten sterben. Das bedeutet für das obige Modell, dass $\beta$ 0,18 entspricht, während $\delta$ 0,12 entspricht, denn $\beta + \delta = 0,3$. Zusätzlich gilt, dass $\beta + \delta + \gamma = 1$. \\
