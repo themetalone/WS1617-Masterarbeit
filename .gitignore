@@ -9,5 +9,9 @@ Simulation/target/
 *.class
 Simulation/PS-Products/PS-Simulation-Product/target/
 Simulation/PS-Products/PS-Analysis-Product/target/
+*.out
+*.nav
+*.snm
 Simulation/PS-Utils/src/generated/
 *.zip
+*.sav

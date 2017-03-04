@@ -1,8 +1,8 @@
-\subsection{Identifikation von Maßnahmen}\steffen
+\steffen\subsection{Identifikation von Maßnahmen}
 Nachdem nun das \emph{SIR}-Modell für die Untersuchung von Pandemien erweitert wurde, werden nun Maßnahmen zur Eindämmung und deren Entsprechung im Netzwerkmodell beschrieben. 
 
 \subsubsection{Lokale Maßnahmen}
-Beginnt eine Krankheit zur Epidemie zu werden, kann man lokal organisatorisch Maßnahmen ergreifen, um sie einzudämmen. Zu diesen zählt die Aufklärung um die Infektionsgefahr sowie die vorübergehende Schließung von öffentlichen Einrichtungen. Letzteres wurde von \textbf{REF?} mit dem oben beschriebenen Modell untersucht und für wirksam befunden. Durch die Aufklärung wird die Vorsicht bei zwischenmenschlichen Interaktionen erhöht, was die Infektionswahrscheinlichkeit pro Interaktion senkt. Ähnlich verhält es sich mit der Schließung von öffentlichen Einrichtungen. Hierdurch wird die Anzahl der möglichen Interaktionen von Infizierten und Infizierbaren reduziert, was ebenfalls die Infektionswahrscheinlichkeit reduziert. Im Modell schlagen sich diese Maßnahmen in einer Reduktion der Volumina der inneren Kanten nieder, wie in Abbildung \ref{fig:ssec:actions:local} dargestellt.
+Beginnt eine Krankheit zur Epidemie zu werden, kann man lokal organisatorisch Maßnahmen ergreifen, um sie einzudämmen. Zu diesen zählt die Aufklärung um die Infektionsgefahr sowie die vorübergehende Schließung von öffentlichen Einrichtungen. Letzteres wurde von \cite{Milne2008} mit einem anderen Modell untersucht und für wirksam befunden. Durch die Aufklärung wird die Vorsicht bei zwischenmenschlichen Interaktionen erhöht, was die Infektionswahrscheinlichkeit pro Interaktion senkt. Ähnlich verhält es sich mit der Schließung von öffentlichen Einrichtungen. Hierdurch wird die Anzahl der möglichen Interaktionen von Infizierten und Infizierbaren reduziert, was ebenfalls die Infektionswahrscheinlichkeit reduziert. Im Modell schlagen sich diese Maßnahmen in einer Reduktion der Volumina der inneren Kanten nieder, wie in Abbildung \ref{fig:ssec:actions:local} dargestellt.
 
 \begin{figure}
 \begin{center}
@@ -41,7 +41,7 @@ Während die beiden eben beschriebenen Maßnahmen die Eindämmung einer Krankhei
 Der Schutz vor Krankheiten, der durch die Isolation einer Population von den restlichen Populationen entsteht, ist offensichtlich sehr effektiv, setzt man eine reine Mensch-zu-Mensch Übertragung vorraus. Wirtschaftlich kann dieser Schutz eine Population vor große Probleme stellen. Reisekanten, auf denen wirtschaftlich notwendige Güter, wie beispielsweise Nahrungsmittel, transportiert werden, können nicht dauerhaft gesperrt werden. 
 
 \subsubsection{Einreisequarantäne}
-Eine andere Maßnahme, mit der die Einreise kranker Individuen verhindert werden soll, ist die Einrichtung einer Quarantäne bei kontrollierbaren Reisewegen, wie Flugzeugen oder Schiffen. Dabei werden die Einreisenden für eine gewisse Zeit von der restlichen Population isoliert. Erkrankende Individuen werden, im Falle des in dieser Arbeit verwendeten \emph{SEIHFRD}-Modells, hospitalisiert und Individuen, die nicht erkranken, werden in die Population entlassen. Wichtig ist dabei die Dauer der Quarantäne. Da Inkubationszeiten nur statistische Durchschnittwerte sind, kann nie eine Wahrscheinlichkeit von 0 für den Fall erreicht werden, dass ein infiziertes Individuum nicht in die Population entlassen wird. Generell sind lange Quarantänezeiten problematisch in der Umsetzung. Betrachtet man sich beispielsweie das Ebola-Fieber, so wird dessen Inkubationszeit von \textbf{REF?Eichner} im Schnitt mit $12,7$ Tagen angegeben, bei einer Standardabweichung von $4,3$ Tagen. Um die Wahrscheinlichkeit einer falsch-negativen Infektionsprognose auf $1\%$ zu senken, benötigt man, nach \textbf{REF?Eichner:4}, $25$ Tage Quarantäne. Dabei wird vorrausgsetzt, dass die Indiviuen in der Quarantäne sich nicht gegenseitig infizieren können. Je nach Attraktivität der Population, kann es organisiatorisch schwer bis unmöglich sein, für alle ankommenden eine $25$-tägige Quarantäne zu verhängen. Die Frage, wie sicher die Quarantäne ist, hängt von den organisatorischen Möglichkeiten der Population, sowie ihrer Einschätzung der Gefährlichkeit der Kranheit ab. 
+Eine andere Maßnahme, mit der die Einreise kranker Individuen verhindert werden soll, ist die Einrichtung einer Quarantäne bei kontrollierbaren Reisewegen, wie Flugzeugen oder Schiffen. Dabei werden die Einreisenden für eine gewisse Zeit von der restlichen Population isoliert. Erkrankende Individuen werden, im Falle des in dieser Arbeit verwendeten \emph{SEIHFRD}-Modells, hospitalisiert und Individuen, die nicht erkranken, werden in die Population entlassen. Wichtig ist dabei die Dauer der Quarantäne. Da Inkubationszeiten nur statistische Durchschnittwerte sind, kann nie eine Wahrscheinlichkeit von 0 für den Fall erreicht werden, dass ein infiziertes Individuum nicht in die Population entlassen wird. Generell sind lange Quarantänezeiten problematisch in der Umsetzung. Betrachtet man sich beispielsweie das Ebola-Fieber, so wird dessen Inkubationszeit von \cite{Eichner2011} im Schnitt mit $12,7$ Tagen angegeben, bei einer Standardabweichung von $4,3$ Tagen. Um die Wahrscheinlichkeit einer falsch-negativen Infektionsprognose auf $1\%$ zu senken, benötigt man, nach \cite[4]{Eichner2011}, $25$ Tage Quarantäne. Dabei wird voraus gesetzt, dass die Individuen in der Quarantäne sich nicht gegenseitig infizieren können. Je nach Attraktivität der Population, kann es organisatorisch schwer bis unmöglich sein, für alle ankommenden eine $25$-tägige Quarantäne zu verhängen. Die Frage, wie sicher die Quarantäne ist, hängt von den organisatorischen Möglichkeiten der Population, sowie ihrer Einschätzung der Gefährlichkeit der Krankheit ab. 
 
 Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopulationen umsetzen. Für jede reisende Subpopulation, in unserem Modell also $S$ und $E$, wird eine Quarantäne-Subpopulation, $Q_S$ und $Q_E$, eingeführt. Eingehende Kanten kontrollierbarer Reisewege haben dann diese Quarantäne-Subpopulationen als Ziel. Die Quarantäne-Subpopulationen werden mit zugehörigen reisenden Subpopulationen mittels einer inneren Kante unidirektional verbunden, und zwar von der Quarantäne in die Population. Das Volumen der Kanten richtet sich nach der veranschlagten Sicherheit der Quarantäne. Ob es zwischen $Q_S$ und $Q_E$ eine innere Kante gibt, hängt davon ab, ob sich die Individuen in der Quarantäne infizieren können. Weiterhin gibt es eine Kante von $Q_E$ nach $H$, da sichtbar Infizierte direkt hospitalisiert werden. 
 
@@ -50,34 +50,64 @@ Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopu
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto, node distance=3cm]
 	\node[state] (S)				{S};
 	\node[state] (E) [right =4cm of S]	{E};
-	\node[state] (I) [right of=E]	{I};
+	\node (I) [right of=E]	{\dots};
 	\node[state] (H) [right of=I]	{H};
-	\node[state] (F)[above of=I]	{F};
-	\node[state] (D)[right of=F]	{D};
-	\node[state] (R)[below of=H]	{R};
 	\node[state] (QS)[below of=S] {$Q_S$};
 	\node[state] (QE)[below of=E] {$Q_E$};
 	\node (X) [below of=QS] {};
 	\node (Y) [below of=QE] {};
 	\path 	(S)	edge node {$\alpha \cdot (I+E)+ \omega \cdot F$}(E)
-			(E)	edge node {$1 \cdot E$}							(I)
-			(I)	edge node {$\beta \cdot I$}						(F)
-			(I)	edge node {$\gamma\cdot I$}					(H)
-			(I)	edge node {$\delta \cdot I$}					(R)
-			(F)	edge node {$1 \cdot F $}						(D)
-			(H)	edge node {$\epsilon \cdot H$}					(D)
-			(H) edge node {$(1-\epsilon) \cdot H $}				(R)
+			(E)	edge node {}							(I)
+			(I)	edge node {}					(H)
 			(QS) edge node {$q_S\cdot Q_S$} (S)
-			(QS) edge node {$\alpha\cdot Q_E$} (QE)
+			(QS) edge node {$\alpha_Q\cdot Q_E$} (QE)
 			(QE) edge node {$q_E\cdot Q_E$} (E)
-			(QE) edge node {$(1-q_E)\cdot Q_E$}	(H)
+			(QE) edge[bend right] node {$(1-q_E)\cdot Q_E$}	(H)
 			(X) edge node {} (QS)
 			(Y) edge node {} (QE)
 			;
 	
 \end{tikzpicture}
 \end{center}
-\caption{SEIHFRD-Modell mit Quarantäne-Subpopulationen $Q_S$ und $Q_E$}\label{fig:ssec:actions:quarantine}
+\caption{Ausschnitt aus dem SEIHFRD-Modell mit Quarantäne-Subpopulationen $Q_S$ und $Q_E$}\label{fig:ssec:actions:quarantine}
 \end{figure}
-\subsection{Auswertung der Maßnahmen}
+\subsection{Auswertung der Maßnahmen}\label{ssec:actions:sim}
 \input{massnahmen/model}
+\ellen
+Nachdem die Simulation durchgeführt wurde, wurden die Ergebnisse mit Hilfe von Excel ausgewertet. Dabei zeigt sich, dass die größten Veränderungen in der Population A auftreten.\\
+\begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A0}
+\caption{Population A ohne Einflussnahme}
+\label{fig:ssec:actions:A0}
+\end{figure}
+ Bei Abbildung \ref{fig:ssec:actions:A0} handelt es sich um den Krankheitsverlauf, innerhalb der Population A, ohne Einflussnahme. Dabei kann man sehen, dass die Anzahl der gesunden Individuen innerhalb der Population zunächst ansteigt. Dies ist auf die Migration zurückzuführen. Etwa die Hälfte der Bevölkerung überlebt die Epidemie uns bildet eine Immunität aus (51\%).\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A1}
+\caption{Population A mit erhöhter Hygiene}
+\label{fig:ssec:actions:A1}
+\end{figure}
+  Durch die erhöhte Hygiene und die daraus resultierende geringere Ansteckungsrate, kommt es nur zu geringen Unterschieden im Krankheitsverlauf. Wie zu erwarten steigt die Anzahl der Infizierten langsamer an als vorher. Zusätzlich befinden sich am Ende weniger Menschen in dieser Population. Ohne Maßnahmen gibt es 16.466.684 Immune und Tote in A, während es bei erhöhter Hygiene lediglich 16.351.824 sind. Dies könnte darauf zurückgeführt werden, dass durch die verlangsamte Krankheitsausbreitung die Zeit für Migration verlängert wird. Die Überlebensrate steigt leicht auf 51,03\%. Siehe dazu die Abbildung \ref{fig:ssec:actions:A1}\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A2}
+\caption{Population A mit Impfen}
+\label{fig:ssec:actions:A2}
+\end{figure}
+  Durch das Impfen steigt die Immunisierungsrate an. Dadurch steigt die Überlebensrate auf 51,39\%. Siehe dazu Abbildung \ref{fig:ssec:actions:A2}.\\
+  \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A3}
+\caption{Population A mit Quarantäne}
+\label{fig:ssec:actions:A3}
+\end{figure}
+  Durch die Quarantäne steigt die Überlebensrate sogar stärker an als zuvor (auf 52,14\%). Dies kann jedoch auch daran liegen, dass sich die Zuwanderung signifikant verändert hat. Wodurch dies ausgelöst wird, ist durch die vorliegenden Daten nicht ersichtlich, jedoch befinden sich am Ende der Simulation 23.508.184 Tote und Immune in der Population A. Siehe dazu Abbildung \ref{fig:ssec:actions:A3}\\
+ \begin{figure}
+ \includegraphics[width=1\textwidth]{massnahmen/A4}
+\caption{Population A mit Impfen und Quarantäne}
+\label{fig:ssec:actions:A4}
+\end{figure}
+  Wie zu erwarten war, steigt die Überlebensrate weiter an, wenn zwei Maßnahmen kombiniert werden.\\
+  Zusätzlich bleibt die Gesamtpopulation erhöht, sogar leicht höher als bei der Quarantäne alleine. Es befinden sich nun 23.542.177 Immune und Tote innerhalb der Population. Siehe dazu Abbildung \ref{fig:ssec:actions:A4}\\
+   Bei den weiteren Populationen ist der Einfluss der Maßnahmen sehr gering. Dies könnte unter anderem daran liegen, dass der auswandernde Anteil an der Population A der geringste ist. Somit sind die anderen Populationen von einer größeren Abwanderung betroffen.\\
+   In den anderen Populationen liegt die Überlebensrate immer bei etwa 51\%. Es gibt jedoch Populationen, bei denen die Einflussname zu geringeren Überlebensquoten führt. Dies liegt jedoch, wie bereits erwähnt eher an den Migrationsbewegungen als an einer wirklichen Verschlechterung der Situation.\\
+   Durch die Auswertung wurde ersichtlich, dass das Modell die Realität noch nicht ausreichend abbildet. Das hier vorgestellte und untersuchte Modell kann nahezu beliebig weitergeführt werden. Beispielsweise können weitere Maßnahmen implementiert werden, dazu gehören Schulschließungen oder Einreisestopps.\\
+   Um dieser Komplexität gerecht zu werden, kann die Simulation für Projektwochen eingesetzt werden. Es handelt sich dabei offensichtlich um eine Kombination aus Mathematik und Informatik. Hinzu kommen jedoch auch Schnittmengen mit den Fächern Deutsch -- durch das einüben von Lesekompetenz und Formulierungen über Zusammenhänge --, Geschichte -- durch die Betrachtung früherer Epidemien --, Sozialkunde -- durch die Urteilsbildung bezüglich der durchführbaren Maßnahmen -- und weitere andere.\\
+   Bei der Umsetzung für diese Arbeit stand jedoch keine Projektwoche zur Verfügung, weshalb lediglich das grundlegende Modell simuliert und ausgewertet wurde.

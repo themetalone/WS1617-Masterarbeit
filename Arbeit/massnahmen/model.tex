@@ -1,5 +1,13 @@
 \subsubsection{Verwendetes Modell}
-Im Folgenden werden die soeben beschriebenen Maßnahmen in einem \emph{SEIHFRD}-Modell mit miteinander interagierenden Populationen untersucht. Es werden 5 Populationen in einem einfachen Netzwerk verwendet, das in Abbildung \ref{fig:ssec:sim:pops} dargestellt ist. Die Populationen unterscheiden sich sowohl in ihrem Lebensstandard als auch ihrem Migrationsanteil. Jede Population umfasst $11,5\cdot 10^6$ Individuen, von denen jeweils $4100$ latent infiziert sind. Das \emph{SEIHFRD}-Modell jeder Population ist in Abbildung \ref{fig:ssec:sim:sir} dargestellt. Es wird von einer uniformen Infektionsrate von $2,18$, einer Hospitalisierung von $70\%$ und einer Letalität der Krankheit von $50\%$ ohne und $40\%$ mit Hospitalisierung ausgegangen. Weiterhin finden rituelle Begräbnisse statt, die mit einer Infektionsrate von $0,2$ die Krankheit weiterverbreiten.
+Im Folgenden werden die soeben beschriebenen Maßnahmen in einem \emph{SEIHFRD}-Modell mit miteinander interagierenden Populationen untersucht. Es werden fünf Populationen in einem einfachen Netzwerk verwendet, das in Abbildung \ref{fig:ssec:sim:pops} dargestellt ist. Die Populationen unterscheiden sich sowohl in ihrem Lebensstandard als auch ihrem Migrationsanteil. Jede Population umfasst $11,5\cdot 10^6$ Individuen. Lediglich Population \emph{C} beginnt mit $4100$ latent Infizierten (Subpopulation \emph{E}). Das \emph{SEIHFRD}-Modell jeder Population ist in Abbildung \ref{fig:ssec:sim:sir} dargestellt. Es wird von einer uniformen Infektionsrate von $2,18$, einer Hospitalisierung von $70\%$ und einer Letalität der Krankheit von $50\%$ ohne und $40\%$ mit Hospitalisierung ausgegangen. Weiterhin finden rituelle Begräbnisse statt, die mit einer Infektionsrate von $0,2$ die Krankheit weiterverbreiten.
+
+Es werden insgesamt fünf Konfigurationen untersucht. Als Basis zum Vergleich der Wirksamkeit der Maßnahmen dient die eben beschriebene Modellkonfiguration. Untersucht werden die Auswirkungen von 
+\begin{enumerate}
+\item erhöhter Hygiene in den Populationen \emph{A} und \emph{E}. Die erhöhte Hygiene manifestiert sich im Modell durch eine Reduktion des Ansteckungsfaktors auf $1,18$ und dem Wegfall der Ansteckung durch rituelle Begräbnisse (Abb. \ref{fig:ssec:model}: $\alpha = 1,18~\&~\omega = 0$).
+\item Impfungen in Population \emph{A}. Es wird angenommen, dass \emph{A} $10.000$ (Abb. \ref{fig:ssec:actions:vac}: $\epsilon\cdot p = 10.000$) erfolgreiche Impfungen pro Zeitintervall durchführen kann. 
+\item der Einführung einer Quarantäne für Einreisende in Population \emph{A}. Eine Ansteckung innerhalb der Quarantäne wird durch entsprechende Vorsichtsmaßnahmen verhindert. Dadurch wird nur die Quarantäne-Subpopulation $Q_E$ benötigt. Es wird weiterhin angenommen, dass die Quarantäne eine $99\%$ Effektivität aufweist. (Abb. \ref{fig:ssec:actions:quarantine}: $q_S=1$, $\alpha_Q=0$ \& $q_E=0,01$)
+\item einer Kombination aus Impfungen und Quarantäne in Population $A$. Die Parameter werden aus den beiden obigen Fällen übernommen.
+\end{enumerate}
 
 \begin{figure}
 \begin{center}
@@ -53,3 +61,4 @@ Im Folgenden werden die soeben beschriebenen Maßnahmen in einem \emph{SEIHFRD}-
 \end{center}
 \caption{SEIHFRD-Modell für die Auswertung der Maßnahmen mit $X \in \lbrace A,B,C,D,E\rbrace$ und $M_X$ dem Migrationsanteil von $X$}\label{fig:ssec:sim:sir}
 \end{figure}
+\subsubsection{Auswertung der Simulation}
