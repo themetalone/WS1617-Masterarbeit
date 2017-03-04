@@ -35,7 +35,7 @@ Eine Auswahl dieser Weiterentwicklungen wird später beschrieben und untersucht.
 
 \subsubsection{Modifizierte SIR Modelle}
 \ellen
-Eine einfache Möglichkeit zur Modifikation des SIR-Modells ist es, zusätzliche Zustände einzuführen. Caitlin Rivers et al. verfolgen einen solchen Ansatz und erweitern das SIR-Modell zu einem SEIHFR-Modell. 
+Eine einfache Möglichkeit zur Modifikation des SIR-Modells ist es, zusätzliche Zustände einzuführen. \cite{Rivers2014} verfolgen einen solchen Ansatz und erweitern das SIR-Modell zu einem SEIHFR-Modell. 
 Genau wie im grundlegenden Modell gibt es die Ansteckbaren (S), Infektiösen (I) und die, die nicht mehr angesteckt werden und auch nicht mehr anstecken (R). Zusätzlich gibt es jedoch jene, die Kontakt zu Kranken hatten, jedoch noch nicht Infektiös sind (E), sowie jene die in Krankenhäusern untergebracht sind (H) und jene, die sterben und beerdigt werden (F).
 Durch diese Einführung zusätzlicher Zustände können genauere Aussagen getroffen werden, da beispielsweise die Klasse R zuvor ungenügend Informationen zur Verfügung stellte. Durch das SEIHFR-Modell ist es möglich zu unterscheiden, wie viele Immunisiert wurden und wie viele gestorben sind. Dies ist im weiteren Verlauf wichtig, wenn man Methoden zur Eindämmung und Bekämpfung von Infektionskrankheiten untersuchen möchte. Gleichzeitig wird das Problem jedoch komplizierter durch die Erweiterung des Modells, da die einzelnen Zustände nun komplizierter miteinander interagieren.\\
 So wird ein Teil von I in Krankenhäuser eingeliefert (H), während andere sterben (F) und wieder andere genesen und immunisiert werden (R). Ebenso stirb ein Teil derjenigen, die sich in Krankenhäusern befinden, während andere genesen und in den Zustand R übergehen.\\
@@ -80,7 +80,7 @@ Es kann davon ausgegangen werden, dass alle die ansteckend sind auch Symptome au
 Mit Hilfe der Reproduktionsrate und dem Wissen über die Menge an Personen, die im Krankenhaus behandelt wurden, konnten die Forscher ebenso die Dunkelziffer abschätzen. Diese liegt für Ebola bei 30\%.\\
 Es starben etwa 50\% der Infizierten bei der Epidemie in Sierra Leone und Guinea. Man kann davon ausgehen, dass diese Rate bei jenen die sich nicht in Behandlung befinden etwas höher liegt, während sie bei denen im Krankenhaus niedriger liegt.\\
 
-\cite{Rivers} geben in ihrem Paper an, dass die Sterblichkeitsrate durch Krankenhausaufenthalte nicht verändert wird. Eine Studie von Ärzte ohne Grenzen kommt jedoch zu dem Schluss, dass ein Malariamedikament die Sterblichkeitsrate um 31\% senkt (\cite{AerzteGrenzen2016}).
+\cite{Rivers2014} geben in ihrem Paper an, dass die Sterblichkeitsrate durch Krankenhausaufenthalte nicht verändert wird. Eine Studie von Ärzte ohne Grenzen kommt jedoch zu dem Schluss, dass ein Malariamedikament die Sterblichkeitsrate um 31\% senkt (\cite{AerzteGrenzen2016}).
 Daher setzen wir die Sterblichkeitsrate im Krankenhaus $\epsilon = 0.4$. Dadurch ist die Überlebenswahrscheinlichkeit gegenüber dem Ausbleiben einer Behandlung leicht erhöht. Dies wirkt mit dem Alltagsverständnis vereinbar, jedoch ist die Verbesserung von 31\% zu hoch, da die Verfügbarkeit des Malariamedikaments nicht in allen Krankenhäusern und für alle Patienten gewährleistet werden kann.
 
 Damit kann man annehmen, dass ohne Behandlung sechs von zehn Patienten sterben. Das bedeutet für das obige Modell, dass $\beta$ 0,18 entspricht, während $\delta$ 0,12 entspricht, denn $\beta + \delta = 0,3$. Zusätzlich gilt, dass $\beta + \delta + \gamma = 1$. \\
