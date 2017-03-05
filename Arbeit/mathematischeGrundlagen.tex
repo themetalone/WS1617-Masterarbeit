@@ -18,7 +18,7 @@ Die Ausbreitung der Infektion wird dann mit der folgenden Gruppe von Differenzia
 
 Dabei gilt: $S_0 > 0, I_0 > 0, R_0 = 0$.\\
 $k > 0$ beschreibt die Infektionsrate und $\gamma > 0$ die Immunisierungsrate, wobei zu beachten ist, dass auch Tote als immun angenommen werden. \\
-Der Faktor $SI$ beschreibt die Möglichkeiten, dass eine kranke auf eine gesunde Person trifft um diese anstecken zu können.\\  
+Der Faktor $SI$ beschreibt die Möglichkeiten, dass eine kranke auf eine gesunde Person trifft um diese anstecken zu können(\citep{Capasso1978}).\\  
 Dieses Modell ist sehr simpel, hat jedoch einige schwächen im Bezug auf die Beobachtungen in der Realität.\\
 So scheint es unwahrscheinlich, dass der Interaktionsterm linear ist. Viel wahrscheinlicher ist es, dass Aufgrund von Verhaltensänderungen eine Verringerung der Interaktionen eintritt, sobald die Epidemie bekannt ist.\\
 Zudem ist es bei Beobachtungen über einen längeren Zeitraum durchaus wahrscheinlich, dass es zu Geburten und Todesfällen kommt.\\
@@ -40,14 +40,14 @@ Genau wie im grundlegenden Modell gibt es die Ansteckbaren (S), Infektiösen (I)
 Durch diese Einführung zusätzlicher Zustände können genauere Aussagen getroffen werden, da beispielsweise die Klasse R zuvor ungenügend Informationen zur Verfügung stellte. Durch das SEIHFR-Modell ist es möglich zu unterscheiden, wie viele Immunisiert wurden und wie viele gestorben sind. Dies ist im weiteren Verlauf wichtig, wenn man Methoden zur Eindämmung und Bekämpfung von Infektionskrankheiten untersuchen möchte. Gleichzeitig wird das Problem jedoch komplizierter durch die Erweiterung des Modells, da die einzelnen Zustände nun komplizierter miteinander interagieren.\\
 So wird ein Teil von I in Krankenhäuser eingeliefert (H), während andere sterben (F) und wieder andere genesen und immunisiert werden (R). Ebenso stirb ein Teil derjenigen, die sich in Krankenhäusern befinden, während andere genesen und in den Zustand R übergehen.\\
 Da es sich hier jedoch um Übergänge handelt, die durchaus nachvollziehbar und für SuS begreiflich darstellbar sind, ist der Gewinn durch die differenziertere Betrachtung der Klasse R stärker zu bewerten, als die Kosten die durch den höheren Aufwand entstehen.\\
-M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen.\\
+M. Roberts et al. untersuchten 2007 ebenfalls die Möglichkeit Epidemien zu kontrollieren und dadurch die Auswirkungen möglichst gering zu halten. Dafür unterteilten sie die Klasse der Infektiösen nach dem Ort, an dem sie sich infiziert haben (bei einem Familienmitglied, in der Schule, auf der Arbeit oder bei der Gesellschaft(\cite{Roberts2006})). Dadurch entsteht die Möglichkeit, die Auswirkungen von der Schließung bestimmter Einrichtungen, wie beispielsweise Schulen, bezüglich der Ausbreitung der Krankheit zu untersuchen. Auf diese Untersuchung wird jedoch in dieser Arbeit verzichtet, da das Modell sonst zu komplex für die Behandlung im Unterricht wird. \\
 \subsubsection{IDEA Modell}
 \ellen
 Auch das IDEA-Modell (Incidence decay witz exponential adjustment) versucht die Ausbreitung von Infektionskrankheiten zu beschreiben. Dieses Modell benutzt keine Differentialgleichungen, sondern beschränkt sich auf eine Funktion:\\
 \begin{align}
 I_t &=\left(\dfrac{R_0}{(1+d)^t}\right)^t
 \end{align}
-Dabei beschreibt $I_t$ die Menge der Krankheitsfälle zum Zeitpunkt t, $R_0$ die Grundreproduktionsrate und $d$ ist ein Kontrollparameter, der dafür sorgt, dass die Anzahl der Krankheitsfälle nicht zu stark ansteigt. 
+Dabei beschreibt $I_t$ die Menge der Krankheitsfälle zum Zeitpunkt t, $R_0$ die Grundreproduktionsrate und $d$ ist ein Kontrollparameter, der dafür sorgt, dass die Anzahl der Krankheitsfälle nicht zu stark ansteigt (vgl. \cite{Fisman2014}). 
 \subsubsection{Wahl eines Modells}
 Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekannten Größen oder Operationen für die SuS auftreten. Da jedoch lediglich die Klasse der Infizierten beschrieben wird, ist sie für die weitere Arbeit kaum zu nutzen, da die Untersuchung der Removed-Klasse nicht möglich ist.\\
  Auch das klassische SIR-Modell hält nicht genügend Möglichkeiten bereit, die Removed-Klasse zu untersuchen.\\
@@ -75,7 +75,7 @@ Das IDEA-Modell kann einfach im Unterricht eingebunden werden, da keine unbekann
 \end{center}
 \caption{SEIHFRD-Modell}\label{fig:ssec:model}
 \end{figure}
-In der obigen Darstellung entspricht $\alpha$ der Reproduktionsrate, also der Anzahl der Gesunden, die durch einen Infektiösen angesteckt werden. Forscher der Eidgenössischen Technischen Hochschule Zürich (ETH Zürich) stellten fest, dass diese Rate bei Ebola etwa bei 2,18 liegt (\cite{Stadler2014}).\\
+In Abbildung \ref{fig:ssec:model} entspricht $\alpha$ der Reproduktionsrate, also der Anzahl der Gesunden, die durch einen Infektiösen angesteckt werden. Forscher der Eidgenössischen Technischen Hochschule Zürich (ETH Zürich) stellten fest, dass diese Rate bei Ebola etwa bei 2,18 liegt (\cite{Stadler2014}).\\
 Es kann davon ausgegangen werden, dass alle die ansteckend sind auch Symptome ausbilden.\\
 Mit Hilfe der Reproduktionsrate und dem Wissen über die Menge an Personen, die im Krankenhaus behandelt wurden, konnten die Forscher ebenso die Dunkelziffer abschätzen. Diese liegt für Ebola bei 30\%.\\
 Es starben etwa 50\% der Infizierten bei der Epidemie in Sierra Leone und Guinea. Man kann davon ausgehen, dass diese Rate bei jenen die sich nicht in Behandlung befinden etwas höher liegt, während sie bei denen im Krankenhaus niedriger liegt.\\
