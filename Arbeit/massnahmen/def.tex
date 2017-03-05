@@ -1,7 +1,7 @@
-\steffen\subsection{Identifikation von Maßnahmen}
+\subsection{Identifikation von Maßnahmen}\steffen
 Nachdem nun das \emph{SIR}-Modell für die Untersuchung von Pandemien erweitert wurde, werden nun Maßnahmen zur Eindämmung und deren Entsprechung im Netzwerkmodell beschrieben. 
 
-\subsubsection{Lokale Maßnahmen}
+\subsubsection{Lokale Maßnahmen}\steffen
 Beginnt eine Krankheit zur Epidemie zu werden, kann man lokal organisatorisch Maßnahmen ergreifen, um sie einzudämmen. Zu diesen zählt die Aufklärung um die Infektionsgefahr sowie die vorübergehende Schließung von öffentlichen Einrichtungen. Letzteres wurde von \cite{Milne2008} mit einem anderen Modell untersucht und für wirksam befunden. Durch die Aufklärung wird die Vorsicht bei zwischenmenschlichen Interaktionen erhöht, was die Infektionswahrscheinlichkeit pro Interaktion senkt. Ähnlich verhält es sich mit der Schließung von öffentlichen Einrichtungen. Hierdurch wird die Anzahl der möglichen Interaktionen von Infizierten und Infizierbaren reduziert, was ebenfalls die Infektionswahrscheinlichkeit reduziert. Im Modell schlagen sich diese Maßnahmen in einer Reduktion der Volumina der inneren Kanten nieder, wie in Abbildung \ref{fig:ssec:actions:local} dargestellt.
 
 \begin{figure}
@@ -18,7 +18,7 @@ Beginnt eine Krankheit zur Epidemie zu werden, kann man lokal organisatorisch Ma
 \end{figure}
 
 
-\subsubsection{Impfungen}
+\subsubsection{Impfungen}\steffen
 Bei gewissen Klassen von Krankheiten, wie den Viruserkrankungen, lässt sich präventiv ein Schutz vor einer Infektion aufbauen. Im Falle von Viren wäre das die Impfung. Wird ein Individuum vor der eigentlichen Infektion geimpft, immunisiert es sich gegen die Krankheit und ist somit nicht mehr Teil der infizierbaren Subpopulation. Im Modell wird durch das Impfen eine zusätzliche Kante zwischen der $S$ und der $R$ Subpopulation eingefügt. Das Volumen der Kante richtet sich nach Verfügbarkeit und Wirksamkeit der präventiven Maßnahme. Die Verfügbarkeit wird als konstant innerhalb einer Population angesehen. Die Effektivität beschreibt, wieviel Prozent der Empfänger immunisiert werden. Das Volumen der Impfkante ist also unabhängig von der Größe der Infizierbaren. Ein Beispiel dazu ist in Abbildung \ref{fig:ssec:actions:vac} gegeben.
 \begin{figure}
 \begin{center}
@@ -35,12 +35,12 @@ Bei gewissen Klassen von Krankheiten, wie den Viruserkrankungen, lässt sich pr�
 \end{figure}
 
 
-\subsubsection{Reisebeschränkungen}
+\subsubsection{Reisebeschränkungen}\steffen
 Während die beiden eben beschriebenen Maßnahmen die Eindämmung einer Krankheit innerhalb der Population als Ziel haben, ist das Ziel der Reisebeschränkung, zu verhindern, dass eine Krankheit in einer bisher gesunden Population ausbricht. Der kanonische Ansatz ist es, kranken Individuen aus anderen Populationen die Einreise zu verwehren. In der Praxis lässt sich dies mit der Sperrung von Grenzen und der Schließung von (Flug-)Häfen realisieren. Stellen die Populationen Länder dar, lässt sich jedoch die vollständige Sperrung von Landwegen zwischen benachbarten Populationen schwer umsetzen. Die Sperrung von (Flug-)Häfen lässt sich als das Entfernen von Reisekanten im Modell darstellen. Bei den Landwegen zwischen benachbarten Populationen ist die Sperrung der Grenze mit einer deutlichen Reduktion der Reisefaktoren gleichzusetzen. 
 
 Der Schutz vor Krankheiten, der durch die Isolation einer Population von den restlichen Populationen entsteht, ist offensichtlich sehr effektiv, setzt man eine reine Mensch-zu-Mensch Übertragung vorraus. Wirtschaftlich kann dieser Schutz eine Population vor große Probleme stellen. Reisekanten, auf denen wirtschaftlich notwendige Güter, wie beispielsweise Nahrungsmittel, transportiert werden, können nicht dauerhaft gesperrt werden. 
 
-\subsubsection{Einreisequarantäne}
+\subsubsection{Einreisequarantäne}\steffen
 Eine andere Maßnahme, mit der die Einreise kranker Individuen verhindert werden soll, ist die Einrichtung einer Quarantäne bei kontrollierbaren Reisewegen, wie Flugzeugen oder Schiffen. Dabei werden die Einreisenden für eine gewisse Zeit von der restlichen Population isoliert. Erkrankende Individuen werden, im Falle des in dieser Arbeit verwendeten \emph{SEIHFRD}-Modells, hospitalisiert und Individuen, die nicht erkranken, werden in die Population entlassen. Wichtig ist dabei die Dauer der Quarantäne. Da Inkubationszeiten nur statistische Durchschnittwerte sind, kann nie eine Wahrscheinlichkeit von 0 für den Fall erreicht werden, dass ein infiziertes Individuum nicht in die Population entlassen wird. Generell sind lange Quarantänezeiten problematisch in der Umsetzung. Betrachtet man sich beispielsweie das Ebola-Fieber, so wird dessen Inkubationszeit von \cite{Eichner2011} im Schnitt mit $12,7$ Tagen angegeben, bei einer Standardabweichung von $4,3$ Tagen. Um die Wahrscheinlichkeit einer falsch-negativen Infektionsprognose auf $1\%$ zu senken, benötigt man, nach \cite[4]{Eichner2011}, $25$ Tage Quarantäne. Dabei wird voraus gesetzt, dass die Individuen in der Quarantäne sich nicht gegenseitig infizieren können. Je nach Attraktivität der Population, kann es organisatorisch schwer bis unmöglich sein, für alle ankommenden eine $25$-tägige Quarantäne zu verhängen. Die Frage, wie sicher die Quarantäne ist, hängt von den organisatorischen Möglichkeiten der Population, sowie ihrer Einschätzung der Gefährlichkeit der Krankheit ab. 
 
 Im Modell lässt sich eine Quarantäne mit der Einführung zusätzlicher Subpopulationen umsetzen. Für jede reisende Subpopulation, in unserem Modell also $S$ und $E$, wird eine Quarantäne-Subpopulation, $Q_S$ und $Q_E$, eingeführt. Eingehende Kanten kontrollierbarer Reisewege haben dann diese Quarantäne-Subpopulationen als Ziel. Die Quarantäne-Subpopulationen werden mit zugehörigen reisenden Subpopulationen mittels einer inneren Kante unidirektional verbunden, und zwar von der Quarantäne in die Population. Das Volumen der Kanten richtet sich nach der veranschlagten Sicherheit der Quarantäne. Ob es zwischen $Q_S$ und $Q_E$ eine innere Kante gibt, hängt davon ab, ob sich die Individuen in der Quarantäne infizieren können. Weiterhin gibt es eine Kante von $Q_E$ nach $H$, da sichtbar Infizierte direkt hospitalisiert werden. 
